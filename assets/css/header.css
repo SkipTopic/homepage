@@ -1,14 +1,25 @@
+/* ---- 顶栏：绝对定位挂在框架顶部，柜柱在最右 ---- */
+
 .topbar {
-  position: relative;
-  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: var(--cabinet-w);
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
   padding: var(--topbar-pad-y) var(--topbar-pad-x);
   border-bottom: 2px solid var(--line);
-  background: rgba(247, 242, 231, 0.68);
+  background: rgba(247, 242, 231, 0.72);
   backdrop-filter: blur(4px);
+  animation: settle-down 0.7s var(--ease) both;
+}
+
+@keyframes settle-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
 }
 
 .brand {
@@ -44,11 +55,10 @@
 .nav-link {
   position: relative;
   padding: 6px 0;
-  border: 0;
-  background: none;
   color: var(--ink);
   font-size: var(--fs-md);
   letter-spacing: 0.08em;
+  text-decoration: none;
   opacity: 0.82;
 }
 
@@ -73,162 +83,89 @@
   right: 0;
 }
 
-.bookmarks {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px;
-  padding: var(--bookmarks-pad-y) var(--bookmarks-pad-x);
-  border-bottom: 2px solid var(--line);
-  background: rgba(251, 247, 238, 0.72);
-}
+/* ---- 下一层目录浮层（点书打开） ---- */
 
-.bookmark {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 9px;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  background: none;
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
-    color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
-}
-
-.bookmark:hover {
-  background: rgba(255, 255, 255, 0.55);
-  color: var(--ink);
-}
-
-.bookmark:active {
-  transform: translateY(1px);
-}
-
-.bookmark[aria-expanded="true"] {
-  border-color: var(--line);
-  background: rgba(251, 247, 238, 0.96);
-  color: var(--ink);
-  box-shadow: 0 1px 0 rgba(20, 19, 18, 0.08);
-}
-
-.folder {
-  position: relative;
-  flex: 0 0 auto;
-  width: 13px;
-  height: 10px;
-  border: 1.5px solid currentColor;
-  border-radius: 1.5px;
-}
-
-.folder::before {
-  content: "";
+.overlay {
   position: absolute;
-  top: -4px;
-  left: -1px;
-  width: 6px;
-  height: 4px;
-  border: 1.5px solid currentColor;
-  border-bottom: 0;
-  border-radius: 1.5px 1.5px 0 0;
-  background: var(--paper-soft);
+  inset: 0;
+  z-index: 60;
 }
 
-.bookmark[aria-expanded="true"] .folder::before {
-  background: var(--paper);
-}
-
-.bookmark-count {
-  padding: 1px 5px;
-  border-radius: 999px;
-  background: rgba(20, 19, 18, 0.07);
-  color: var(--muted);
-  font-size: 9px;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.4;
-}
-
-.bookmark[aria-expanded="true"] .bookmark-count {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* ---- 展开面板：高度与透明度一起过渡（0fr → 1fr） ---- */
-
-.bookmark-panels {
-  position: relative;
-  z-index: 4;
-  background: rgba(251, 247, 238, 0.94);
-}
-
-.panel-slot {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition: grid-template-rows var(--dur-panel) var(--ease), opacity var(--dur-panel) var(--ease);
-}
-
-.panel-slot.is-open {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-
-.panel-slot[hidden] {
+.overlay[hidden] {
   display: none;
 }
 
-.bookmark-panel {
-  overflow: hidden;
-  min-height: 0;
-  padding: clamp(14px, 2vw, 22px) var(--topbar-pad-x) clamp(16px, 2.4vw, 26px);
-  border-bottom: 2px solid var(--line);
+.overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 19, 18, 0.38);
+  opacity: 0;
+  transition: opacity var(--dur-panel) var(--ease);
 }
 
-.panel-head {
+.overlay.is-open .overlay-backdrop {
+  opacity: 1;
+}
+
+.overlay-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(640px, calc(100vw - 2 * var(--page-pad) - var(--cabinet-w) - 16px));
+  max-height: min(76vh, 620px);
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-5);
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 14px));
+  transition: opacity var(--dur-panel) var(--ease), transform var(--dur-panel) var(--ease);
+}
+
+.overlay.is-open .overlay-panel {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.overlay-head {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 12px;
+  padding: 14px 18px 12px;
+  border-bottom: 2px solid var(--line);
+  background: var(--gray-200);
 }
 
-.panel-heading {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  min-width: 0;
-}
-
-.panel-title {
+.overlay-title {
   margin: 0;
-  color: var(--ink);
-  font-size: 12px;
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-xl);
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  letter-spacing: 0.08em;
 }
 
-.panel-note {
-  margin: 0;
+.overlay-title .ov-en {
+  margin-left: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--muted);
-  font-size: var(--fs-sm);
-  line-height: 1.4;
+  font-weight: 400;
 }
 
 .panel-close {
   flex: 0 0 auto;
-  padding: 2px 8px;
+  padding: 2px 9px;
   border: 1px solid transparent;
   border-radius: var(--radius);
   background: none;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
@@ -239,72 +176,7 @@
   color: var(--ink);
 }
 
-.panel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  column-gap: clamp(18px, 3vw, 42px);
-}
-
-/* ---- 条目：hover/focus 时标题下划线 + 左侧冒出一粒墨点 ---- */
-
-.bookmark-item {
-  position: relative;
-  display: block;
-  padding: 9px 0 10px;
-  border-top: 1px solid rgba(20, 19, 18, 0.16);
-  text-decoration: none;
-}
-
-.bookmark-item::before {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: 14px;
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--ink);
-  opacity: 0;
-  transform: scale(0.4);
-  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
-}
-
-.bookmark-item:hover::before,
-.bookmark-item:focus-visible::before {
-  opacity: 0.85;
-  transform: none;
-}
-
-.bookmark-item:hover .bookmark-title,
-.bookmark-item:focus-visible .bookmark-title {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.bookmark-title-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.bookmark-title {
-  color: var(--ink);
-  font-size: var(--fs-md);
-  font-weight: 600;
-}
-
-.bookmark-tag {
-  flex: 0 0 auto;
-  color: var(--muted);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-}
-
-.bookmark-note {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: var(--fs-sm);
-  line-height: 1.5;
-  text-wrap: pretty;
+.overlay-grid {
+  overflow-y: auto;
+  padding: 6px 18px 16px;
 }

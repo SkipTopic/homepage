@@ -6,27 +6,48 @@
 
 @media (max-width: 980px) {
   :root {
-    --door-height: clamp(330px, 48vh, 480px);
+    --door-height: clamp(320px, 46vh, 460px);
     --door-title-size: clamp(38px, 7.8vw, 78px);
+    --drawer-w: clamp(280px, 40vw, 380px);
+    --drawer-h: clamp(76px, 10vh, 104px);
   }
 
   .quote-col {
     width: min(24vw, 220px);
   }
 
-  .quote-col:nth-child(1) {
-    left: 3%;
+  .quote-col:nth-child(1) { left: 3%; }
+  .quote-col:nth-child(2) { right: 7%; }
+
+  .cols-3 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .quote-col:nth-child(2) {
-    right: 3%;
+  .sec-no {
+    font-size: clamp(44px, 7vw, 72px);
   }
 }
 
 @media (max-width: 720px) {
+  :root {
+    --cabinet-w: 46px;
+    --drawer-w: min(320px, calc(100vw - 120px));
+    --drawer-h: clamp(72px, 9vh, 96px);
+    --door-height: clamp(300px, 42vh, 420px);
+    --door-title-size: clamp(30px, 8.4vw, 52px);
+    --fs-display: clamp(34px, 9vw, 44px);
+  }
+
+  /* 手机上滚到底再snap，避免内容超过一屏被夹住 */
+  .snap {
+    scroll-snap-type: y proximity;
+  }
+
   .topbar {
+    right: var(--cabinet-w);
     flex-wrap: wrap;
-    gap: 10px 16px;
+    gap: 8px 14px;
+    padding: 10px 14px;
   }
 
   .brand-sub {
@@ -34,98 +55,135 @@
   }
 
   .nav {
-    width: 100%;
-    justify-content: space-between;
-    gap: 18px;
+    gap: 14px;
   }
 
-  .bookmarks {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+  .nav-link {
+    font-size: var(--fs-md);
   }
 
-  .bookmarks::-webkit-scrollbar {
+  .sec {
+    padding-right: calc(var(--cabinet-w) + 14px);
+    padding-left: 16px;
+    justify-content: flex-start;
+    padding-top: clamp(64px, 9vh, 88px);
+  }
+
+  .cols-3,
+  .cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-indicator {
     display: none;
   }
 
-  .hero {
-    min-height: 62vh;
-    padding-top: 34px;
+  .statusline {
+    left: 14px;
+    bottom: 14px;
   }
 
-  .door-caption {
-    max-width: 82vw;
+  /* 窄柱上抽屉牌改竖排：中文竖排刚好，也更有柜子味 */
+  .drawer-plate {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-height: calc(100% - 18px);
+    padding: 6px 1px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
   }
 
-  .footer {
-    flex-wrap: wrap;
-    gap: 6px 16px;
+  .d-small .drawer-plate {
+    font-size: 8px;
+    padding: 3px 1px;
+    max-height: calc(100% - 12px);
   }
 
-  .footer-note {
-    flex-basis: 100%;
-    order: 3;
+  .drawer-pull {
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    height: 2px;
+  }
+
+  .scroll-hint {
+    bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .drawer:nth-of-type(1) { top: 5%; }
+  .drawer:nth-of-type(2) { top: calc(5% + 58px); }
+  .drawer:nth-of-type(3) { top: 30%; }
+  .drawer:nth-of-type(4) { top: 50%; }
+  .drawer:nth-of-type(5) { top: 70%; }
+
+  .cabinet-col::before {
+    font-size: 7px;
+    letter-spacing: 0.26em;
+  }
+
+  .book {
+    width: 22px;
+    height: 60px;
+    font-size: 11px;
+  }
+
+  .file {
+    width: 66px;
+    height: 48px;
+  }
+
+  .end-foot {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --page-pad: 8px;
+    --door-height: clamp(280px, 40vh, 380px);
+    --door-title-size: clamp(28px, 9.4vw, 44px);
     --frame-border: 2px;
-    --door-height: clamp(300px, 44vh, 400px);
-    --door-title-size: clamp(34px, 10.2vw, 52px);
     --door-border: 2px;
-  }
-
-  .topbar {
-    padding: 10px 12px;
-  }
-
-  .nav-link {
-    font-size: 12px;
-  }
-
-  .bookmark {
-    padding: 5px 7px;
-    font-size: 11px;
-  }
-
-  .quote-layer {
-    opacity: 0.65;
-  }
-
-  .quote-col:nth-child(1) {
-    left: 2%;
-    width: 30vw;
-  }
-
-  .quote-col:nth-child(2) {
-    right: 2%;
-    width: 30vw;
-  }
-
-  .door-caption {
-    font-size: 11px;
-    letter-spacing: 0.01em;
+    --page-pad: 8px;
   }
 
   .door-wrap::before {
     inset: -9px -7px -7px;
   }
 
-  .panel-grid {
-    grid-template-columns: 1fr;
+  .quote-layer {
+    opacity: 0.65;
   }
 
-  .bookmark-item::before {
+  .quote-col:nth-child(1) { left: 1%; width: 30vw; }
+  .quote-col:nth-child(2) { right: 8%; width: 30vw; }
+
+  .sec-lede {
+    font-size: var(--fs-md);
+  }
+
+  .item-link::before {
     display: none;
+  }
+
+  .drawer-box {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .scroll-hint {
+    white-space: nowrap;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  .snap {
     scroll-behavior: auto;
   }
 
@@ -133,8 +191,12 @@
     animation: none !important;
   }
 
-  /* 字幕已经静止，开关没有意义 */
+  /* 字幕已静止，开关没有意义 */
   .footer-toggle {
+    display: none;
+  }
+
+  .wipe {
     display: none;
   }
 

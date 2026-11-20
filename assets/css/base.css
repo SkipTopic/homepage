@@ -6,19 +6,18 @@
 
 html {
   min-width: 320px;
-  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   background: var(--outside);
   color: var(--ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -53,25 +52,22 @@ svg {
 }
 
 .page {
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   padding: var(--page-pad);
-  display: flex;
 }
 
 .frame {
   position: relative;
-  flex: 1;
+  height: 100%;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   background: var(--paper);
   border: var(--frame-border) solid var(--line);
-  box-shadow: 0 24px 70px rgba(20, 19, 18, 0.1);
+  box-shadow: var(--shadow-4);
 }
 
-/* ---- 背景层：白色/纸色的分散径向渐变 + 同心波纹 ---- */
+/* ---- 背景层：白/纸分散径向渐变 + 同心波纹（整站共用，滚页时不动） ---- */
 
 .backdrop {
   position: absolute;
@@ -80,15 +76,15 @@ svg {
   pointer-events: none;
   background:
     repeating-radial-gradient(
-      circle at 50% 58%,
+      circle at 42% 58%,
       transparent 0 34px,
       rgba(var(--warm-rgb), 0.05) 40px 48px,
       transparent 54px 80px
     ),
-    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0) 32%),
-    radial-gradient(circle at 72% 70%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0) 34%),
+    radial-gradient(circle at 26% 22%, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0) 32%),
+    radial-gradient(circle at 70% 72%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0) 34%),
     radial-gradient(
-      ellipse at 50% 58%,
+      ellipse at 42% 58%,
       #ffffff 0 16%,
       #fffefa 26%,
       rgba(var(--paper-rgb), 0.55) 50%,
@@ -96,7 +92,7 @@ svg {
       var(--paper) 86%,
       var(--paper) 100%
     );
-  transform-origin: 50% 58%;
+  transform-origin: 42% 58%;
   opacity: 1;
   animation:
     backdrop-in 0.9s ease both,
@@ -104,24 +100,16 @@ svg {
 }
 
 @keyframes backdrop-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes backdrop-drift {
-  from {
-    transform: scale(1) translate3d(-0.6%, 0, 0);
-  }
-  to {
-    transform: scale(1.035) translate3d(0.6%, -0.6%, 0);
-  }
+  from { transform: scale(1) translate3d(-0.6%, 0, 0); }
+  to { transform: scale(1.035) translate3d(0.6%, -0.6%, 0); }
 }
 
-/* ---- 纸的颗粒：静态噪点，一次栅格化，无动画 ---- */
+/* ---- 纸的颗粒 ---- */
 
 .grain {
   position: absolute;
@@ -133,65 +121,98 @@ svg {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
 }
 
-/* ---- 入场编排：一次有顺序的展开，其余时间保持安静 ---- */
+/* ---- 转场：整页的一张纸掠过 ---- */
 
-.topbar,
-.bookmarks,
-.footer {
-  animation: settle-down 0.7s var(--ease) both;
+.wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--gray-200), var(--paper-soft));
+  transform: translateY(-102%);
 }
 
-.topbar {
-  animation-delay: 0.05s;
+.wipe.is-wiping {
+  animation: wipe-sweep 0.62s var(--ease-snap);
 }
 
-.bookmarks {
-  animation-delay: 0.12s;
+@keyframes wipe-sweep {
+  0% { transform: translateY(-102%); }
+  42% { transform: translateY(0); }
+  58% { transform: translateY(0); }
+  100% { transform: translateY(102%); }
 }
 
-.footer {
-  animation-delay: 0.24s;
-}
+/* ---- 页码指示（左侧竖排 01–05） ---- */
 
-@keyframes settle-down {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* ---- 页脚：签名版本号 + 字幕开关 ---- */
-
-.footer {
-  position: relative;
-  z-index: 2;
+.page-indicator {
+  position: absolute;
+  left: clamp(10px, 1.6vw, 22px);
+  top: 50%;
+  z-index: 46;
+  transform: translateY(-50%);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 9px var(--topbar-pad-x);
-  border-top: 1px solid rgba(20, 19, 18, 0.35);
-  background: rgba(247, 242, 231, 0.45);
-  color: var(--muted);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.footer-meta {
+.page-indicator button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  flex: 0 0 auto;
+  gap: 7px;
+  padding: 3px 0;
+  border: 0;
+  background: none;
+  color: var(--gray-600);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-fast) var(--ease);
 }
 
-.footer-version {
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+.page-indicator button::before {
+  content: "";
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  transition: width var(--dur-fast) var(--ease);
+}
+
+.page-indicator button:hover,
+.page-indicator button:focus-visible {
+  color: var(--ink);
+}
+
+.page-indicator button.is-current {
+  color: var(--ink);
+}
+
+.page-indicator button.is-current::before {
+  width: 26px;
+}
+
+/* ---- 状态条（左下角常驻） ---- */
+
+.statusline {
+  position: absolute;
+  left: var(--topbar-pad-x);
+  bottom: clamp(10px, 1.6vw, 18px);
+  z-index: 46;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--gray-600);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: settle-up 0.7s var(--ease) 0.3s both;
+}
+
+@keyframes settle-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
 }
 
 .footer-toggle {
@@ -202,7 +223,7 @@ svg {
   border: 1px solid rgba(20, 19, 18, 0.4);
   border-radius: 999px;
   background: none;
-  color: var(--muted);
+  color: var(--gray-600);
   font-size: var(--fs-xs);
   letter-spacing: 0.12em;
   transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
@@ -221,9 +242,7 @@ svg {
   color: var(--paper);
 }
 
-.footer-toggle[aria-pressed="true"] .footer-toggle-icon {
-  font-size: 9px;
-}
+/* ---- toast / noscript ---- */
 
 .toast {
   position: fixed;

@@ -117,5 +117,21 @@ window.SITE_DATA = {
         { title: "这个站", note: "一扇关着的门，门后面是还在长的东西。", tag: "说明" }
       ]
     }
+  ],
+
+  /*
+   * 右侧固定柜子的抽屉配置（v0.4）。
+   * - kind: "books" 书脊（点开一本 = 打开一个板块的目录）
+   *         "files" 档案袋（一个袋子 = 一件作品，点击进下一层或提示）
+   *         "card"  小抽屉里的一张卡（点击跳到某个 section）
+   * - small: true 的是草图顶部那两只小抽屉
+   * - 想换柜子里有什么：改这里就行，不用动 HTML
+   */
+  cabinets: [
+    { id: "card-about", kind: "card", small: true, label: "关于", target: "sec-about" },
+    { id: "card-site", kind: "card", small: true, label: "本站", target: "sec-about" },
+    { id: "shelf-write", kind: "books", label: "写与读", groups: ["philosophy", "dreams", "creation"] },
+    { id: "shelf-read", kind: "books", label: "看与玩", groups: ["media", "games"] },
+    { id: "files-made", kind: "files", label: "做出来的", groups: ["visual", "design"] }
   ]
 };

@@ -1,17 +1,13 @@
-.hero {
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-  flex: 1;
+/* ============ 01 · 门厅 ============ */
+
+.sec-hall {
   display: grid;
   place-items: center;
-  min-height: clamp(520px, 72vh, 820px);
-  overflow: hidden;
-  padding: clamp(30px, 6vh, 70px) clamp(18px, 4vw, 60px);
-  background: transparent;
+  padding: clamp(56px, 9vh, 88px) clamp(18px, 4vw, 60px) clamp(48px, 8vh, 76px);
+  padding-right: calc(var(--cabinet-w) + 16px);
 }
 
-/* ---- 门后面的滚动名言：两列、上下交替、字号有节奏 ---- */
+/* ---- 门后的滚动名言 ---- */
 
 .quote-layer {
   position: absolute;
@@ -26,8 +22,9 @@
   animation: fade-soft 0.9s ease 0.45s both;
 }
 
-.hero.is-pulse .quote-layer {
-  opacity: 1;
+.quote-layer.is-paused .quote-track,
+.quote-layer.is-idle .quote-track {
+  animation-play-state: paused;
 }
 
 .quote-col {
@@ -38,23 +35,14 @@
   overflow: hidden;
 }
 
-.quote-col:nth-child(1) {
-  left: 4%;
-}
-
-.quote-col:nth-child(2) {
-  right: 4%;
-}
+.quote-col:nth-child(1) { left: 4%; }
+.quote-col:nth-child(2) { right: 6%; }
 
 .quote-track {
   display: flex;
   flex-direction: column;
   animation: quote-up var(--duration, 60s) linear infinite;
   will-change: transform;
-}
-
-.quote-layer.is-paused .quote-track {
-  animation-play-state: paused;
 }
 
 .quote-col.is-down .quote-track {
@@ -77,16 +65,13 @@
   line-height: 1.5;
 }
 
-/* 少数条目放大放淡，让纵列有期刊排版的呼吸 */
 .quote-item.is-major {
   font-size: var(--fs-xl);
   color: var(--quote-soft);
   line-height: 1.42;
 }
 
-.quote-item blockquote {
-  margin: 0;
-}
+.quote-item blockquote { margin: 0; }
 
 .quote-item .quote-author {
   display: block;
@@ -103,24 +88,16 @@
 }
 
 @keyframes quote-up {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(0, -50%, 0);
-  }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
 }
 
 @keyframes quote-down {
-  from {
-    transform: translate3d(0, -50%, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+  from { transform: translate3d(0, -50%, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
-/* ---- 门后的暖光：不再用 blur，靠渐变本身变软 ---- */
+/* ---- 门后的暖光（预柔化渐变，无 blur） ---- */
 
 .door-glow {
   position: absolute;
@@ -128,7 +105,7 @@
   left: 50%;
   z-index: 1;
   width: min(56vw, 720px);
-  height: min(70vh, 640px);
+  height: min(66vh, 620px);
   pointer-events: none;
   opacity: 0.8;
   background: radial-gradient(
@@ -141,14 +118,13 @@
   animation: glow-in 0.9s ease 0.1s both, glow-breathe 13s ease-in-out 1s infinite alternate;
 }
 
-/* 点门时的一次性光脉冲：单独一层，不打断呼吸 */
 .door-surge {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 1;
   width: min(56vw, 720px);
-  height: min(70vh, 640px);
+  height: min(66vh, 620px);
   pointer-events: none;
   opacity: 0;
   background: radial-gradient(
@@ -160,45 +136,27 @@
   transform: translate(-50%, -50%);
 }
 
-.hero.is-pulse .door-surge {
+.sec-hall.is-pulse .door-surge {
   animation: surge 1.6s var(--ease);
 }
 
 @keyframes glow-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.96);
-  }
-  to {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1);
-  }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+  to { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
 }
 
 @keyframes glow-breathe {
-  from {
-    opacity: 0.62;
-    transform: translate(-50%, -50%) scale(0.97);
-  }
-  to {
-    opacity: 0.92;
-    transform: translate(-50%, -50%) scale(1.04);
-  }
+  from { opacity: 0.62; transform: translate(-50%, -50%) scale(0.97); }
+  to { opacity: 0.92; transform: translate(-50%, -50%) scale(1.04); }
 }
 
 @keyframes surge {
-  0% {
-    opacity: 0;
-  }
-  30% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { opacity: 0; }
 }
 
-/* ---- 门台：门、门上字、光晕都站在这里 ---- */
+/* ---- 门台 ---- */
 
 .door-stage {
   position: relative;
@@ -248,17 +206,11 @@
 }
 
 @keyframes door-land {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
 
-/* 门套：门从「贴在纸上的一块色」变成「装在墙洞里的门」 */
+/* 门套 */
 .door-wrap::before {
   content: "";
   position: absolute;
@@ -270,7 +222,7 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 2px 0 rgba(20, 19, 18, 0.06);
 }
 
-/* 门底漏出的光落在纸面上 */
+/* 门底漏光落在纸面 */
 .door-wrap::after {
   content: "";
   position: absolute;
@@ -286,15 +238,11 @@
 }
 
 @keyframes pool-breathe {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 0.78;
-  }
+  from { opacity: 0.4; }
+  to { opacity: 0.78; }
 }
 
-/* ---- 门本体：木作 ---- */
+/* ---- 门本体 ---- */
 
 .door {
   position: relative;
@@ -316,7 +264,7 @@
     linear-gradient(115deg, var(--door-light), var(--door) 44%, var(--door-deep));
   box-shadow:
     8px 11px 0 rgba(20, 19, 18, 0.07),
-    0 24px 55px rgba(20, 19, 18, 0.18),
+    var(--shadow-3),
     inset -3px 0 6px rgba(46, 22, 10, 0.25),
     inset 3px 0 6px rgba(255, 240, 214, 0.14),
     inset 0 -4px 10px rgba(46, 22, 10, 0.28);
@@ -324,7 +272,6 @@
   user-select: none;
 }
 
-/* 两块凹板 */
 .door-panel {
   position: absolute;
   left: 15%;
@@ -332,25 +279,13 @@
   z-index: 1;
   border: 1px solid rgba(20, 19, 18, 0.42);
   background: rgba(46, 22, 10, 0.06);
-  box-shadow:
-    inset 0 2px 3px rgba(255, 240, 214, 0.16),
-    inset 0 -3px 6px rgba(46, 22, 10, 0.32),
-    inset 2px 0 4px rgba(46, 22, 10, 0.16),
-    inset -2px 0 4px rgba(255, 240, 214, 0.1);
+  box-shadow: var(--shadow-inset-dent);
   pointer-events: none;
 }
 
-.door-panel-a {
-  top: 9%;
-  height: 36%;
-}
+.door-panel-a { top: 9%; height: 36%; }
+.door-panel-b { top: 53%; height: 30%; }
 
-.door-panel-b {
-  top: 53%;
-  height: 30%;
-}
-
-/* 门底缝漏光 */
 .door-lightline {
   position: absolute;
   left: 7%;
@@ -370,15 +305,10 @@
 }
 
 @keyframes light-breathe {
-  from {
-    opacity: 0.35;
-  }
-  to {
-    opacity: 0.8;
-  }
+  from { opacity: 0.35; }
+  to { opacity: 0.8; }
 }
 
-/* 反应时的暖色薄纱（只动 opacity） */
 .door-veil {
   position: absolute;
   inset: 0;
@@ -394,7 +324,7 @@
   opacity: 0.12;
 }
 
-.hero.is-pulse .door-veil {
+.sec-hall.is-pulse .door-veil {
   opacity: 0.22;
 }
 
@@ -431,7 +361,7 @@
   transition: box-shadow 0.5s var(--ease);
 }
 
-.hero.is-pulse .door-keyhole {
+.sec-hall.is-pulse .door-keyhole {
   box-shadow: 0 0 10px rgba(255, 180, 90, 0.65);
 }
 
@@ -473,24 +403,16 @@
 }
 
 @keyframes fade-soft {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.85;
-  }
+  from { opacity: 0; }
+  to { opacity: 0.85; }
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* ---- 手绘箭头：入场时被画出来 ---- */
+/* ---- 手绘箭头 ---- */
 
 .hero-arrow {
   position: absolute;
@@ -514,28 +436,44 @@
   animation: arrow-draw 0.7s var(--ease) forwards;
 }
 
-.hero-arrow path:nth-child(1) {
-  animation-delay: 0.95s;
-}
-
-.hero-arrow path:nth-child(2) {
-  animation-delay: 1.4s;
-}
-
-.hero-arrow path:nth-child(3) {
-  animation-delay: 1.45s;
-}
-
-.hero-arrow path:nth-child(4) {
-  animation-delay: 1.55s;
-}
+.hero-arrow path:nth-child(1) { animation-delay: 0.95s; }
+.hero-arrow path:nth-child(2) { animation-delay: 1.4s; }
+.hero-arrow path:nth-child(3) { animation-delay: 1.45s; }
+.hero-arrow path:nth-child(4) { animation-delay: 1.55s; }
 
 @keyframes arrow-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
+  to { stroke-dashoffset: 0; }
 }
 
 .door-stage:hover .hero-arrow {
   transform: translateX(5px);
+}
+
+/* ---- 往下滚的暗示 ---- */
+
+.scroll-hint {
+  position: absolute;
+  bottom: clamp(26px, 5vh, 44px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--gray-600);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.2em;
+  animation: fade-in 0.9s ease 1.5s both, hint-float 3.2s ease-in-out 2.4s infinite alternate;
+}
+
+.scroll-hint-line {
+  width: 1.5px;
+  height: 34px;
+  background: linear-gradient(180deg, var(--gray-600), transparent);
+  align-self: flex-start;
+}
+
+@keyframes hint-float {
+  from { transform: translate(-50%, 0); }
+  to { transform: translate(-50%, 5px); }
 }

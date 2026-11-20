@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>跳过话题 · 个人小站</title>
-    <meta name="description" content="一扇关着的门，和门后面的句子。" />
+    <meta name="description" content="一扇关着的门，一排柜子，和一个还在长的站。" />
     <meta name="theme-color" content="#f7f2e7" />
     <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="./assets/fonts/cormorant-garamond-normal.woff2" as="font" type="font/woff2" crossorigin />
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="./assets/css/base.css" />
     <link rel="stylesheet" href="./assets/css/header.css" />
     <link rel="stylesheet" href="./assets/css/hero.css" />
+    <link rel="stylesheet" href="./assets/css/sections.css" />
+    <link rel="stylesheet" href="./assets/css/cabinet.css" />
     <link rel="stylesheet" href="./assets/css/responsive.css" />
   </head>
   <body>
@@ -24,68 +26,137 @@
         <div class="backdrop" aria-hidden="true"></div>
         <div class="grain" aria-hidden="true"></div>
 
-        <header class="topbar" data-block="topbar">
-          <a class="brand" href="./index.html" aria-label="跳过话题 · 首页">
+        <header class="topbar">
+          <a class="brand" href="#sec-hall" aria-label="跳过话题 · 回到门厅">
             <span class="brand-mark">跳过话题</span>
             <span class="brand-sub">个人小站</span>
           </a>
-          <nav class="nav" aria-label="主导航">
-            <button type="button" class="nav-link" data-open="philosophy">探索</button>
-            <button type="button" class="nav-link" data-open="media">喜欢</button>
-            <button type="button" class="nav-link" data-open="visual">乐趣</button>
-            <button type="button" class="nav-link" data-open="about">关于</button>
+          <nav class="nav" aria-label="页面导航">
+            <a class="nav-link" href="#sec-explore">探索</a>
+            <a class="nav-link" href="#sec-like">喜欢</a>
+            <a class="nav-link" href="#sec-fun">乐趣</a>
+            <a class="nav-link" href="#sec-about">关于</a>
           </nav>
         </header>
 
-        <nav class="bookmarks" id="bookmarks" aria-label="收藏夹" data-block="bookmarks"></nav>
-        <div class="bookmark-panels" id="bookmark-panels"></div>
-
-        <main class="hero" id="hero" data-block="hero">
-          <div class="quote-layer" id="quote-layer" aria-hidden="true"></div>
-          <div class="door-glow" aria-hidden="true"></div>
-          <div class="door-surge" aria-hidden="true"></div>
-
-          <div class="door-stage">
-            <p class="door-caption">but father the sky has blue</p>
-
-            <div class="door-wrap">
-              <button type="button" class="door" aria-label="一扇关着的门" title="点了也不会开">
-                <span class="door-panel door-panel-a" aria-hidden="true"></span>
-                <span class="door-panel door-panel-b" aria-hidden="true"></span>
-                <span class="door-lightline" aria-hidden="true"></span>
-                <span class="door-veil" aria-hidden="true"></span>
-                <span class="door-handle" aria-hidden="true"></span>
-                <span class="door-keyhole" aria-hidden="true"></span>
-              </button>
-              <p class="door-title"><span class="door-title-he">HE</span> <span class="door-title-rest">who has</span></p>
+        <main class="snap" id="snap" tabindex="-1">
+          <!-- 01 · 门厅 -->
+          <section class="sec sec-hall" id="sec-hall" data-sec="1" data-title="门厅">
+            <div class="quote-layer" id="quote-layer" aria-hidden="true"></div>
+            <div class="door-glow" aria-hidden="true"></div>
+            <div class="door-surge" aria-hidden="true"></div>
+            <div class="door-stage">
+              <p class="door-caption">but father the sky has blue</p>
+              <div class="door-wrap">
+                <button type="button" class="door" aria-label="一扇关着的门" title="点了也不会开">
+                  <span class="door-panel door-panel-a" aria-hidden="true"></span>
+                  <span class="door-panel door-panel-b" aria-hidden="true"></span>
+                  <span class="door-lightline" aria-hidden="true"></span>
+                  <span class="door-veil" aria-hidden="true"></span>
+                  <span class="door-handle" aria-hidden="true"></span>
+                  <span class="door-keyhole" aria-hidden="true"></span>
+                </button>
+                <p class="door-title"><span class="door-title-he">HE</span> <span class="door-title-rest">who has</span></p>
+              </div>
+              <svg class="hero-arrow" viewBox="0 0 120 56" fill="none" aria-hidden="true">
+                <path d="M3 30c22-9 44-10 70-8 10 1 22 3 36 6" pathLength="100" />
+                <path d="M91 13c6 6 12 11 18 15" pathLength="100" />
+                <path d="M92 42c6-6 11-11 17-14" pathLength="100" />
+                <path d="M14 34c6 2 11 4 16 8" pathLength="100" opacity=".5" />
+              </svg>
             </div>
+            <p class="scroll-hint" aria-hidden="true"><span class="scroll-hint-line"></span>滚轮往下 · 或者去右边柜子里翻翻</p>
+          </section>
 
-            <svg class="hero-arrow" viewBox="0 0 120 56" fill="none" aria-hidden="true">
-              <path d="M3 30c22-9 44-10 70-8 10 1 22 3 36 6" pathLength="100" />
-              <path d="M91 13c6 6 12 11 18 15" pathLength="100" />
-              <path d="M92 42c6-6 11-11 17-14" pathLength="100" />
-              <path d="M14 34c6 2 11 4 16 8" pathLength="100" opacity=".5" />
-            </svg>
-          </div>
+          <!-- 02 · 探索 -->
+          <section class="sec sec-explore" id="sec-explore" data-sec="2" data-title="探索">
+            <header class="sec-head">
+              <span class="sec-no" aria-hidden="true">02</span>
+              <div>
+                <h2 class="sec-title-cn">探索</h2>
+                <span class="sec-title-en">Explore</span>
+              </div>
+              <p class="sec-lede">还没想清楚的问题，写了一半的世界，和梦里排好的片。</p>
+            </header>
+            <div class="sec-body cols-3" data-groups="philosophy,dreams,creation"></div>
+          </section>
+
+          <!-- 03 · 喜欢 -->
+          <section class="sec sec-like" id="sec-like" data-sec="3" data-title="喜欢">
+            <header class="sec-head">
+              <span class="sec-no" aria-hidden="true">03</span>
+              <div>
+                <h2 class="sec-title-cn">喜欢</h2>
+                <span class="sec-title-en">Favorites</span>
+              </div>
+              <p class="sec-lede">看过、听过、借过、玩过——都记一笔。</p>
+            </header>
+            <div class="sec-body cols-2" data-groups="media,games"></div>
+          </section>
+
+          <!-- 04 · 乐趣 -->
+          <section class="sec sec-fun" id="sec-fun" data-sec="4" data-title="乐趣">
+            <header class="sec-head">
+              <span class="sec-no" aria-hidden="true">04</span>
+              <div>
+                <h2 class="sec-title-cn">乐趣</h2>
+                <span class="sec-title-en">Playground</span>
+              </div>
+              <p class="sec-lede">镜头、转场、界面和一点风——做出来的东西装在档案袋里。</p>
+            </header>
+            <div class="sec-body cols-2" data-groups="visual,design"></div>
+          </section>
+
+          <!-- 05 · 关于 -->
+          <section class="sec sec-about" id="sec-about" data-sec="5" data-title="关于">
+            <header class="sec-head">
+              <span class="sec-no" aria-hidden="true">05</span>
+              <div>
+                <h2 class="sec-title-cn">关于</h2>
+                <span class="sec-title-en">About</span>
+              </div>
+              <p class="sec-lede">先放三句话，以后再补。</p>
+            </header>
+            <div class="sec-body about-body" data-groups="about"></div>
+            <footer class="end-foot">
+              <span>跳过话题 · <span id="year">2026</span></span>
+              <span class="end-foot-note">门后面是句子，句子后面是还在长的东西。</span>
+              <span class="footer-version">v. Ⅳ</span>
+            </footer>
+          </section>
         </main>
 
-        <footer class="footer" data-block="footer">
-          <span>跳过话题 · <span id="year">2026</span></span>
-          <span class="footer-note">门后面是句子，句子后面是还在长的东西。</span>
-          <span class="footer-meta">
-            <span class="footer-version" title="网站版本">v. Ⅲ</span>
-            <button type="button" class="footer-toggle" id="quote-toggle" aria-pressed="false" aria-label="暂停名言滚动">
-              <span class="footer-toggle-icon" aria-hidden="true">❚❚</span> 字幕
-            </button>
-          </span>
-        </footer>
+        <div class="wipe" id="wipe" aria-hidden="true"></div>
+
+        <aside class="page-indicator" id="page-indicator" aria-hidden="true"></aside>
+
+        <p class="statusline">
+          <span>跳过话题</span>
+          <button type="button" class="footer-toggle" id="quote-toggle" aria-pressed="false" aria-label="暂停名言滚动">
+            <span class="footer-toggle-icon" aria-hidden="true">❚❚</span> 字幕
+          </button>
+        </p>
+
+        <aside class="cabinet" id="cabinet" aria-label="柜子：书和档案袋都在里面"></aside>
+      </div>
+    </div>
+
+    <!-- 下一层目录浮层（点书打开） -->
+    <div class="overlay" id="directory" role="dialog" aria-modal="true" aria-labelledby="directory-title" hidden>
+      <div class="overlay-backdrop" data-close></div>
+      <div class="overlay-panel">
+        <header class="overlay-head">
+          <h2 class="overlay-title" id="directory-title">目录</h2>
+          <button type="button" class="panel-close" data-close aria-label="关闭目录">×</button>
+        </header>
+        <div class="overlay-grid" id="directory-grid"></div>
       </div>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <noscript>
-      <p class="noscript">这个页面需要 JavaScript 才能展开收藏夹和滚动字幕。</p>
+      <p class="noscript">这个页面需要 JavaScript 才能翻页和打开柜子。</p>
     </noscript>
 
     <script src="./assets/js/data.js"></script>

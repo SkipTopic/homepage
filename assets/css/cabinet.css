@@ -1,0 +1,296 @@
+/* ============ 右侧固定柜柱（最上层，永不随页滚动） ============ */
+
+.cabinet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--cabinet-w);
+  z-index: 50;
+  animation: settle-down 0.7s var(--ease) 0.15s both;
+}
+
+/* 木柱本体：与门同族的棕色 */
+.cabinet-col {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-left: 2px solid var(--line);
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 40%),
+    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.06) 0 1px, transparent 1px 11px),
+    linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 40%, var(--cabinet-deep));
+  box-shadow: inset -2px 0 5px rgba(46, 22, 10, 0.3);
+}
+
+.cabinet-col::before {
+  content: "SKIP TOPIC";
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.34em;
+  color: rgba(255, 240, 214, 0.65);
+  text-transform: uppercase;
+}
+
+/* ---- 抽屉：五层（按草图两只小抽屉 + 三只大抽屉） ---- */
+
+.drawer {
+  position: absolute;
+  right: 0;
+  height: var(--drawer-h);
+  width: calc(var(--cabinet-w) + var(--drawer-w));
+}
+
+.drawer.d-small {
+  height: 46px;
+}
+
+.drawer:nth-of-type(1) { top: 6%; }
+.drawer:nth-of-type(2) { top: calc(6% + 62px); }
+.drawer:nth-of-type(3) { top: 32%; }
+.drawer:nth-of-type(4) { top: 52%; }
+.drawer:nth-of-type(5) { top: 72%; }
+
+/* 抽屉脸：贴在柱子上的木牌（z 高于滑出的抽屉盒） */
+.drawer-face {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--cabinet-w);
+  z-index: 3;
+  border: 0;
+  padding: 0;
+  border-left: 2px solid var(--line);
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 46%),
+    linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 46%, var(--cabinet-deep));
+  box-shadow: inset 0 2px 3px rgba(255, 240, 214, 0.2), inset 0 -3px 6px rgba(46, 22, 10, 0.3);
+}
+
+.drawer-plate {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: block;
+  width: calc(100% - 12px);
+  padding: 3px 0;
+  border: 1px solid rgba(46, 26, 12, 0.55);
+  background: var(--gray-100);
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.d-small .drawer-plate {
+  font-size: 10px;
+}
+
+.drawer-face:hover .drawer-plate,
+.drawer-face:focus-visible .drawer-plate {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.drawer-face[aria-expanded="true"] .drawer-plate {
+  background: var(--file-900);
+  color: var(--paper);
+}
+
+.drawer-pull {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 7px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(46, 22, 10, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 240, 214, 0.3);
+}
+
+/* 裁剪层：抽屉盒只在「柱左缘 → 页内」这段空间里滑动，绝不产生框外溢出 */
+.drawer-clip {
+  position: absolute;
+  right: var(--cabinet-w);
+  top: 0;
+  bottom: 0;
+  width: var(--drawer-w);
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.drawer.is-open .drawer-clip {
+  pointer-events: auto;
+}
+
+/* 抽屉盒：藏在裁剪层右侧（被柱子挡住），拉出时向左滑 */
+.drawer-box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 8px 14px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.05) 0 1px, transparent 1px 14px),
+    linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 55%, var(--cabinet-deep));
+  box-shadow:
+    inset 0 3px 6px rgba(46, 22, 10, 0.35),
+    inset 0 -3px 6px rgba(46, 22, 10, 0.35),
+    var(--shadow-3);
+  transform: translateX(100%);
+  transition: transform var(--dur-move) var(--ease-snap);
+  pointer-events: none;
+}
+
+.drawer.is-open .drawer-box {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ---- 书脊（蓝，竖排书名） ---- */
+
+.book {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 68px;
+  border: 1.5px solid var(--line);
+  border-radius: 2px 2px 0 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, var(--book-500), var(--book-900));
+  color: var(--book-100);
+  writing-mode: vertical-rl;
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  padding: 6px 0;
+  text-align: left;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.drawer .book:nth-child(odd) {
+  height: 60px;
+}
+
+.drawer .book:nth-child(3n) {
+  height: 72px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, var(--book-500), var(--book-900));
+}
+
+.book:hover,
+.book:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+
+/* ---- 档案袋（朱砂描线，牛皮纸底） ---- */
+
+.file {
+  position: relative;
+  flex: 0 0 auto;
+  width: 78px;
+  height: 54px;
+  border: 2px solid var(--file-500);
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 42%),
+    var(--file-100);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.file::before {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  width: 18px;
+  height: 14px;
+  border: 2px solid var(--file-500);
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0 0 3px 0;
+  background: var(--file-100);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 26% 100%, 0 42%);
+}
+
+.file-title {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 5px;
+  display: block;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--file-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.file:hover,
+.file:focus-visible {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: var(--shadow-2);
+}
+
+/* ---- 索引卡（小抽屉） ---- */
+
+.index-card {
+  flex: 0 0 auto;
+  width: 116px;
+  height: 42px;
+  border: 1.5px solid var(--line);
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 9px, rgba(20, 19, 18, 0.16) 9px 10px),
+    var(--gray-100);
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  text-align: center;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.index-card:hover,
+.index-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+
+.drawer-box .drawer-box-note {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 240, 214, 0.55);
+  align-self: flex-end;
+  padding-bottom: 2px;
+}
