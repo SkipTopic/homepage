@@ -16,9 +16,13 @@
   var bookmarksEl = document.getElementById("bookmarks");
   var panelsEl = document.getElementById("bookmark-panels");
   var quoteLayer = document.getElementById("quote-layer");
+  var heroEl = document.getElementById("hero");
+  var doorEl = document.querySelector(".door");
+  var toggleBtn = document.getElementById("quote-toggle");
   var toastEl = document.getElementById("toast");
   var openPanelId = null;
   var toastTimer = null;
+  var pulseTimer = null;
   var panelState = {};
 
   function el(tag, className, text) {
@@ -49,16 +53,31 @@
     }, 2400);
   }
 
+  /* ---- 收藏夹面板：0fr → 1fr 的高度过渡 ---- */
+
   function setPanelOpen(id, shouldOpen) {
     var state = panelState[id];
     if (!state) return;
-    state.panel.hidden = !shouldOpen;
+    state.open = shouldOpen;
     state.button.setAttribute("aria-expanded", String(shouldOpen));
+
     if (shouldOpen) {
+      state.slot.hidden = false;
+      // 等元素从 display:none 变为可渲染后，再开启过渡
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          state.slot.classList.add("is-open");
+        });
+      });
       openPanelId = id;
-    } else if (openPanelId === id) {
-      openPanelId = null;
+      return;
     }
+
+    state.slot.classList.remove("is-open");
+    window.setTimeout(function () {
+      if (!state.open) state.slot.hidden = true;
+    }, 360);
+    if (openPanelId === id) openPanelId = null;
   }
 
   function closeAllPanels() {
@@ -115,7 +134,6 @@
   function buildPanel(group, button) {
     var panel = el("section", "bookmark-panel");
     panel.id = "panel-" + group.id;
-    panel.hidden = true;
     panel.setAttribute("aria-labelledby", button.id);
 
     var head = el("div", "panel-head");
@@ -137,7 +155,11 @@
     });
     panel.appendChild(grid);
 
-    return panel;
+    // 外面再包一层 slot，负责 0fr → 1fr 的展开动画
+    var slot = el("div", "panel-slot");
+    slot.hidden = true;
+    slot.appendChild(panel);
+    return slot;
   }
 
   function renderBookmarks() {
@@ -164,16 +186,19 @@
 
       bookmarksEl.appendChild(button);
 
-      var panel = buildPanel(group, button);
-      panelsEl.appendChild(panel);
-      panelState[group.id] = { button: button, panel: panel };
+      var slot = buildPanel(group, button);
+      panelsEl.appendChild(slot);
+      panelState[group.id] = { button: button, slot: slot, open: false };
     });
   }
+
+  /* ---- 门后的名言：两列、随机、少数条目放大 ---- */
 
   function buildQuoteGroup(items) {
     var group = el("div", "quote-group");
     items.forEach(function (quote) {
-      var figure = el("figure", "quote-item");
+      var major = Math.random() < 0.25 ? " is-major" : "";
+      var figure = el("figure", "quote-item" + major);
       var text = el("blockquote", null, quote.text || "");
       figure.appendChild(text);
       if (quote.author) {
@@ -214,6 +239,30 @@
     }
   }
 
+  /* ---- 门的反应：有光、有纱、锁孔透亮，但门永远不开 ---- */
+
+  function pulseDoor() {
+    if (!heroEl) return;
+    heroEl.classList.add("is-pulse");
+    window.clearTimeout(pulseTimer);
+    pulseTimer = window.setTimeout(function () {
+      heroEl.classList.remove("is-pulse");
+    }, 1700);
+  }
+
+  /* ---- 字幕开关：无限滚动超过 5 秒必须有暂停控制 ---- */
+
+  var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function syncToggle() {
+    if (!toggleBtn || !quoteLayer) return;
+    var paused = quoteLayer.classList.contains("is-paused");
+    toggleBtn.setAttribute("aria-pressed", String(paused));
+    toggleBtn.setAttribute("aria-label", paused ? "播放名言滚动" : "暂停名言滚动");
+    var icon = toggleBtn.querySelector(".footer-toggle-icon");
+    if (icon) icon.textContent = paused ? "▶" : "❚❚";
+  }
+
   function setupNav() {
     Array.prototype.forEach.call(document.querySelectorAll(".nav-link"), function (button) {
       button.addEventListener("click", function () {
@@ -240,6 +289,28 @@
     setupNav();
     setupKeyboard();
     setYear();
+
+    if (doorEl) doorEl.addEventListener("click", pulseDoor);
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        if (!quoteLayer) return;
+        quoteLayer.classList.toggle("is-paused");
+        syncToggle();
+      });
+      syncToggle();
+      if (motionQuery.matches) toggleBtn.hidden = true;
+      // 系统中途开启减少动效时也要跟上
+      if (typeof motionQuery.addEventListener === "function") {
+        motionQuery.addEventListener("change", function (event) {
+          toggleBtn.hidden = event.matches;
+          if (event.matches && quoteLayer) {
+            quoteLayer.classList.remove("is-paused");
+            syncToggle();
+          }
+        });
+      }
+    }
   }
 
   if (document.readyState === "loading") {

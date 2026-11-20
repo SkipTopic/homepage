@@ -47,7 +47,7 @@
   border: 0;
   background: none;
   color: var(--ink);
-  font-size: 13px;
+  font-size: var(--fs-md);
   letter-spacing: 0.08em;
   opacity: 0.82;
 }
@@ -97,12 +97,17 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 
 .bookmark:hover {
   background: rgba(255, 255, 255, 0.55);
   color: var(--ink);
+}
+
+.bookmark:active {
+  transform: translateY(1px);
 }
 
 .bookmark[aria-expanded="true"] {
@@ -153,31 +158,35 @@
   color: var(--paper);
 }
 
+/* ---- 展开面板：高度与透明度一起过渡（0fr → 1fr） ---- */
+
 .bookmark-panels {
   position: relative;
   z-index: 4;
   background: rgba(251, 247, 238, 0.94);
 }
 
-.bookmark-panel {
-  padding: clamp(14px, 2vw, 22px) var(--topbar-pad-x) clamp(16px, 2.4vw, 26px);
-  border-bottom: 2px solid var(--line);
-  animation: panel-in 0.22s var(--ease);
+.panel-slot {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--dur-panel) var(--ease), opacity var(--dur-panel) var(--ease);
 }
 
-.bookmark-panel[hidden] {
+.panel-slot.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.panel-slot[hidden] {
   display: none;
 }
 
-@keyframes panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.bookmark-panel {
+  overflow: hidden;
+  min-height: 0;
+  padding: clamp(14px, 2vw, 22px) var(--topbar-pad-x) clamp(16px, 2.4vw, 26px);
+  border-bottom: 2px solid var(--line);
 }
 
 .panel-head {
@@ -202,27 +211,30 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .panel-note {
   margin: 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--fs-sm);
   line-height: 1.4;
 }
 
 .panel-close {
   flex: 0 0 auto;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border: 1px solid transparent;
   border-radius: var(--radius);
   background: none;
   color: var(--muted);
   font-size: 16px;
   line-height: 1;
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
 
-.panel-close:hover {
+.panel-close:hover,
+.panel-close:focus-visible {
   border-color: var(--line);
   color: var(--ink);
 }
@@ -233,14 +245,38 @@
   column-gap: clamp(18px, 3vw, 42px);
 }
 
+/* ---- 条目：hover/focus 时标题下划线 + 左侧冒出一粒墨点 ---- */
+
 .bookmark-item {
+  position: relative;
   display: block;
   padding: 9px 0 10px;
   border-top: 1px solid rgba(20, 19, 18, 0.16);
   text-decoration: none;
 }
 
-.bookmark-item:hover .bookmark-title {
+.bookmark-item::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 14px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--ink);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.bookmark-item:hover::before,
+.bookmark-item:focus-visible::before {
+  opacity: 0.85;
+  transform: none;
+}
+
+.bookmark-item:hover .bookmark-title,
+.bookmark-item:focus-visible .bookmark-title {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -254,7 +290,7 @@
 
 .bookmark-title {
   color: var(--ink);
-  font-size: 13px;
+  font-size: var(--fs-md);
   font-weight: 600;
 }
 
@@ -268,6 +304,7 @@
 .bookmark-note {
   margin: 4px 0 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--fs-sm);
   line-height: 1.5;
+  text-wrap: pretty;
 }

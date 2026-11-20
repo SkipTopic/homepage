@@ -1,5 +1,6 @@
 .hero {
   position: relative;
+  z-index: 2;
   isolation: isolate;
   flex: 1;
   display: grid;
@@ -10,7 +11,7 @@
   background: transparent;
 }
 
-/* ---- 门后面的滚动名言 ---- */
+/* ---- 门后面的滚动名言：两列、上下交替、字号有节奏 ---- */
 
 .quote-layer {
   position: absolute;
@@ -18,8 +19,15 @@
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.6s var(--ease);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
+  animation: fade-soft 0.9s ease 0.45s both;
+}
+
+.hero.is-pulse .quote-layer {
+  opacity: 1;
 }
 
 .quote-col {
@@ -45,6 +53,10 @@
   will-change: transform;
 }
 
+.quote-layer.is-paused .quote-track {
+  animation-play-state: paused;
+}
+
 .quote-col.is-down .quote-track {
   animation-name: quote-down;
 }
@@ -58,11 +70,18 @@
 
 .quote-item {
   margin: 0;
-  color: rgba(20, 19, 18, 0.54);
+  color: var(--quote);
   font-family: var(--font-quote);
-  font-size: clamp(12px, 1.15vw, 16px);
+  font-size: var(--fs-md);
   font-weight: 500;
   line-height: 1.5;
+}
+
+/* 少数条目放大放淡，让纵列有期刊排版的呼吸 */
+.quote-item.is-major {
+  font-size: var(--fs-xl);
+  color: var(--quote-soft);
+  line-height: 1.42;
 }
 
 .quote-item blockquote {
@@ -74,7 +93,7 @@
   margin-top: 5px;
   color: var(--quote-author);
   font-family: var(--font-ui);
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -101,7 +120,7 @@
   }
 }
 
-/* ---- 门与门上的字 ---- */
+/* ---- 门后的暖光：不再用 blur，靠渐变本身变软 ---- */
 
 .door-glow {
   position: absolute;
@@ -111,27 +130,75 @@
   width: min(56vw, 720px);
   height: min(70vh, 640px);
   pointer-events: none;
+  opacity: 0.8;
   background: radial-gradient(
     ellipse at center,
-    rgba(var(--glow-rgb), 0.3),
-    rgba(var(--warm-rgb), 0.12) 38%,
+    rgba(var(--glow-rgb), 0.34),
+    rgba(var(--warm-rgb), 0.14) 40%,
     transparent 72%
   );
-  filter: blur(22px);
+  transform: translate(-50%, -50%) scale(1);
+  animation: glow-in 0.9s ease 0.1s both, glow-breathe 13s ease-in-out 1s infinite alternate;
+}
+
+/* 点门时的一次性光脉冲：单独一层，不打断呼吸 */
+.door-surge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: min(56vw, 720px);
+  height: min(70vh, 640px);
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--light-rgb), 0.4),
+    rgba(var(--glow-rgb), 0.16) 42%,
+    transparent 72%
+  );
   transform: translate(-50%, -50%);
-  animation: glow-breathe 13s ease-in-out infinite alternate;
+}
+
+.hero.is-pulse .door-surge {
+  animation: surge 1.6s var(--ease);
+}
+
+@keyframes glow-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 @keyframes glow-breathe {
   from {
-    opacity: 0.55;
-    transform: translate(-50%, -50%) scale(0.96);
+    opacity: 0.62;
+    transform: translate(-50%, -50%) scale(0.97);
   }
   to {
     opacity: 0.92;
     transform: translate(-50%, -50%) scale(1.04);
   }
 }
+
+@keyframes surge {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---- 门台：门、门上字、光晕都站在这里 ---- */
 
 .door-stage {
   position: relative;
@@ -155,18 +222,21 @@
     rgba(255, 255, 255, 0.62) 50%,
     rgba(255, 255, 255, 0) 70%
   );
+  animation: fade-in 1s ease 0.3s both;
 }
 
 .door-caption {
   margin: 0 0 clamp(12px, 2vh, 22px);
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: clamp(13px, 1.3vw, 17px);
+  font-size: var(--fs-lg);
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0.01em;
   text-align: center;
+  text-wrap: balance;
   opacity: 0.78;
+  animation: fade-soft 0.8s ease 0.55s both;
 }
 
 .door-wrap {
@@ -174,57 +244,198 @@
   display: flex;
   justify-content: center;
   isolation: isolate;
+  animation: door-land 0.7s var(--ease) 0.2s both;
 }
+
+@keyframes door-land {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 门套：门从「贴在纸上的一块色」变成「装在墙洞里的门」 */
+.door-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -13px -11px -11px;
+  z-index: 0;
+  border: 3px solid var(--line);
+  border-radius: 2px;
+  background: linear-gradient(180deg, #fdfaf3, #ece3d1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 2px 0 rgba(20, 19, 18, 0.06);
+}
+
+/* 门底漏出的光落在纸面上 */
+.door-wrap::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: -30px;
+  height: 30px;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(var(--light-rgb), 0.4), rgba(var(--light-rgb), 0) 70%);
+  opacity: 0.6;
+  animation: pool-breathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes pool-breathe {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 0.78;
+  }
+}
+
+/* ---- 门本体：木作 ---- */
 
 .door {
   position: relative;
+  z-index: 1;
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
   width: auto;
   height: var(--door-height);
   aspect-ratio: var(--door-ratio);
+  padding: 0;
   overflow: hidden;
   border: var(--door-border) solid var(--line);
   background:
-    linear-gradient(105deg, rgba(255, 255, 255, 0.1), transparent 32%),
-    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.055) 0 1px, transparent 1px 7px),
+    linear-gradient(100deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 30%),
+    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.05) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(255, 246, 230, 0.03) 0 2px, transparent 2px 23px),
     linear-gradient(115deg, var(--door-light), var(--door) 44%, var(--door-deep));
-  box-shadow: 10px 14px 0 rgba(20, 19, 18, 0.07), 0 24px 55px rgba(20, 19, 18, 0.18);
-  cursor: default;
+  box-shadow:
+    8px 11px 0 rgba(20, 19, 18, 0.07),
+    0 24px 55px rgba(20, 19, 18, 0.18),
+    inset -3px 0 6px rgba(46, 22, 10, 0.25),
+    inset 3px 0 6px rgba(255, 240, 214, 0.14),
+    inset 0 -4px 10px rgba(46, 22, 10, 0.28);
+  cursor: pointer;
   user-select: none;
 }
 
+/* 两块凹板 */
 .door-panel {
   position: absolute;
-  inset: 10px;
+  left: 15%;
+  right: 15%;
   z-index: 1;
-  border: 1px solid rgba(20, 19, 18, 0.45);
-  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(20, 19, 18, 0.42);
+  background: rgba(46, 22, 10, 0.06);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 240, 214, 0.16),
+    inset 0 -3px 6px rgba(46, 22, 10, 0.32),
+    inset 2px 0 4px rgba(46, 22, 10, 0.16),
+    inset -2px 0 4px rgba(255, 240, 214, 0.1);
   pointer-events: none;
+}
+
+.door-panel-a {
+  top: 9%;
+  height: 36%;
+}
+
+.door-panel-b {
+  top: 53%;
+  height: 30%;
+}
+
+/* 门底缝漏光 */
+.door-lightline {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 0;
+  z-index: 2;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--light-rgb), 0),
+    rgba(var(--light-rgb), 0.9) 30% 70%,
+    rgba(var(--light-rgb), 0)
+  );
+  opacity: 0.55;
+  animation: light-breathe 7s ease-in-out infinite alternate;
+}
+
+@keyframes light-breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+/* 反应时的暖色薄纱（只动 opacity） */
+.door-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 224, 178, 0.5), rgba(255, 190, 120, 0.28));
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+
+.door:hover .door-veil,
+.door:focus-visible .door-veil {
+  opacity: 0.12;
+}
+
+.hero.is-pulse .door-veil {
+  opacity: 0.22;
 }
 
 .door-handle {
   position: absolute;
   top: 52%;
   right: var(--door-handle-right);
-  z-index: 2;
+  z-index: 4;
   width: 11px;
   height: 11px;
   border: 2px solid #2a1a10;
   border-radius: 50%;
   background: #c8a061;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 2px rgba(42, 26, 16, 0.25);
+  transition: transform 0.3s var(--ease);
+}
+
+.door:hover .door-handle,
+.door:focus-visible .door-handle {
+  transform: translateY(2px);
 }
 
 .door-keyhole {
   position: absolute;
   top: calc(52% + 18px);
   right: calc(var(--door-handle-right) + 3px);
-  z-index: 2;
+  z-index: 4;
   width: 5px;
   height: 9px;
   clip-path: polygon(50% 0, 100% 40%, 72% 100%, 28% 100%, 0 40%);
-  background: #2a1a10;
-  opacity: 0.85;
+  background: linear-gradient(to bottom, #241409 45%, rgba(255, 186, 102, 0.9) 100%);
+  box-shadow: 0 0 5px rgba(255, 180, 90, 0.3);
+  opacity: 0.9;
+  transition: box-shadow 0.5s var(--ease);
 }
+
+.hero.is-pulse .door-keyhole {
+  box-shadow: 0 0 10px rgba(255, 180, 90, 0.65);
+}
+
+/* ---- 门上的字 ---- */
 
 .door-title {
   position: absolute;
@@ -243,6 +454,7 @@
   transform: translate(-50%, -50%);
   white-space: nowrap;
   mix-blend-mode: multiply;
+  animation: fade-in 0.9s ease 0.75s both;
 }
 
 .door-title-he {
@@ -259,6 +471,26 @@
   font-weight: 400;
   letter-spacing: -0.03em;
 }
+
+@keyframes fade-soft {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- 手绘箭头：入场时被画出来 ---- */
 
 .hero-arrow {
   position: absolute;
@@ -277,6 +509,31 @@
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: arrow-draw 0.7s var(--ease) forwards;
+}
+
+.hero-arrow path:nth-child(1) {
+  animation-delay: 0.95s;
+}
+
+.hero-arrow path:nth-child(2) {
+  animation-delay: 1.4s;
+}
+
+.hero-arrow path:nth-child(3) {
+  animation-delay: 1.45s;
+}
+
+.hero-arrow path:nth-child(4) {
+  animation-delay: 1.55s;
+}
+
+@keyframes arrow-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .door-stage:hover .hero-arrow {

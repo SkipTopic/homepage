@@ -5,15 +5,17 @@
   --paper-rgb: 247, 242, 231;
   --paper-soft: #fbf7ee;
   --ink: #141312;
-  --muted: #756c5f;
+  --muted: #6f665a;
   --line: #141312;
   --door: #a9714b;
   --door-deep: #7c4c31;
   --door-light: #bd855b;
   --warm-rgb: 169, 113, 75;
   --glow-rgb: 189, 133, 91;
-  --quote: rgba(20, 19, 18, 0.42);
-  --quote-author: rgba(20, 19, 18, 0.34);
+  --light-rgb: 255, 196, 120;
+  --quote: rgba(20, 19, 18, 0.62);
+  --quote-soft: rgba(20, 19, 18, 0.44);
+  --quote-author: rgba(20, 19, 18, 0.52);
   --accent: #8a5a3a;
 
   /* 字体：全部本地自托管；换字体改这里 + assets/css/fonts.css */
@@ -22,7 +24,14 @@
   --font-display: "Cormorant Garamond", Georgia, "Noto Serif SC", serif;
   --font-title: "Cinzel", "Cormorant Garamond", serif;
 
-  /* 页面外框与间距 */
+  /* 字号阶梯：小字 10 / 辅助 11 / 正文 13 / 强调 15 / 大一点的界面字 17 */
+  --fs-xs: 10px;
+  --fs-sm: 11px;
+  --fs-md: 13px;
+  --fs-lg: 15px;
+  --fs-xl: 17px;
+
+  /* 页面外框与间距（节奏：4 的倍数） */
   --page-pad: clamp(10px, 2vw, 26px);
   --frame-border: 3px;
   --topbar-pad-x: clamp(16px, 2.6vw, 30px);
@@ -39,4 +48,6 @@
 
   --radius: 3px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 0.2s;
+  --dur-panel: 0.32s;
 }

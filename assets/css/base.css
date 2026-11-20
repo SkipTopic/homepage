@@ -19,6 +19,8 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -69,6 +71,8 @@ svg {
   box-shadow: 0 24px 70px rgba(20, 19, 18, 0.1);
 }
 
+/* ---- 背景层：白色/纸色的分散径向渐变 + 同心波纹 ---- */
+
 .backdrop {
   position: absolute;
   inset: 0;
@@ -93,7 +97,19 @@ svg {
       var(--paper) 100%
     );
   transform-origin: 50% 58%;
-  animation: backdrop-drift 30s ease-in-out infinite alternate;
+  opacity: 1;
+  animation:
+    backdrop-in 0.9s ease both,
+    backdrop-drift 30s ease-in-out 0.9s infinite alternate;
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes backdrop-drift {
@@ -105,35 +121,50 @@ svg {
   }
 }
 
+/* ---- 纸的颗粒：静态噪点，一次栅格化，无动画 ---- */
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+/* ---- 入场编排：一次有顺序的展开，其余时间保持安静 ---- */
+
 .topbar,
 .bookmarks,
-.hero,
 .footer {
-  animation: dream-in 0.95s var(--ease) both;
+  animation: settle-down 0.7s var(--ease) both;
+}
+
+.topbar {
+  animation-delay: 0.05s;
 }
 
 .bookmarks {
-  animation-delay: 0.06s;
-}
-
-.hero {
-  animation-delay: 0.1s;
+  animation-delay: 0.12s;
 }
 
 .footer {
-  animation-delay: 0.18s;
+  animation-delay: 0.24s;
 }
 
-@keyframes dream-in {
+@keyframes settle-down {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
+
+/* ---- 页脚：签名版本号 + 字幕开关 ---- */
 
 .footer {
   position: relative;
@@ -146,9 +177,52 @@ svg {
   border-top: 1px solid rgba(20, 19, 18, 0.35);
   background: rgba(247, 242, 231, 0.45);
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.footer-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.footer-version {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid rgba(20, 19, 18, 0.4);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.footer-toggle .footer-toggle-icon {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.footer-toggle:hover,
+.footer-toggle:focus-visible {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.footer-toggle[aria-pressed="true"] .footer-toggle-icon {
+  font-size: 9px;
 }
 
 .toast {
@@ -161,13 +235,13 @@ svg {
   border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
-  font-size: 12px;
+  font-size: var(--fs-sm);
   letter-spacing: 0.04em;
   text-align: center;
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, 12px);
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 
 .toast.is-visible {
@@ -185,5 +259,5 @@ svg {
   padding: 10px 14px;
   background: var(--ink);
   color: var(--paper);
-  font-size: 12px;
+  font-size: var(--fs-sm);
 }
