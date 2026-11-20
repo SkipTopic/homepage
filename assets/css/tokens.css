@@ -1,0 +1,42 @@
+:root {
+  /* 颜色：先改这里，整站的纸色、墨色、门色都会跟着变 */
+  --outside: #e9e2d3;
+  --paper: #f7f2e7;
+  --paper-rgb: 247, 242, 231;
+  --paper-soft: #fbf7ee;
+  --ink: #141312;
+  --muted: #756c5f;
+  --line: #141312;
+  --door: #a9714b;
+  --door-deep: #7c4c31;
+  --door-light: #bd855b;
+  --warm-rgb: 169, 113, 75;
+  --glow-rgb: 189, 133, 91;
+  --quote: rgba(20, 19, 18, 0.42);
+  --quote-author: rgba(20, 19, 18, 0.34);
+  --accent: #8a5a3a;
+
+  /* 字体：全部本地自托管；换字体改这里 + assets/css/fonts.css */
+  --font-ui: "Space Grotesk", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+  --font-quote: "Cormorant Garamond", Georgia, "Noto Serif SC", serif;
+  --font-display: "Cormorant Garamond", Georgia, "Noto Serif SC", serif;
+  --font-title: "Cinzel", "Cormorant Garamond", serif;
+
+  /* 页面外框与间距 */
+  --page-pad: clamp(10px, 2vw, 26px);
+  --frame-border: 3px;
+  --topbar-pad-x: clamp(16px, 2.6vw, 30px);
+  --topbar-pad-y: clamp(10px, 1.6vw, 16px);
+  --bookmarks-pad-x: clamp(10px, 1.8vw, 18px);
+  --bookmarks-pad-y: 7px;
+
+  /* 门：改高度和比例，门会整体缩放 */
+  --door-height: clamp(360px, 54vh, 560px);
+  --door-ratio: 1 / 2.15;
+  --door-border: 3px;
+  --door-handle-right: clamp(10px, 1.5vw, 18px);
+  --door-title-size: clamp(48px, 8.6vw, 126px);
+
+  --radius: 3px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

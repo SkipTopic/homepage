@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>海盗船长暗金</title>
+    <meta name="description" content="一扇门。" />
+    <meta name="theme-color" content="#e7d8c7" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <!-- 静态图：没有硬件加速的机器走这条路，保证一定能打开 -->
+    <div class="poster" id="poster" hidden aria-hidden="true"></div>
+
+    <canvas id="scene"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <p class="mark">海盗船长暗金</p>
+
+    <p class="boot-hint" id="boot-hint" hidden>
+      本地预览请双击 <code>本地预览.bat</code>，不要直接双击 index.html
+    </p>
+
+    <noscript>
+      <p class="fallback">这个房间需要开启 JavaScript 才能看见。</p>
+    </noscript>
+
+    <script>
+      // 兜底：1.2 秒后如果什么都没启动（比如 file:// 把模块拦了），
+      // 直接把静态图亮出来，至少不会是一片空白底色。
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          if (document.documentElement.dataset.scene === 'ready') return;
+          var poster = document.getElementById('poster');
+          if (poster) poster.hidden = false;
+          document.body.classList.add('is-static', 'ready');
+          var hint = document.getElementById('boot-hint');
+          if (hint) hint.hidden = false;
+        }, 1200);
+      });
+    </script>
+
+    <script type="module" src="./assets/js/boot.js"></script>
+  </body>
+</html>

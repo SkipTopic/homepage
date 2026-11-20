@@ -3,42 +3,77 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>海盗船长暗金</title>
-    <meta name="description" content="一扇门。" />
-    <meta name="theme-color" content="#e7d8c7" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>跳过话题 · 个人小站</title>
+    <meta name="description" content="一扇关着的门，和门后面的句子。" />
+    <meta name="theme-color" content="#f7f2e7" />
+    <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/css/fonts.css" />
+    <link rel="stylesheet" href="./assets/css/tokens.css" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/hero.css" />
+    <link rel="stylesheet" href="./assets/css/responsive.css" />
   </head>
   <body>
-    <!-- 静态图：没有硬件加速的机器走这条路，保证一定能打开 -->
-    <div class="poster" id="poster" hidden aria-hidden="true"></div>
+    <div class="page">
+      <div class="frame">
+        <div class="backdrop" aria-hidden="true"></div>
 
-    <canvas id="scene"></canvas>
-    <div class="vignette" aria-hidden="true"></div>
-    <p class="mark">海盗船长暗金</p>
+        <header class="topbar" data-block="topbar">
+          <a class="brand" href="./index.html" aria-label="跳过话题 · 首页">
+            <span class="brand-mark">跳过话题</span>
+            <span class="brand-sub">个人小站</span>
+          </a>
+          <nav class="nav" aria-label="主导航">
+            <button type="button" class="nav-link" data-open="philosophy">探索</button>
+            <button type="button" class="nav-link" data-open="media">喜欢</button>
+            <button type="button" class="nav-link" data-open="visual">乐趣</button>
+            <button type="button" class="nav-link" data-open="about">关于</button>
+          </nav>
+        </header>
 
-    <p class="boot-hint" id="boot-hint" hidden>
-      本地预览请双击 <code>本地预览.bat</code>，不要直接双击 index.html
-    </p>
+        <nav class="bookmarks" id="bookmarks" aria-label="收藏夹" data-block="bookmarks"></nav>
+        <div class="bookmark-panels" id="bookmark-panels"></div>
+
+        <main class="hero" id="hero" data-block="hero">
+          <div class="quote-layer" id="quote-layer" aria-hidden="true"></div>
+          <div class="door-glow" aria-hidden="true"></div>
+
+          <div class="door-stage">
+            <p class="door-caption">but father the sky has blue</p>
+
+            <div class="door-wrap">
+              <div class="door" role="img" aria-label="一扇关着的门">
+                <span class="door-panel" aria-hidden="true"></span>
+                <span class="door-handle" aria-hidden="true"></span>
+                <span class="door-keyhole" aria-hidden="true"></span>
+              </div>
+              <p class="door-title"><span class="door-title-he">HE</span> <span class="door-title-rest">who has</span></p>
+            </div>
+
+            <svg class="hero-arrow" viewBox="0 0 120 56" fill="none" aria-hidden="true">
+              <path d="M3 30c22-9 44-10 70-8 10 1 22 3 36 6" />
+              <path d="M91 13c6 6 12 11 18 15" />
+              <path d="M92 42c6-6 11-11 17-14" />
+              <path d="M14 34c6 2 11 4 16 8" opacity=".5" />
+            </svg>
+          </div>
+        </main>
+
+        <footer class="footer" data-block="footer">
+          <span>跳过话题 · <span id="year">2026</span></span>
+          <span>门后面是句子，句子后面是还在长的东西。</span>
+        </footer>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <noscript>
-      <p class="fallback">这个房间需要开启 JavaScript 才能看见。</p>
+      <p class="noscript">这个页面需要 JavaScript 才能展开收藏夹和滚动字幕。</p>
     </noscript>
 
-    <script>
-      // 兜底：1.2 秒后如果什么都没启动（比如 file:// 把模块拦了），
-      // 直接把静态图亮出来，至少不会是一片空白底色。
-      window.addEventListener('load', function () {
-        setTimeout(function () {
-          if (document.documentElement.dataset.scene === 'ready') return;
-          var poster = document.getElementById('poster');
-          if (poster) poster.hidden = false;
-          document.body.classList.add('is-static', 'ready');
-          var hint = document.getElementById('boot-hint');
-          if (hint) hint.hidden = false;
-        }, 1200);
-      });
-    </script>
-
-    <script type="module" src="./assets/js/boot.js"></script>
+    <script src="./assets/js/data.js"></script>
+    <script src="./assets/js/main.js"></script>
   </body>
 </html>
