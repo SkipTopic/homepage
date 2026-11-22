@@ -9,3 +9,6 @@
 *.gltf binary
 *.hdr binary
 *.woff2 binary
+
+# 批处理脚本：保留原始编码与 CRLF 换行，否则从仓库恢复后无法运行
+*.bat -text

@@ -21,3 +21,15 @@ dist/
 
 # ZCode的工作区域：AI 的本地办公区（研究笔记、设计稿、草稿），永不进仓库（站主决定，2026-11-20）
 ZCode的工作区域/
+
+# 独立备份仓库的元数据目录（不进入主仓库）
+.git-backup/
+
+# WorkBuddy 的会话与记忆目录（不进任何公开仓库）
+.workbuddy/
+
+# 备份仓库的说明文件（只进备份，不进 homepage）
+README.md
+
+# Playwright 浏览器截图缓存（工具临时文件，不进任何仓库）
+.playwright-mcp/
