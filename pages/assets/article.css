@@ -258,6 +258,8 @@ body {
 
 .art-back {
   appearance: none;
+  display: inline-block;
+  text-decoration: none;
   border: 2px solid var(--ink);
   background: transparent;
   padding: 8px 14px;

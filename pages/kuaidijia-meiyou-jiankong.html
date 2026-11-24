@@ -6,7 +6,7 @@
 <title>宿舍楼下那个没有监控的快递架 · 跳过话题</title>
 <meta name="description" content="方便省了十分钟，风险留给了一个没有监控的架子。" />
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="./assets/article.css" />
+<link rel="stylesheet" href="./assets/article.css?v=20261125back" />
 </head>
 <body>
 <main class="art">
@@ -33,7 +33,7 @@
   </article>
 
   <footer class="art-foot">
-    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <a class="art-back" href="../book/index.html" onclick="if (document.referrer.indexOf('/book/') > -1 && history.length > 1) { history.back(); return false; }">← 返回</a>
     <span>跳过话题 · 私人小站</span>
   </footer>
 </main>

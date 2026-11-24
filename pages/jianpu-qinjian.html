@@ -6,7 +6,7 @@
 <title>简谱琴键 · 跳过话题</title>
 <meta name="description" content="21 个键放不下，先决定谁可以被牺牲。" />
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="./assets/article.css" />
+<link rel="stylesheet" href="./assets/article.css?v=20261125back" />
 </head>
 <body>
 <main class="art">
@@ -33,7 +33,7 @@
   </article>
 
   <footer class="art-foot">
-    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <a class="art-back" href="../book/index.html" onclick="if (document.referrer.indexOf('/book/') > -1 && history.length > 1) { history.back(); return false; }">← 返回</a>
     <span>跳过话题 · 私人小站</span>
   </footer>
 </main>

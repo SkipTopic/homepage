@@ -6,7 +6,7 @@
 <title>教资赋分制 · 跳过话题</title>
 <meta name="description" content="分数不是你的，是你在队伍里的位置。" />
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="./assets/article.css" />
+<link rel="stylesheet" href="./assets/article.css?v=20261125back" />
 </head>
 <body>
 <main class="art">
@@ -32,7 +32,7 @@
   </article>
 
   <footer class="art-foot">
-    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <a class="art-back" href="../book/index.html" onclick="if (document.referrer.indexOf('/book/') > -1 && history.length > 1) { history.back(); return false; }">← 返回</a>
     <span>跳过话题 · 私人小站</span>
   </footer>
 </main>
