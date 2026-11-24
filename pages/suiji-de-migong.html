@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>随机的迷宫 · 跳过话题</title>
+<meta name="description" content="随机不是把玩家扔进去，是每次都给他一条能讲出来的路。" />
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/article.css" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">游戏 · GAMES</p>
+    <h1 class="art-title" data-text="随机的迷宫">随机的迷宫</h1>
+    <p class="art-sub">随机不是把玩家扔进去，是每次都给他一条能讲出来的路。</p>
+    <p class="art-meta"><span>2025-07-18</span><span>项目</span><span>开发记录</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+    <div class="art-note">这是 2025 年夏天那个 Unity 迷宫游戏。写这篇的时候，我还能想起来按 K 那一下的声音。</div>
+
+    <p class="lead">我想做一款像《巫术》《世界树迷宫》的迷宫游戏：一格走廊，随机生成，大小可调，有入口和出口。</p>
+    <p>第一版用递归回溯。生成没问题，玩起来却像被扔进一团噪声：每条走廊都长得一样，转两个弯就不知道自己在哪。</p>
+    <p>随机不等于有趣。没有地标的迷宫，玩家记不住路，只能贴墙走。贴墙走能出去，但不好玩。</p>
+    <p>我加了几个东西。死胡同按概率放宝箱，让人愿意偏离主路。入口到出口生成三条不重复的路，条条大路通罗马。迷路的时候按 K，地上浮出一条到出口的标记。</p>
+    <p>按 K 这个功能，一开始我觉得是作弊。后来想通了：迷宫难的不是走，是绝望。给一条随时能看见的路，玩家才敢往深处走。</p>
+    <p>还有一块石头。面对它的时候，它会把自己的对话 JSON 投给我，我把它装进对话系统。设定里玩家是显示器，石头是 U 盘。</p>
+    <p>怪物在出入口之间往返巡逻。宝箱、路径、巡逻、对话，一层层加上去，迷宫才从一个算法变成一个有东西的地方。</p>
+    <p>我到现在也没做完。但那套生成器还在，改一改就能再用。</p>
+    <p>随机不是把玩家扔进去，是每次都给他一条能讲出来的路。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>

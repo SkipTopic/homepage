@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>一条走廊的两种读法 · 跳过话题</title>
+<meta name="description" content="游戏设计 / 关卡 / 心理恐怖" />
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/article.css?v=20261125title" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">游戏设计 · GAME DESIGN</p>
+    <h1 class="art-title" data-text="一条走廊的两种读法">一条走廊的两种读法</h1>
+    <p class="art-sub">把"观察"变成"承担"</p>
+    <p class="art-meta"><span>2024-07-25</span><span>游戏设计</span><span>游戏设计 / 关卡 / 心理恐怖</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+      <p>《8号出口》这一类游戏，规则简单到一句话：</p>
+      <p>走廊里有没有异常。有，就回头。没有，就往前走。</p>
+      <p>我试着拆过它的结构，发现它能成立，靠的不是美术，不是音效，是<strong>判定</strong>。</p>
+      <h2>空间</h2>
+      <p>走廊长六十个单位，宽二十。</p>
+      <p>出口和入口不在一条直线上——下一个走廊要往上一个走廊的中心点偏移，往左四十，往前二十。</p>
+      <p>这个错位很关键。它让玩家没法靠"记住路线"通过，只能靠"看"。</p>
+      <h2>异常</h2>
+      <p>一条走廊里埋八个位置（开发时用红框标出）。</p>
+      <p>每个位置对应一组预制体。比如"门"这个位置，可以是正常的门、破裂的门、红色的门，三选一。</p>
+      <p>规则是死的：<strong>一条走廊里最多只能有一个异常。</strong></p>
+      <p>这条规则看起来是限制，其实是整个游戏的骨架。因为玩家一旦发现"最多一个"，他就会开始做排除法——他会主动去找那个唯一的错处，而不是被动地害怕。</p>
+      <p>恐惧变成了任务。</p>
+      <h2>计分</h2>
+      <p>走到尽头，系统检查刚才那条走廊：有异常，分不变；没异常，加一分。</p>
+      <p>入口也有一个检查区。如果玩家走出去了又回头，系统同样判定：有异常，加一分；没异常，分不变。</p>
+      <p>这两条加起来，构成一个很漂亮的机制：</p>
+      <p><strong>你必须判断，而判断错了会被记下来。</strong></p>
+      <p>往前走代表"我认为没有异常"。回头代表"我认为有异常"。</p>
+      <p>玩家每一次移动，都是一次下注。</p>
+      <h2>为什么这个设计好</h2>
+      <p>因为它把"观察"变成了"承担"。</p>
+      <p>大部分恐怖游戏里，玩家是被吓的那一方。这里不是。这里玩家要做决定，而且要做几十次，每次都可能错。</p>
+      <p>错一次不会有惩罚动画，只是分数不动。但玩家自己知道。</p>
+      <p>那种"我刚刚是不是看漏了"的感觉，比任何 jump scare 都持久。</p>
+      <h2>我能拿走的东西</h2>
+      <p>一，规则要少，而且要能被玩家自己总结出来。</p>
+      <p>二，错位比迷宫好用。迷宫考记忆，错位考注意。</p>
+      <p>三，判定要无声。一旦弹出"判定错误"，紧张感就散了。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>

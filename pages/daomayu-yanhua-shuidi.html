@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>代码雨、烟花与水滴 · 跳过话题</title>
+<meta name="description" content="让一滴水碎得好看，是我那半年唯一的工作。" />
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/article.css" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">杂记 · NOTES</p>
+    <h1 class="art-title" data-text="代码雨、烟花与水滴">代码雨、烟花与水滴</h1>
+    <p class="art-sub">让一滴水碎得好看，是我那半年唯一的工作。</p>
+    <p class="art-meta"><span>2025-04-27</span><span>技术</span><span>回顾</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+    <div class="art-note">这篇是 2025 年春天 AS3 特效期的回顾。代码大多跑不起来了，习惯还在。</div>
+
+    <p class="lead">2025 年春天，我有一段时间天天写 AS3 特效。</p>
+    <p>树叶飘落、风车匀速旋转、全屏 45 度暴雨、烟花升空炸开、黑客帝国代码雨、大海波浪、汽车抖动、水滴落下把底座像切蛋糕一样碎成十块。</p>
+    <p>最疯的是水滴那个场景，迭代了 23 轮。先是水滴形状不对，后来是碎片方向不对，再后来是碎片落地的重力不对。</p>
+    <p>最后一版：水滴砸下来，底座先裂一条缝，再顺着缝分成十块，往两边倒。碎片不是同时飞，是一块接一块。</p>
+    <p>还有伪透视。按物体距离舞台顶部的远近分五档速度，越远移得越慢，画面就有了纵深。没有 3D，全靠速度骗眼睛。</p>
+    <p>1080p 下粒子一多就卡。我学会了对象池，学会了不要每帧新建。那时候不懂性能，只知道不能卡。</p>
+    <p>现在这些代码大多跑不起来了，Flash 也没了。但那种“把一个动作拆成几十帧”的习惯留下来了。</p>
+    <p>后来做三渲二、做游戏特效，我发现还是同一件事：先想清楚它为什么动，再让它动。</p>
+    <p>那时候我不懂引擎，只知道让一滴水碎得好看。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>

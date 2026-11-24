@@ -1,0 +1,276 @@
+/* 正文页共用样式（2026-11-23）
+   十套布局共用的文章页；纸、蓝、荧光粉，和站内的 RISO 一致。
+   单栏阅读，中文 18px / 1.95，标题用蓝字 + 粉影。 */
+
+/* 2026-11-24：换掉原来的 196KB 子集字体（缺字会掉回微软雅黑，造成同段两种字形）。
+   改用 LXGW WenKai 完整字符集，按 unicode-range 切成 97 个分包，只下载当前页面用到的几片。 */
+/* 2026-11-25 上站：字体分包不再在 pages/assets 里放第二份，改指站点根的那套
+   （/pages/assets/article.css → ../../assets/fonts/lxgw/） */
+@import url("../../assets/fonts/lxgw/lxgwwenkai-regular.css");
+
+:root {
+  --paper: #faf7f0;
+  --ink: #14110f;
+  --blue: #0078bf;
+  --pink: #ff48b0;
+  --muted: #6e6657;
+  --rule: rgba(20, 17, 15, 0.16);
+  --cn: "LXGW WenKai", "KaiTi", "STKaiti", "Noto Serif SC", serif;
+  --mono: "Space Mono", "Consolas", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background:
+    radial-gradient(circle, rgba(0, 120, 191, 0.055) 1.2px, transparent 1.5px) 0 0 / 13px 13px,
+    radial-gradient(circle, rgba(255, 72, 176, 0.045) 1.1px, transparent 1.4px) 6px 7px / 15px 15px,
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--cn);
+  font-size: 18px;
+  line-height: 1.95;
+  letter-spacing: 0.01em;
+}
+
+.art {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 84px) clamp(20px, 5vw, 36px) 96px;
+}
+
+/* ---------- 题头 ---------- */
+
+.art-kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.art-title {
+  position: relative;
+  z-index: 0;
+  margin: 30px 0 0;
+  font-size: clamp(34px, 5.4vw, 56px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+}
+
+.art-title::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0.05em;
+  top: 0.045em;
+  width: 100%;
+  z-index: -1;
+  color: var(--pink);
+  /* 2026-11-25：原来这里是 nowrap，标题一长就整串不断行、从右边溢出去，
+     长标题（如《一个广告人的自白》：广告是为了卖货）右边会多出一截粉色字。
+     改成跟正文同宽、同样换行，粉影只负责错位，不再漏字。 */
+  white-space: normal;
+  pointer-events: none;
+}
+
+.art-sub {
+  margin-top: 14px;
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.art-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.art-meta span::before { content: "· "; color: var(--pink); }
+
+.art-head-rule {
+  margin: 28px 0 0;
+  height: 6px;
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+/* ---------- 正文 ---------- */
+
+.art-body { margin-top: 42px; }
+
+.art-body p { margin: 0 0 1.15em; }
+
+.art-body p.lead { font-size: 20px; }
+
+.art-body h2 {
+  margin: 2.4em 0 0.9em;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.art-body h2::before {
+  content: "";
+  display: block;
+  width: 46px;
+  height: 4px;
+  margin-bottom: 14px;
+  background: var(--blue);
+}
+
+.art-body h2 + p { margin-top: 0; }
+
+.art-body h3 {
+  margin: 1.9em 0 0.7em;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.art-body hr {
+  margin: 2.2em 0;
+  border: 0;
+  border-top: 1px solid rgba(20, 17, 15, 0.22);
+}
+
+.art-body ul {
+  margin: 0 0 1.15em;
+  padding-left: 1.15em;
+  list-style: disc;
+}
+
+.art-body li { margin: 0 0 0.45em; }
+
+.art-body strong { font-weight: 700; }
+
+.art-body em { font-style: italic; }
+
+/* 博客目录页：分类标题后的篇数、条目右侧的日期 */
+.art-body .blog-meta {
+  margin-left: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.art-body ul.blog-index { list-style: none; padding-left: 0; }
+.art-body ul.blog-index li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.12);
+}
+.art-body ul.blog-index li a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.art-body ul.blog-index li a:hover { border-bottom-color: currentColor; }
+.art-body ul.blog-index .blog-meta { flex: none; }
+
+.art-quote {
+  margin: 1.5em 0;
+  padding: 4px 0 4px 20px;
+  border-left: 4px solid var(--pink);
+  color: #3d352c;
+  font-size: 17px;
+}
+
+.art-quote p { margin-bottom: 0.7em; }
+.art-quote p:last-child { margin-bottom: 0; }
+
+/* 编者按 / 说明盒 */
+.art-note {
+  margin: 2em 0;
+  padding: 18px 20px;
+  border: 2px solid var(--ink);
+  background: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.art-note::before {
+  content: "NOTE";
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--pink);
+}
+
+/* 色卡 */
+.art-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 10px;
+  margin: 1.4em 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.art-swatches div {
+  border: 1px solid var(--rule);
+  padding: 8px;
+}
+.art-swatches i {
+  display: block;
+  height: 34px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(20, 17, 15, 0.12);
+}
+.art-swatches b { display: block; font-family: var(--cn); font-size: 13px; font-weight: 400; }
+
+/* 条目清单 */
+.art-list { margin: 1.2em 0 1.6em; padding: 0; }
+.art-list li {
+  list-style: none;
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--rule);
+}
+.art-list li b { font-weight: 700; }
+.art-list li span { color: var(--muted); font-size: 16px; }
+
+/* ---------- 页脚 ---------- */
+
+.art-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 3px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.art-back {
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: transparent;
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  cursor: pointer;
+}
+.art-back:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .art-body p.lead { font-size: 18px; }
+  .art-meta { font-size: 11px; }
+}

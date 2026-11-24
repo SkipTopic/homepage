@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>塔科夫式背包 · 跳过话题</title>
+<meta name="description" content="手机上没有鼠标，只有一根会挡住视线的指头。" />
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/article.css" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">游戏 · GAMES</p>
+    <h1 class="art-title" data-text="塔科夫式背包">塔科夫式背包</h1>
+    <p class="art-sub">手机上没有鼠标，只有一根会挡住视线的指头。</p>
+    <p class="art-meta"><span>2025-09-26</span><span>项目</span><span>开发记录</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+    <div class="art-note">这篇写的是把 PC 的网格背包搬到手机上。那个只咬多格旋转物品的 bug，我记了很久。</div>
+
+    <p class="lead">我在做一个类塔科夫的手游，背包是网格的：物品占格、能拖、能旋转，1x2 遇到 2x1 的空位会自动转过来。</p>
+    <p>PC 上用鼠标很顺，搬到手机上全废了。手指按住物品，物品被手指挡住，你不知道下面那格有没有东西。</p>
+    <p>后来改成“按住浮空、松手放置”：按住时物品浮到指尖上方，跟着走；松手才落下。视线让出来了，操作也慢了半拍，刚好够你想清楚。</p>
+    <p>箱子到背包的转移、开箱时逐件揭示物品的协程、点击面板外关闭，都是一点点磨出来的。</p>
+    <p>最邪门的是一个 bug：只有旋转过的多格武器，经过箱子、旋转区、背包之后会消失。1x1 的物品怎么转都没事。</p>
+    <p>我为了这个 bug 排查了很久。最后发现是旋转后的索引和格子占用对不上，物品被记在了另一个坐标上。</p>
+    <p>修完那天我没有很开心，只觉得手机端的交互真难。屏幕小，手指粗，能用的手势就那么几个。</p>
+    <p>手机上没有鼠标，只有一根会挡住视线的指头。所有的交互设计，都是在跟这根指头商量。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>

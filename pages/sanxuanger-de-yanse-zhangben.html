@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>三渲二的颜色账本 · 跳过话题</title>
+<meta name="description" content="二次元不是滤镜，是一本颜色账。" />
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/article.css" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">杂记 · NOTES</p>
+    <h1 class="art-title" data-text="三渲二的颜色账本">三渲二的颜色账本</h1>
+    <p class="art-sub">二次元不是滤镜，是一本颜色账。</p>
+    <p class="art-meta"><span>2026-08-15</span><span>技术</span><span>学习笔记</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+    <div class="art-note">这篇是踩坑记录。把 AgX 改成 Standard 那天，人物终于不像蜡像了。</div>
+
+    <p class="lead">做三渲二，第一步不是画风，是颜色空间。</p>
+    <p>Unity 里选 Gamma 还是 Linear，会直接改变画面的明暗和饱和度；Blender 里把 AgX 改成 Standard，颜色才不会一进引擎就发灰。</p>
+    <p>我试过用电影感的色调映射，结果二次元的皮肤全部变成蜡。后来明白，三渲二要的是可预测的颜色，不是胶片的宽容度。</p>
+    <p>还有描边、法线、Rim Light、阴影的分阶。每一个参数都在回答同一个问题：这个角色看起来像不像画出来的。</p>
+    <p>Shader Graph 里那套 NPR 节点，我背了很久。真正记住是在一次调错颜色之后：我把阴影调成蓝紫，人物立刻从白天掉进夜里。</p>
+    <p>三渲二不是把一个 3D 模型贴上卡通材质。它是一整套决定：光从哪来，阴影分几阶，边缘描多粗，高光给不给。</p>
+    <p>我现在调角色，先调阴影，再调高光，最后才碰描边。顺序反了，怎么调都不对。</p>
+    <p>二次元不是滤镜，是一本颜色账。每一笔都要能对上。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>

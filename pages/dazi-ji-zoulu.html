@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>打字即走路 · 跳过话题</title>
+<meta name="description" content="他每打对一句，才往前走一格。" />
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/article.css" />
+</head>
+<body>
+<main class="art">
+  <header>
+    <p class="art-kicker">游戏 · GAMES</p>
+    <h1 class="art-title" data-text="打字即走路">打字即走路</h1>
+    <p class="art-sub">他每打对一句，才往前走一格。</p>
+    <p class="art-meta"><span>2026-08-04</span><span>项目</span><span>开发记录</span></p>
+    <div class="art-head-rule"></div>
+  </header>
+
+  <article class="art-body">
+    <div class="art-note">《心墙》改了五版。这篇按五版顺序写，最后一版才有人物。</div>
+
+    <p class="lead">《心墙》的起点是一个玩法：打字即走路。打对一句英文，往前走一格；打错，原地不动。</p>
+    <p>第一版是英文，类似死亡打字机。第二版换成拼音，因为中文用户不习惯在游戏里打英文。第三版要求真 3D，不要伪 3D。第四版加平滑移动、错三次重置、给迷宫上色。</p>
+    <p>第五版才给它一个故事：一个社恐男生，从黑暗的房间走进有光的地方。前半段迷宫是黑的，越往后越亮。</p>
+    <p>怪物挡路，遇到就有一分钟倒计时。你和它“对话”——还是打字。一分钟打不完，退一格。</p>
+    <p>到这一步，打字不再只是操作，它变成了“面对”。你不敢开口，就打不出那句话；打不出，就走不过去。</p>
+    <p>我后来回看这五版，发现我不是在做玩法，是在给自己找一个能说话的方式。</p>
+    <p>技术上没什么难的：Three.js、随进度变化的灯光、遭遇战、错误重置、步伐镜头弹跳。难的是让它看起来像一个人真的在往外走。</p>
+    <p>最后一版做完前，我把开场那句提示改了很久。原来是“输入正确即可前进”，后来改成“把话说完，门就开了”。</p>
+    <p>他每打对一句，才往前走一格。我也一样。</p>
+  </article>
+
+  <footer class="art-foot">
+    <button class="art-back" type="button" onclick="history.back()">← 返回</button>
+    <span>跳过话题 · 私人小站</span>
+  </footer>
+</main>
+</body>
+</html>
