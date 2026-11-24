@@ -103,6 +103,18 @@ button {
   line-height: 1.08;
 }
 
+/* 2026-11-25：左上「跳过话题」做成回封面的入口，别让它看起来像死字 */
+.book-title .book-home {
+  color: inherit;
+  text-decoration: none;
+}
+.book-title .book-home:hover,
+.book-title .book-home:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
 .book-sub {
   margin: 0 0 clamp(16px, 3vh, 30px);
   color: var(--muted);
