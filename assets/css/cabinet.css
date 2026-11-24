@@ -10,17 +10,17 @@
   animation: settle-down 0.7s var(--ease) 0.15s both;
 }
 
-/* 木柱本体：与门同族的棕色 */
+/* 蓝墨柱本体：与门同版油墨，网点压感 */
 .cabinet-col {
   position: absolute;
   inset: 0;
   z-index: 2;
   border-left: 2px solid var(--line);
   background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.07) 1.2px, transparent 1.5px) 0 0 / 10px 10px,
     linear-gradient(100deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 40%),
-    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.06) 0 1px, transparent 1px 11px),
     linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 40%, var(--cabinet-deep));
-  box-shadow: inset -2px 0 5px rgba(46, 22, 10, 0.3);
+  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .cabinet-col::before {
@@ -33,7 +33,7 @@
   font-family: var(--mono);
   font-size: 8.5px;
   letter-spacing: 0.34em;
-  color: rgba(255, 240, 214, 0.65);
+  color: rgba(253, 251, 246, 0.7);
   text-transform: uppercase;
 }
 
@@ -69,8 +69,9 @@
   border-left: 2px solid var(--line);
   background:
     linear-gradient(100deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 46%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1.1px, transparent 1.4px) 0 0 / 10px 10px,
     linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 46%, var(--cabinet-deep));
-  box-shadow: inset 0 2px 3px rgba(255, 240, 214, 0.2), inset 0 -3px 6px rgba(46, 22, 10, 0.3);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.18), inset 0 -3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .drawer-plate {
@@ -81,7 +82,7 @@
   display: block;
   width: calc(100% - 12px);
   padding: 3px 0;
-  border: 1px solid rgba(46, 26, 12, 0.55);
+  border: 1px solid rgba(20, 17, 15, 0.55);
   background: var(--gray-100);
   font-family: var(--font-cn-display);
   font-size: var(--fs-sm);
@@ -101,7 +102,7 @@
 
 .drawer-face:hover .drawer-plate,
 .drawer-face:focus-visible .drawer-plate {
-  background: var(--ink);
+  background: var(--ink1);
   color: var(--paper);
 }
 
@@ -116,9 +117,9 @@
   right: 6px;
   bottom: 7px;
   height: 3px;
-  border-radius: 2px;
-  background: rgba(46, 22, 10, 0.5);
-  box-shadow: 0 1px 0 rgba(255, 240, 214, 0.3);
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* 裁剪层：抽屉盒只在「柱左缘 → 页内」这段空间里滑动，绝不产生框外溢出 */
@@ -151,11 +152,11 @@
   overflow: hidden;
   border: 2px solid var(--line);
   background:
-    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.05) 0 1px, transparent 1px 14px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1.1px, transparent 1.4px) 0 0 / 10px 10px,
     linear-gradient(180deg, var(--cabinet-light), var(--cabinet) 55%, var(--cabinet-deep));
   box-shadow:
-    inset 0 3px 6px rgba(46, 22, 10, 0.35),
-    inset 0 -3px 6px rgba(46, 22, 10, 0.35),
+    inset 0 3px 6px rgba(0, 0, 0, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
     var(--shadow-3);
   transform: translateX(100%);
   transition: transform var(--dur-move) var(--ease-snap);
@@ -174,7 +175,7 @@
   width: 24px;
   height: 68px;
   border: 1.5px solid var(--line);
-  border-radius: 2px 2px 0 0;
+  border-radius: var(--radius) var(--radius) 0 0;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%),
     linear-gradient(180deg, var(--book-500), var(--book-900));
@@ -214,7 +215,7 @@
   width: 78px;
   height: 54px;
   border: 2px solid var(--file-500);
-  border-radius: 2px;
+  border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 42%),
     var(--file-100);
@@ -231,7 +232,7 @@
   border: 2px solid var(--file-500);
   border-top: 0;
   border-left: 0;
-  border-radius: 0 0 3px 0;
+  border-radius: 0 0 var(--radius) 0;
   background: var(--file-100);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 26% 100%, 0 42%);
 }
@@ -265,9 +266,9 @@
   width: 116px;
   height: 42px;
   border: 1.5px solid var(--line);
-  border-radius: 2px;
+  border-radius: var(--radius);
   background:
-    repeating-linear-gradient(180deg, transparent 0 9px, rgba(20, 19, 18, 0.16) 9px 10px),
+    repeating-linear-gradient(180deg, transparent 0 9px, rgba(20, 17, 15, 0.16) 9px 10px),
     var(--gray-100);
   font-family: var(--font-cn-display);
   font-size: var(--fs-sm);
@@ -290,7 +291,7 @@
   font-size: 8.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 240, 214, 0.55);
+  color: rgba(253, 251, 246, 0.6);
   align-self: flex-end;
   padding-bottom: 2px;
 }

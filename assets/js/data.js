@@ -6,7 +6,6 @@
  */
 window.SITE_DATA = {
   quotes: [
-    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
     { text: "We are such stuff as dreams are made on.", author: "William Shakespeare" },
     { text: "The wound is the place where the light enters you.", author: "Rumi" },
     { text: "The mystery of human existence lies not in just staying alive, but in finding something to live for.", author: "Fyodor Dostoevsky" },
@@ -43,7 +42,6 @@ window.SITE_DATA = {
       note: "一些还没想清楚的问题。",
       items: [
         { title: "介质与围墙", note: "社交、孤独，以及我们用来互相抵达的东西。", tag: "随笔" },
-        { title: "好奇心的休眠与苏醒", note: "应试教育之后，怎么把好奇心重新叫醒。", tag: "随笔" },
         { title: "没有敌人的世界", note: "克隆人、冲突，以及把敌人变成共同体。", tag: "随笔" }
       ]
     },
@@ -86,18 +84,7 @@ window.SITE_DATA = {
         { title: "随机的迷宫", note: "一格走廊、随机生成，和按 K 指路。", tag: "项目" },
         { title: "塔科夫式背包", note: "按住浮空、松手放置的手机端交互。", tag: "项目" }
       ]
-    },
-    {
-      id: "visual",
-      label: "影像",
-      note: "镜头、转场和一点风。",
-      items: [
-        { title: "五分钟抵达云端", note: "eVTOL 低空经济，与做减法的三维短片。", tag: "短片" },
-        { title: "教室—公园", note: "窗外的树与公园的树重叠，一次匹配剪辑。", tag: "转场" },
-        { title: "圣地巡礼", note: "同机位也对不上动画角度：焦距与透视。", tag: "摄影" }
-      ]
-    },
-    {
+    },    {
       id: "design",
       label: "设计",
       note: "把想法做成能摸到的东西。",
@@ -132,6 +119,6 @@ window.SITE_DATA = {
     { id: "card-site", kind: "card", small: true, label: "本站", target: "sec-about" },
     { id: "shelf-write", kind: "books", label: "写与读", groups: ["philosophy", "dreams", "creation"] },
     { id: "shelf-read", kind: "books", label: "看与玩", groups: ["media", "games"] },
-    { id: "files-made", kind: "files", label: "做出来的", groups: ["visual", "design"] }
+    { id: "files-made", kind: "files", label: "做出来的", groups: ["design"] }
   ]
 };

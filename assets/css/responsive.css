@@ -8,8 +8,6 @@
   :root {
     --door-height: clamp(320px, 46vh, 460px);
     --door-title-size: clamp(38px, 7.8vw, 78px);
-    --drawer-w: clamp(280px, 40vw, 380px);
-    --drawer-h: clamp(76px, 10vh, 104px);
   }
 
   .quote-col {
@@ -30,9 +28,6 @@
 
 @media (max-width: 720px) {
   :root {
-    --cabinet-w: 46px;
-    --drawer-w: min(320px, calc(100vw - 120px));
-    --drawer-h: clamp(72px, 9vh, 96px);
     --door-height: clamp(300px, 42vh, 420px);
     --door-title-size: clamp(30px, 8.4vw, 52px);
     --fs-display: clamp(34px, 9vw, 44px);
@@ -44,7 +39,6 @@
   }
 
   .topbar {
-    right: var(--cabinet-w);
     flex-wrap: wrap;
     gap: 8px 14px;
     padding: 10px 14px;
@@ -63,7 +57,7 @@
   }
 
   .sec {
-    padding-right: calc(var(--cabinet-w) + 14px);
+    padding-right: 16px;
     padding-left: 16px;
     justify-content: flex-start;
     padding-top: clamp(64px, 9vh, 88px);
@@ -83,58 +77,9 @@
     bottom: 14px;
   }
 
-  /* 窄柱上抽屉牌改竖排：中文竖排刚好，也更有柜子味 */
-  .drawer-plate {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    max-height: calc(100% - 18px);
-    padding: 6px 1px;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-  }
-
-  .d-small .drawer-plate {
-    font-size: 8px;
-    padding: 3px 1px;
-    max-height: calc(100% - 12px);
-  }
-
-  .drawer-pull {
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    height: 2px;
-  }
-
   .scroll-hint {
     bottom: 12px;
     letter-spacing: 0.1em;
-  }
-
-  .drawer:nth-of-type(1) { top: 5%; }
-  .drawer:nth-of-type(2) { top: calc(5% + 58px); }
-  .drawer:nth-of-type(3) { top: 30%; }
-  .drawer:nth-of-type(4) { top: 50%; }
-  .drawer:nth-of-type(5) { top: 70%; }
-
-  .cabinet-col::before {
-    font-size: 7px;
-    letter-spacing: 0.26em;
-  }
-
-  .book {
-    width: 22px;
-    height: 60px;
-    font-size: 11px;
-  }
-
-  .file {
-    width: 66px;
-    height: 48px;
   }
 
   .end-foot {
@@ -171,11 +116,6 @@
     display: none;
   }
 
-  .drawer-box {
-    padding: 6px 10px;
-    gap: 6px;
-  }
-
   .scroll-hint {
     white-space: nowrap;
   }
@@ -187,13 +127,10 @@
     scroll-behavior: auto;
   }
 
+  /* 两列名言保持无限滚动；系统“减少动态”只关掉转场/装饰动画 */
   .quote-track {
-    animation: none !important;
-  }
-
-  /* 字幕已静止，开关没有意义 */
-  .footer-toggle {
-    display: none;
+    animation-duration: var(--duration, 60s) !important;
+    animation-iteration-count: infinite !important;
   }
 
   .wipe {

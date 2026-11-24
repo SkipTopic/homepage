@@ -1,0 +1,333 @@
+/* 音乐 · 专辑墙（324 张）
+   与 movie-wall.css 同一套视觉语言：细黑框 + 纸张底 + 悬停褪去灰罩。
+   颜色/字体全部走各页 token，不写死。 */
+
+.aw-crumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.aw-crumb button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--ink1, #0078bf);
+  font: inherit;
+  cursor: pointer;
+  border-bottom: 1px solid currentColor;
+}
+.aw-crumb i { font-style: normal; opacity: 0.5; }
+
+.aw-lede {
+  max-width: 62ch;
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted, #6e6657);
+}
+
+.ial-host > .aw-crumb,
+.ial-host > .aw-lede,
+.ial-host > .aw-shelf { width: 100%; }
+
+.aw-shelf {
+  display: grid;
+  grid-template-columns: minmax(140px, 176px) minmax(0, 1fr);
+  gap: var(--gap);
+  align-items: start;
+  min-width: 0;
+}
+
+.aw-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.aw-rail h4 {
+  margin: 10px 0 2px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6657);
+}
+.aw-rail h4:first-child { margin-top: 0; }
+
+.aw-search {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1.5px solid var(--line, #14110f);
+  background: var(--paper-soft, #fff);
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--ink, #14110f);
+  outline: none;
+}
+.aw-search:focus { border-color: var(--ink1, #0078bf); }
+
+.aw-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 2px;
+  border: 0;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.12);
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--muted, #6e6657);
+  text-align: left;
+  cursor: pointer;
+}
+.aw-filter:hover { color: var(--ink, #14110f); }
+.aw-filter.is-on {
+  color: var(--ink, #14110f);
+  font-weight: 700;
+  border-bottom-color: var(--ink, #14110f);
+}
+.aw-filter em {
+  font-style: normal;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  opacity: 0.65;
+  margin-left: 4px;
+}
+
+.aw-grid {
+  /* 2026-11-25：横排最多 4 个——列宽取「容器四分之一」和最小值的较大者，
+     容器宽就跟着放大，窄了自动减列。不用 max-width，避免右侧留一大块空白。 */
+  --tile: 130px;
+  --gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--tile), calc((100% - 3 * var(--gap)) / 4)), 1fr));
+  gap: 14px;
+  max-height: 64vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+  padding: 2px 5px 6px 2px;
+  scrollbar-width: thin;
+}
+
+.aw-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid var(--line, #14110f);
+  background: var(--paper-soft, #fff);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+}
+.aw-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  filter: grayscale(0.32);
+  transition: filter 0.3s, transform 0.45s var(--ease, ease);
+}
+.aw-card:hover img,
+.aw-card:focus-visible img { filter: none; transform: scale(1.04); }
+.aw-card:focus-visible { outline: 2px solid var(--ink1, #0078bf); outline-offset: 2px; }
+
+.aw-meta {
+  display: block;
+  padding: 5px 6px 6px;
+  border-top: 1px solid rgba(20, 17, 15, 0.14);
+}
+.aw-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 10.5px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.aw-artist {
+  display: block;
+  margin-top: 2px;
+  font-size: 8.5px;
+  line-height: 1.35;
+  color: var(--muted, #6e6657);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aw-empty {
+  grid-column: 1 / -1;
+  padding: 46px 18px;
+  text-align: center;
+  color: var(--muted, #6e6657);
+  font-size: 13px;
+  border: 1.5px dashed rgba(20, 17, 15, 0.22);
+}
+
+/* 分批加载的「继续看」 */
+.aw-more {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  padding: 9px 12px;
+  border: 1.5px dashed rgba(20, 17, 15, 0.32);
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--muted, #6e6657);
+  cursor: pointer;
+}
+.aw-more:hover {
+  border-color: var(--ink, #14110f);
+  color: var(--ink, #14110f);
+}
+
+/* 布局10：墙长在固定高度的海报里 */
+.poster .aw-grid { max-height: 44vh; }
+
+/* ---------- 专辑卡 ---------- */
+
+body.aw-open { overflow: hidden; }
+
+.aw-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.aw-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 7, 0.68);
+  backdrop-filter: blur(5px);
+}
+.aw-sheet {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: clamp(16px, 2.4vw, 30px);
+  width: min(760px, 100%);
+  max-height: min(90vh, 760px);
+  overflow: auto;
+  padding: clamp(18px, 2.4vw, 30px);
+  background: var(--paper, #faf7f0);
+  border: 2.5px solid var(--line, #14110f);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
+}
+.aw-cover {
+  align-self: start;
+  border: 1.5px solid var(--line, #14110f);
+  background: var(--paper-soft, #fff);
+}
+.aw-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.aw-body { min-width: 0; }
+.aw-kick {
+  margin: 0 0 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink1, #0078bf);
+}
+.aw-body h3 {
+  margin: 0 0 6px;
+  font-size: clamp(18px, 2.2vw, 26px);
+  line-height: 1.25;
+  font-weight: 600;
+}
+.aw-by {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.aw-info {
+  margin: 0 0 14px;
+  font-size: 11.5px;
+  color: var(--muted, #6e6657);
+}
+.aw-sub {
+  margin: 0 0 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6657);
+}
+.aw-songs {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(20, 17, 15, 0.14);
+}
+.aw-songs li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.14);
+  font-size: 12.5px;
+}
+.aw-songs li::before {
+  content: "♪";
+  margin-right: 7px;
+  color: var(--ink2, #ff48b0);
+  font-size: 11px;
+}
+.aw-foot { display: flex; gap: 14px; align-items: center; }
+.aw-link {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink1, #0078bf);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.aw-link:hover { color: var(--ink2-deep, #a11671); }
+
+.aw-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--line, #14110f);
+  background: var(--paper-soft, #fff);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--ink, #14110f);
+  cursor: pointer;
+}
+.aw-close:hover { background: var(--ink, #14110f); color: var(--paper, #faf7f0); }
+
+@media (max-width: 720px) {
+  .aw-shelf { grid-template-columns: 1fr; }
+  .aw-rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+  }
+  .aw-rail h4 { margin: 0; width: 100%; }
+  .aw-search { max-width: 220px; }
+  .aw-filter { border: 1.5px solid rgba(20, 17, 15, 0.2); padding: 3px 7px; }
+  .aw-filter.is-on { border-color: var(--ink, #14110f); }
+  .aw-grid { max-height: none; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+  .aw-sheet { grid-template-columns: 1fr; }
+  .aw-cover { max-width: 220px; }
+}

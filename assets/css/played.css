@@ -1,0 +1,13 @@
+/* 06 · 游戏库 —— 本页：砌砖
+   按钮和浮层的骨架在 _shared/game-lib.css，这里只写这一页的脾气。 */
+.gp-t:nth-child(even){margin-top:10px;}
+
+/* 入场：砌砖 */
+@keyframes gpp {
+  0%{opacity:0;transform:translateX(-36px);}
+  100%{opacity:1;transform:none;}
+}
+.gp-lib.is-in .gp-t {
+  animation: gpp .7s var(--ease-drop, cubic-bezier(.3,1.35,.5,1)) both;
+  animation-delay: calc(var(--i) * 45ms);
+}

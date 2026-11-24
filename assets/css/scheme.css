@@ -1,0 +1,31 @@
+/* ============ 大胆06 砖红×靛 · 配色方案档 ============
+   砖红当主墨（标题/门/柜——「一整面红墙」），靛当第二版（鬼影/档案袋/光）。 */
+
+:root {
+  --ink1: #e0483e;
+  --ink2: #3a5ba0;
+  --ink2-deep: #2f4c88;
+  --ink1-rgb: 224, 72, 62;
+  --ink2-rgb: 58, 91, 160;
+
+  --warm-rgb: 224, 72, 62;
+  --glow-rgb: 236, 111, 100;
+  --light-rgb: 58, 91, 160;
+
+  --door: #e0483e;
+  --door-deep: #b53228;
+  --door-light: #ec6f64;
+  --cabinet: #e0483e;
+  --cabinet-deep: #b53228;
+  --cabinet-light: #ec6f64;
+
+  --book-900: #6e1f18;
+  --book-500: #c23a30;
+  --book-100: #f6dbd8;
+  --file-900: #2a4478;
+  --file-500: #3a5ba0;
+  --file-100: #dbe3f4;
+
+  --accent: var(--ink2-deep);
+  --shadow-inset-dent: inset 0 2px 3px rgba(122, 32, 25, 0.32), inset 0 -3px 6px rgba(122, 32, 25, 0.26);
+}

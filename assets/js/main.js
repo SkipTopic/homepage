@@ -4,7 +4,6 @@
   var data = window.SITE_DATA || {};
   var quotes = Array.isArray(data.quotes) ? data.quotes : [];
   var bookmarks = Array.isArray(data.bookmarks) ? data.bookmarks : [];
-  var cabinets = Array.isArray(data.cabinets) ? data.cabinets : [];
   var groupById = {};
   bookmarks.forEach(function (g) {
     if (g && g.id) groupById[g.id] = g;
@@ -16,23 +15,18 @@
   var doorEl = document.querySelector(".door");
   var indicatorEl = document.getElementById("page-indicator");
   var wipeEl = document.getElementById("wipe");
-  var cabinetEl = document.getElementById("cabinet");
-  var overlayEl = document.getElementById("directory");
-  var overlayTitle = document.getElementById("directory-title");
-  var overlayGrid = document.getElementById("directory-grid");
   var toggleBtn = document.getElementById("quote-toggle");
   var toastEl = document.getElementById("toast");
-  var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   var sections = Array.prototype.slice.call(document.querySelectorAll(".sec"));
   var activeIndex = -1;
   var navLock = false;
-  var openDrawerId = null;
-  var openPanelId = null; // 指当前目录浮层对应的板块
   var toastTimer = null;
   var pulseTimer = null;
   var wheelAcc = 0;
-  var overlayOpener = null;
+  // 2026-11-25 转正：门厅不再"开门"跳去「对页书」那一页，滚轮一律在本站翻页
+  // 2026-11-24 修复：motionQuery 之前只在 manga.js 的作用域里，main.js 没定义，滚轮开门会抛 ReferenceError
+  var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   /* ---------- 工具 ---------- */
 
@@ -93,6 +87,19 @@
         block.appendChild(head);
 
         if (group.note) block.appendChild(el("p", "group-note", group.note));
+
+        // 书影音组：多给一块「打开漫画墙」的油墨按钮（封面墙在 manga.js）
+        if (group.id === "media" && typeof window.__openMangaWall === "function") {
+          var wallBtn = el("button", "wall-open");
+          wallBtn.type = "button";
+          wallBtn.appendChild(el("span", null, "打开漫画墙"));
+          var mangaCount = (window.MANGA_DATA && window.MANGA_DATA.length) || 52;
+          wallBtn.appendChild(el("span", "wall-open-count", mangaCount + " VOLS"));
+          wallBtn.addEventListener("click", function () {
+            window.__openMangaWall(wallBtn);
+          });
+          block.appendChild(wallBtn);
+        }
 
         var list = el("ul", "item-list");
         list.setAttribute("aria-labelledby", h.id);
@@ -159,6 +166,9 @@
     }, motionQuery.matches ? 120 : 850);
   }
 
+  /* 门厅曾是「封面」：滚轮一到门底就切去「对页书」内页。
+     2026-11-25 转正时站主要求「滚轮到翻页」，跳转整段撤掉，只留普通翻页。 */
+
   function setupObserver() {
     var io = new IntersectionObserver(
       function (entries) {
@@ -197,17 +207,19 @@
   /* 键盘：方向键 / PageUp Down / Home End */
   function setupKeyboardNav() {
     document.addEventListener("keydown", function (e) {
-      if (openPanelId && e.key !== "Escape") return;
+      // 漫画墙开着时：翻页/滚轮全部让路，Esc 只关墙
+      if (document.body.classList.contains("mw-locked")) {
+        if (e.key === "Escape" && typeof window.__closeMangaWall === "function") {
+          window.__closeMangaWall();
+        }
+        return;
+      }
       var next = null;
       if (e.key === "ArrowDown" || e.key === "PageDown") next = activeIndex + 1;
       else if (e.key === "ArrowUp" || e.key === "PageUp") next = activeIndex - 1;
       else if (e.key === "Home") next = 0;
       else if (e.key === "End") next = sections.length - 1;
-      else if (e.key === "Escape") {
-        if (openPanelId) closeOverlay();
-        else if (openDrawerId) closeDrawer();
-        return;
-      } else return;
+      else return;
 
       if (next === null) return;
       e.preventDefault();
@@ -215,153 +227,28 @@
     });
   }
 
-  /* ---------- 柜子：抽屉 / 书 / 档案袋 / 索引卡 ---------- */
-
-  function setDrawer(id, shouldOpen) {
-    var drawer = cabinetEl ? cabinetEl.querySelector('[data-drawer="' + id + '"]') : null;
-    if (!drawer) return;
-    var face = drawer.querySelector(".drawer-face");
-    var box = drawer.querySelector(".drawer-box");
-    drawer.classList.toggle("is-open", shouldOpen);
-    face.setAttribute("aria-expanded", String(shouldOpen));
-    if (box && "inert" in box) box.inert = !shouldOpen;
-    openDrawerId = shouldOpen ? id : null;
-  }
-
-  function closeDrawer() {
-    if (openDrawerId) setDrawer(openDrawerId, false);
-  }
-
-  function renderCabinet() {
-    if (!cabinetEl) return;
-    cabinets.forEach(function (cab) {
-      if (!cab || !cab.id) return;
-      var drawer = el("div", "drawer" + (cab.small ? " d-small" : ""));
-      drawer.dataset.drawer = cab.id;
-
-      var face = el("button", "drawer-face");
-      face.type = "button";
-      face.setAttribute("aria-expanded", "false");
-      face.setAttribute("aria-controls", "drawerbox-" + cab.id);
-      face.setAttribute("aria-label", "拉开抽屉：" + cab.label);
-      face.appendChild(el("span", "drawer-plate", cab.label));
-      face.appendChild(el("span", "drawer-pull"));
-      face.addEventListener("click", function () {
-        if (openDrawerId === cab.id) closeDrawer();
-        else {
-          closeDrawer();
-          setDrawer(cab.id, true);
-        }
-      });
-      drawer.appendChild(face);
-
-      // 裁剪层：抽屉盒贴着柱左缘滑出，不产生框外溢出
-      var clip = el("div", "drawer-clip");
-      var box = el("div", "drawer-box");
-      box.id = "drawerbox-" + cab.id;
-
-      if (cab.kind === "books" && Array.isArray(cab.groups)) {
-        cab.groups.forEach(function (gid) {
-          var g = groupById[gid];
-          if (!g) return;
-          var book = el("button", "book");
-          book.type = "button";
-          book.appendChild(el("span", "book-title", g.label));
-          book.setAttribute("aria-label", "抽出「" + g.label + "」这本书（共 " + g.items.length + " 篇）");
-          book.addEventListener("click", function () {
-            openOverlay(g, book);
-          });
-          box.appendChild(book);
-        });
-        box.appendChild(el("span", "drawer-box-note", "点书看目录"));
-      } else if (cab.kind === "files" && Array.isArray(cab.groups)) {
-        cab.groups.forEach(function (gid) {
-          var g = groupById[gid];
-          if (!g) return;
-          g.items.forEach(function (item) {
-            var file = el("button", "file");
-            file.type = "button";
-            var t = el("span", "file-title", item.title || "未命名");
-            file.appendChild(t);
-            file.setAttribute("aria-label", "档案袋：" + (item.title || ""));
-            file.addEventListener("click", function () {
-              if (item.href) window.location.href = item.href;
-              else showToast("「" + (item.title || "这份档案") + "」还在整理。");
-            });
-            box.appendChild(file);
-          });
-        });
-        box.appendChild(el("span", "drawer-box-note", "点袋看作品"));
-      } else if (cab.kind === "card") {
-        var card = el("button", "index-card", cab.label);
-        card.type = "button";
-        card.addEventListener("click", function () {
-          var target = document.getElementById(cab.target);
-          if (target) {
-            goTo(sections.indexOf(target));
-            closeDrawer();
-          }
-        });
-        box.appendChild(card);
-      }
-
-      clip.appendChild(box);
-      drawer.appendChild(clip);
-      cabinetEl.appendChild(drawer);
-    });
-
-    // 点击抽屉以外的地方收起
-    document.addEventListener("click", function (e) {
-      if (!openDrawerId) return;
-      if (cabinetEl.contains(e.target)) return;
-      closeDrawer();
-    });
-  }
-
-  /* ---------- 下一层目录浮层（点书打开） ---------- */
-
-  function openOverlay(group, opener) {
-    if (!overlayEl || !group) return;
-    openPanelId = group.id;
-    overlayOpener = opener || null;
-
-    overlayTitle.textContent = "";
-    overlayTitle.appendChild(el("span", null, group.label));
-    overlayTitle.appendChild(el("span", "ov-en", group.items.length + " items · " + (group.note || "")));
-
-    overlayGrid.textContent = "";
-    var list = el("ul", "item-list");
-    group.items.forEach(function (item) {
-      var li = el("li", "item-row");
-      li.appendChild(itemLink(item));
-      list.appendChild(li);
-    });
-    overlayGrid.appendChild(list);
-
-    overlayEl.hidden = false;
-    window.requestAnimationFrame(function () {
-      overlayEl.classList.add("is-open");
-    });
-    var closeBtn = overlayEl.querySelector("[data-close].panel-close");
-    if (closeBtn) closeBtn.focus();
-  }
-
-  function closeOverlay() {
-    if (!overlayEl || !openPanelId) return;
-    openPanelId = null;
-    overlayEl.classList.remove("is-open");
-    window.setTimeout(function () {
-      overlayEl.hidden = true;
-    }, 360);
-    if (overlayOpener && overlayOpener.focus) overlayOpener.focus();
-    overlayOpener = null;
-  }
-
-  function setupOverlay() {
-    if (!overlayEl) return;
-    Array.prototype.forEach.call(overlayEl.querySelectorAll("[data-close]"), function (btn) {
-      btn.addEventListener("click", closeOverlay);
-    });
+  /* 触屏：在门厅往上滑也直接切到下一页 */
+  function setupTouchLaunch() {
+    if (!snap) return;
+    var touchStartY = null;
+    snap.addEventListener(
+      "touchstart",
+      function (e) {
+        if (activeIndex === 0 && e.touches.length) touchStartY = e.touches[0].clientY;
+        else touchStartY = null;
+      },
+      { passive: true }
+    );
+    snap.addEventListener(
+      "touchend",
+      function (e) {
+        if (touchStartY === null || !e.changedTouches.length) return;
+        var moved = touchStartY - e.changedTouches[0].clientY;
+        touchStartY = null;
+        if (moved > 42) goTo(activeIndex + 1);
+      },
+      { passive: true }
+    );
   }
 
   /* ---------- 门与字幕（沿用 v0.3） ---------- */
@@ -447,20 +334,11 @@
     renderGroupLists();
     renderQuotes();
     renderIndicator();
-    renderCabinet();
-    setupOverlay();
     setupObserver();
     setupWheel();
     setupKeyboardNav();
+    setupTouchLaunch();
     setYear();
-
-    // 保险：框架绝不允许横向滚动（抽屉的滑入空间都在框内裁剪）
-    var frame = document.querySelector(".frame");
-    if (frame) {
-      frame.addEventListener("scroll", function () {
-        if (frame.scrollLeft !== 0) frame.scrollLeft = 0;
-      });
-    }
 
     // 转场层用完就把类摘掉，保持 DOM 干净
     if (wipeEl) {
@@ -478,16 +356,6 @@
         syncToggle();
       });
       syncToggle();
-      if (motionQuery.matches) toggleBtn.hidden = true;
-      if (typeof motionQuery.addEventListener === "function") {
-        motionQuery.addEventListener("change", function (event) {
-          toggleBtn.hidden = event.matches;
-          if (event.matches && quoteLayer) {
-            quoteLayer.classList.remove("is-paused");
-            syncToggle();
-          }
-        });
-      }
     }
   }
 

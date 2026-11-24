@@ -1,0 +1,332 @@
+/* IA 轻量版样式（大胆十页共用）
+   颜色全走各页的 token，所以同一套结构在十种配色下自动变样。 */
+
+.ial-host { display: block; }
+
+.ial-lede {
+  margin: 0 0 clamp(16px, 2.6vh, 24px);
+  color: var(--muted);
+  font-size: var(--fs-lg, 15px);
+  line-height: 1.7;
+}
+
+/* 三行栏目 */
+.ial-rows {
+  display: flex;
+  flex-direction: column;
+  border-top: 3px double var(--line, #14110f);
+}
+.ial-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--gap);
+  padding: clamp(15px, 2.3vh, 23px) 0;
+  border: 0;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.18);
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: padding-left 0.22s var(--ease, ease), background 0.22s var(--ease, ease);
+}
+.ial-row:hover,
+.ial-row:focus-visible {
+  padding-left: 12px;
+  background: rgba(var(--ink1-rgb, 0, 120, 191), 0.06);
+  outline: none;
+}
+.ial-no {
+  font-family: var(--font-display, serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: var(--ink1);
+  line-height: 1;
+}
+.ial-main b {
+  display: block;
+  font-family: var(--font-cn-display, serif);
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: 0.06em;
+}
+.ial-main span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ial-go {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink2);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ial-row:hover .ial-go { opacity: 1; }
+
+/* 面包屑 */
+.ial-crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(12px, 2vh, 18px);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.ial-crumb button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--ink1);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ial-crumb i { font-style: normal; opacity: 0.5; }
+
+/* 左筛右墙 */
+.ial-shelf {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: clamp(14px, 2.2vw, 26px);
+  align-items: start;
+}
+.ial-rail {
+  position: sticky;
+  top: 10px;
+  border-right: 1px solid rgba(20, 17, 15, 0.16);
+  padding-right: 12px;
+}
+.ial-rail h4 {
+  margin: 0 0 9px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.ial-search {
+  width: 100%;
+  margin-bottom: 13px;
+  padding: 6px 8px;
+  border: 1.5px solid var(--line, #14110f);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 12.5px;
+  outline: none;
+}
+.ial-search:focus { border-color: var(--ink1); }
+.ial-filter {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 5px 7px;
+  margin-bottom: 2px;
+  border: 0;
+  border-left: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.ial-filter:hover { color: var(--ink); }
+.ial-filter.is-on {
+  color: var(--ink);
+  border-left-color: var(--ink1);
+  font-weight: 700;
+}
+.ial-filter em {
+  font-style: normal;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  opacity: 0.55;
+  margin-left: 4px;
+}
+
+.ial-wall {
+  /* 2026-11-25：横排最多 4 个——列宽取「容器四分之一」和最小值的较大者，
+     容器宽就跟着放大，窄了自动减列。不用 max-width，避免右侧留一大块空白。 */
+  --tile: 130px;
+  --gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--tile), calc((100% - 3 * var(--gap)) / 4)), 1fr));
+  gap: 12px;
+  max-height: 62vh;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+.ial-book {
+  border: 1.5px solid var(--line, #14110f);
+  background: var(--paper-soft, #fff);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+.ial-book img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: grayscale(0.5);
+  transition: filter 0.3s, transform 0.4s var(--ease, ease);
+}
+.ial-book:hover img { filter: none; transform: scale(1.03); }
+.ial-book b {
+  display: block;
+  padding: 4px 5px 5px;
+  font-size: 10px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.ial-empty {
+  grid-column: 1 / -1;
+  padding: 48px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  border: 1.5px dashed rgba(20, 17, 15, 0.22);
+}
+
+/* 书卡 */
+.ial-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.ial-modal[hidden] { display: none; }
+.ial-modal-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 13, 11, 0.55);
+  backdrop-filter: blur(4px);
+}
+.ial-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  width: min(640px, 100%);
+  background: var(--paper);
+  border: 2.5px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+.ial-fig { padding: 15px; border-right: 1px solid rgba(20, 17, 15, 0.16); }
+.ial-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; border: 1.5px solid var(--line); }
+.ial-body { padding: 16px 20px 18px; }
+.ial-kick {
+  margin: 0 0 7px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.ial-card h3 {
+  margin: 0 0 10px;
+  padding-bottom: 9px;
+  border-bottom: 3px double var(--line);
+  font-family: var(--font-cn-display, serif);
+  font-size: 22px;
+  line-height: 1.25;
+}
+.ial-card p { margin: 0 0 9px; font-size: 12.5px; line-height: 1.8; color: var(--muted); }
+.ial-card .ial-kv { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--ink1); }
+.ial-stamp {
+  display: inline-block;
+  padding: 2px 9px;
+  margin-bottom: 12px;
+  border: 1.5px solid var(--ink2);
+  color: var(--ink2);
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  transform: rotate(-1.5deg);
+}
+.ial-card .ial-note { padding-top: 9px; border-top: 1px solid rgba(20, 17, 15, 0.14); font-size: 11.5px; }
+.ial-body { max-height: min(72vh, 620px); overflow-y: auto; }
+.ial-desc {
+  padding-top: 10px;
+  border-top: 1px solid rgba(20, 17, 15, 0.14);
+  color: var(--ink1);
+  font-size: 13px;
+  line-height: 1.9;
+  text-align: justify;
+}
+.ial-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-bottom: 10px;
+  color: var(--ink1);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.ial-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.ial-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 13px;
+  border: 1.5px solid var(--line, #14110f);
+  background: none;
+  color: var(--ink1);
+  font-family: var(--font-cn, inherit);
+  font-size: 12px;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+.ial-btn:hover { transform: translate(-1px, -1px); background: rgba(var(--ink1-rgb, 0, 120, 191), 0.08); }
+.ial-btn.is-solid { background: var(--ink1); color: var(--paper); }
+.ial-btn.is-solid:hover { background: var(--ink2-deep, var(--ink1)); color: var(--paper); }
+.ial-card.is-game { grid-template-columns: 260px 1fr; width: min(720px, 100%); }
+.ial-fig.is-game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #14110f;
+  border-right-color: rgba(var(--paper-rgb, 255, 255, 255), 0.18);
+}
+.ial-fig.is-game img { aspect-ratio: 16 / 9; object-fit: cover; border-color: rgba(255, 255, 255, 0.18); }
+.ial-close {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--line);
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+}
+.ial-close:hover { background: var(--ink); color: var(--paper); }
+
+@media (max-width: 860px) {
+  .ial-shelf { grid-template-columns: 1fr; }
+  .ial-rail { position: static; border-right: 0; border-bottom: 1px solid rgba(20, 17, 15, 0.16); padding: 0 0 10px; }
+  .ial-card { grid-template-columns: 1fr; }
+  .ial-wall { max-height: none; }
+}
+
+/* 探索末尾追加的「我做的游戏」 */
+.ial-mine {
+  border-top: 2px solid var(--line, #14110f);
+  padding-top: 14px;
+}

@@ -5,20 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>跳过话题 · 个人小站</title>
     <meta name="description" content="一扇关着的门，一排柜子，和一个还在长的站。" />
-    <meta name="theme-color" content="#f7f2e7" />
+    <meta name="theme-color" content="#faf7f0" />
     <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="./assets/fonts/cormorant-garamond-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="./assets/fonts/cormorant-garamond-italic.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="./assets/fonts/cinzel-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="./assets/fonts/space-grotesk-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./assets/css/fonts.css" />
-    <link rel="stylesheet" href="./assets/css/tokens.css" />
+    <!-- 本地站点：字体走 CSS @font-face 即时加载，不做 preload（本地预加载只会刷控制台警告） -->
+    <link rel="stylesheet" href="./assets/css/fonts.css?v=20261124font" />
+    <link rel="stylesheet" href="./assets/css/tokens.css?v=20261124font" />
     <link rel="stylesheet" href="./assets/css/base.css" />
-    <link rel="stylesheet" href="./assets/css/header.css" />
-    <link rel="stylesheet" href="./assets/css/hero.css" />
+    <link rel="stylesheet" href="./assets/css/header.css?v=20261124font" />
+    <link rel="stylesheet" href="./assets/css/hero.css?v=20261125why4" />
     <link rel="stylesheet" href="./assets/css/sections.css" />
-    <link rel="stylesheet" href="./assets/css/cabinet.css" />
-    <link rel="stylesheet" href="./assets/css/responsive.css" />
+    <link rel="stylesheet" href="./assets/css/responsive.css?v=20261124scroll" />
+    <link rel="stylesheet" href="./assets/css/manga.css" />
+    <link rel="stylesheet" href="./assets/css/scheme.css?v=20261124font" />
+      <link rel="stylesheet" href="./assets/css/played.css?v=20261124b" />
+      <link rel="stylesheet" href="./assets/exp/_shared/game-lib.css" />
+      <link rel="stylesheet" href="./assets/exp/_shared/ia-lite.css" />
+      <link rel="stylesheet" href="./assets/exp/_shared/movie-wall.css?v=20261125rack7" />
+      <link rel="stylesheet" href="./assets/exp/_shared/album-wall.css?v=20261125rack7" />
   </head>
   <body>
     <div class="page">
@@ -46,8 +49,9 @@
             <div class="door-glow" aria-hidden="true"></div>
             <div class="door-surge" aria-hidden="true"></div>
             <div class="door-stage">
-              <p class="door-caption">but father the sky has blue</p>
+              <p class="door-caption">- Friedrich Wilhelm Nietzsche</p>
               <div class="door-wrap">
+                <span class="dq-why" aria-hidden="true">why</span>
                 <button type="button" class="door" aria-label="一扇关着的门" title="点了也不会开">
                   <span class="door-panel door-panel-a" aria-hidden="true"></span>
                   <span class="door-panel door-panel-b" aria-hidden="true"></span>
@@ -55,8 +59,16 @@
                   <span class="door-veil" aria-hidden="true"></span>
                   <span class="door-handle" aria-hidden="true"></span>
                   <span class="door-keyhole" aria-hidden="true"></span>
+                  <!-- why 的「门内那层」：跟门外那层同字号同位置，被门的 overflow 裁掉，
+                       只留下压在门上的部分，换个颜色 = 字穿门而过 -->
+                  <span class="dq-why dq-why-in" aria-hidden="true">why</span>
                 </button>
-                <p class="door-title"><span class="door-title-he">HE</span> <span class="door-title-rest">who has</span></p>
+                <p class="door-quote">
+                  <span class="dq-sr">He who has a 「why」 to live for can bear almost any 「how」.</span>
+                  <span class="dq-line dq-l1" aria-hidden="true"><span class="dq-strong">He</span> who has a</span>
+                  <span class="dq-line dq-l2" aria-hidden="true">to live for</span>
+                  <span class="dq-line dq-l3" aria-hidden="true">can bear almost any <span class="dq-how"><span class="dq-br">「</span>how<span class="dq-br">」</span><span class="dq-dot">.</span></span></span>
+                </p>
               </div>
               <svg class="hero-arrow" viewBox="0 0 120 56" fill="none" aria-hidden="true">
                 <path d="M3 30c22-9 44-10 70-8 10 1 22 3 36 6" pathLength="100" />
@@ -65,7 +77,7 @@
                 <path d="M14 34c6 2 11 4 16 8" pathLength="100" opacity=".5" />
               </svg>
             </div>
-            <p class="scroll-hint" aria-hidden="true"><span class="scroll-hint-line"></span>滚轮往下 · 或者去右边柜子里翻翻</p>
+            <p class="scroll-hint" aria-hidden="true"><span class="scroll-hint-line"></span>滚轮往下 · 一页一页翻</p>
           </section>
 
           <!-- 02 · 探索 -->
@@ -73,7 +85,7 @@
             <header class="sec-head">
               <span class="sec-no" aria-hidden="true">02</span>
               <div>
-                <h2 class="sec-title-cn">探索</h2>
+                <h2 class="sec-title-cn" data-misreg="探索">探索</h2>
                 <span class="sec-title-en">Explore</span>
               </div>
               <p class="sec-lede">还没想清楚的问题，写了一半的世界，和梦里排好的片。</p>
@@ -86,7 +98,7 @@
             <header class="sec-head">
               <span class="sec-no" aria-hidden="true">03</span>
               <div>
-                <h2 class="sec-title-cn">喜欢</h2>
+                <h2 class="sec-title-cn" data-misreg="喜欢">喜欢</h2>
                 <span class="sec-title-en">Favorites</span>
               </div>
               <p class="sec-lede">看过、听过、借过、玩过——都记一笔。</p>
@@ -99,20 +111,21 @@
             <header class="sec-head">
               <span class="sec-no" aria-hidden="true">04</span>
               <div>
-                <h2 class="sec-title-cn">乐趣</h2>
+                <h2 class="sec-title-cn" data-misreg="乐趣">乐趣</h2>
                 <span class="sec-title-en">Playground</span>
               </div>
-              <p class="sec-lede">镜头、转场、界面和一点风——做出来的东西装在档案袋里。</p>
+              <p class="sec-lede">界面和一点风——做出来的东西装在档案袋里。</p>
             </header>
-            <div class="sec-body cols-2" data-groups="visual,design"></div>
+            <div class="sec-body cols-2" data-groups="design"></div>
           </section>
+
 
           <!-- 05 · 关于 -->
           <section class="sec sec-about" id="sec-about" data-sec="5" data-title="关于">
             <header class="sec-head">
               <span class="sec-no" aria-hidden="true">05</span>
               <div>
-                <h2 class="sec-title-cn">关于</h2>
+                <h2 class="sec-title-cn" data-misreg="关于">关于</h2>
                 <span class="sec-title-en">About</span>
               </div>
               <p class="sec-lede">先放三句话，以后再补。</p>
@@ -121,7 +134,7 @@
             <footer class="end-foot">
               <span>跳过话题 · <span id="year">2026</span></span>
               <span class="end-foot-note">门后面是句子，句子后面是还在长的东西。</span>
-              <span class="footer-version">v. Ⅳ</span>
+              <span class="footer-version">v. RISO Ⅰ</span>
             </footer>
           </section>
         </main>
@@ -136,30 +149,51 @@
             <span class="footer-toggle-icon" aria-hidden="true">❚❚</span> 字幕
           </button>
         </p>
-
-        <aside class="cabinet" id="cabinet" aria-label="柜子：书和档案袋都在里面"></aside>
-      </div>
-    </div>
-
-    <!-- 下一层目录浮层（点书打开） -->
-    <div class="overlay" id="directory" role="dialog" aria-modal="true" aria-labelledby="directory-title" hidden>
-      <div class="overlay-backdrop" data-close></div>
-      <div class="overlay-panel">
-        <header class="overlay-head">
-          <h2 class="overlay-title" id="directory-title">目录</h2>
-          <button type="button" class="panel-close" data-close aria-label="关闭目录">×</button>
-        </header>
-        <div class="overlay-grid" id="directory-grid"></div>
       </div>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+    <!-- 书影音 · 漫画墙（点「喜欢」页的「打开漫画墙」按钮后整版盖上来） -->
+    <div class="manga-wall" id="manga-wall" role="dialog" aria-modal="true" aria-labelledby="manga-wall-title" hidden>
+      <div class="mw-backdrop" data-mw-close></div>
+      <div class="mw-sheet">
+        <header class="mw-head">
+          <div>
+            <p class="mw-kick" aria-hidden="true">Books · Comics — 看过的都记一笔</p>
+            <h2 class="mw-title" id="manga-wall-title" data-misreg="书影音">书影音</h2>
+            <p class="mw-sub">目前为止看过的漫画，52 张封面落成一面墙。把鼠标放上去看书名。</p>
+          </div>
+          <div class="mw-head-side">
+            <button type="button" class="mw-replay">重印一次 ↻</button>
+            <span class="mw-stamp" aria-hidden="true">52<br />VOLS</span>
+            <button type="button" class="mw-close" data-mw-close aria-label="关闭漫画墙">×</button>
+          </div>
+        </header>
+        <div class="mw-grid" id="mw-grid"></div>
+        <footer class="mw-foot">
+          <div class="mw-foot-inner">
+            <p class="mw-foot-title">读记在写：</p>
+            <div id="mw-foot-links" class="mw-foot-links"></div>
+            <p class="mw-foot-note">封面长边 ≤720 · #51 无大陆版暂用台版封面</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+
     <noscript>
-      <p class="noscript">这个页面需要 JavaScript 才能翻页和打开柜子。</p>
+      <p class="noscript">这个页面需要 JavaScript 才能翻页。</p>
     </noscript>
 
     <script src="./assets/js/data.js"></script>
-    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/manga-data.js"></script>
+    <script src="./assets/js/main.js?v=20261125site"></script>
+    <script src="./assets/js/manga.js"></script>
+    <script src="./assets/exp/_shared/games-data.js?v=20261124egg3"></script>
+    <script src="./assets/exp/_shared/movies-data.js?v=20261124egg3"></script>
+    <script src="./assets/exp/_shared/albums-data.js?v=20261124egg3"></script>
+    <script src="./assets/exp/_shared/movie-wall.js?v=20261125rack7"></script>
+    <script src="./assets/exp/_shared/album-wall.js?v=20261125rack7"></script>
+    <script src="./assets/exp/_shared/ia-lite.js?v=20261125site"></script>
   </body>
 </html>

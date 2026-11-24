@@ -4,7 +4,6 @@
   display: grid;
   place-items: center;
   padding: clamp(56px, 9vh, 88px) clamp(18px, 4vw, 60px) clamp(48px, 8vh, 76px);
-  padding-right: calc(var(--cabinet-w) + 16px);
 }
 
 /* ---- 门后的滚动名言 ---- */
@@ -60,6 +59,7 @@
   margin: 0;
   color: var(--quote);
   font-family: var(--font-quote);
+  font-style: italic;
   font-size: var(--fs-md);
   font-weight: 500;
   line-height: 1.5;
@@ -186,7 +186,7 @@
 .door-caption {
   margin: 0 0 clamp(12px, 2vh, 22px);
   color: var(--ink);
-  font-family: var(--font-display);
+  font-family: var(--font-quote);
   font-size: var(--fs-lg);
   font-style: italic;
   font-weight: 400;
@@ -217,9 +217,9 @@
   inset: -13px -11px -11px;
   z-index: 0;
   border: 3px solid var(--line);
-  border-radius: 2px;
-  background: linear-gradient(180deg, #fdfaf3, #ece3d1);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 2px 0 rgba(20, 19, 18, 0.06);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fdfbf6, #efe9dc);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 2px 0 rgba(20, 17, 15, 0.06);
 }
 
 /* 门底漏光落在纸面 */
@@ -256,18 +256,17 @@
   padding: 0;
   overflow: hidden;
   border: var(--door-border) solid var(--line);
+  border-radius: var(--radius);
   background:
-    linear-gradient(100deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 34%),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 30%),
-    repeating-linear-gradient(90deg, rgba(60, 32, 18, 0.05) 0 1px, transparent 1px 9px),
-    repeating-linear-gradient(90deg, rgba(255, 246, 230, 0.03) 0 2px, transparent 2px 23px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.4px, transparent 1.7px) 0 0 / 9px 9px,
+    linear-gradient(100deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 34%),
     linear-gradient(115deg, var(--door-light), var(--door) 44%, var(--door-deep));
   box-shadow:
-    8px 11px 0 rgba(20, 19, 18, 0.07),
-    var(--shadow-3),
-    inset -3px 0 6px rgba(46, 22, 10, 0.25),
-    inset 3px 0 6px rgba(255, 240, 214, 0.14),
-    inset 0 -4px 10px rgba(46, 22, 10, 0.28);
+    7px 7px 0 var(--ink2),
+    10px 10px 0 rgba(20, 17, 15, 0.12),
+    inset -3px 0 6px rgba(0, 0, 0, 0.35),
+    inset 3px 0 6px rgba(255, 255, 255, 0.16),
+    inset 0 -4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   user-select: none;
 }
@@ -277,8 +276,8 @@
   left: 15%;
   right: 15%;
   z-index: 1;
-  border: 1px solid rgba(20, 19, 18, 0.42);
-  background: rgba(46, 22, 10, 0.06);
+  border: 1px solid rgba(20, 17, 15, 0.45);
+  background: rgba(20, 17, 15, 0.08);
   box-shadow: var(--shadow-inset-dent);
   pointer-events: none;
 }
@@ -314,7 +313,7 @@
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 224, 178, 0.5), rgba(255, 190, 120, 0.28));
+  background: linear-gradient(180deg, rgba(var(--ink2-rgb), 0.42), rgba(var(--ink2-rgb), 0.22));
   opacity: 0;
   transition: opacity 0.5s var(--ease);
 }
@@ -335,10 +334,10 @@
   z-index: 4;
   width: 11px;
   height: 11px;
-  border: 2px solid #2a1a10;
+  border: 2px solid var(--ink);
   border-radius: 50%;
-  background: #c8a061;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 2px rgba(42, 26, 16, 0.25);
+  background: var(--ink2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 2px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s var(--ease);
 }
 
@@ -355,51 +354,155 @@
   width: 5px;
   height: 9px;
   clip-path: polygon(50% 0, 100% 40%, 72% 100%, 28% 100%, 0 40%);
-  background: linear-gradient(to bottom, #241409 45%, rgba(255, 186, 102, 0.9) 100%);
-  box-shadow: 0 0 5px rgba(255, 180, 90, 0.3);
+  background: linear-gradient(to bottom, #14110f 45%, rgba(var(--ink2-rgb), 0.9) 100%);
+  box-shadow: 0 0 5px rgba(var(--ink2-rgb), 0.4);
   opacity: 0.9;
   transition: box-shadow 0.5s var(--ease);
 }
 
 .sec-hall.is-pulse .door-keyhole {
-  box-shadow: 0 0 10px rgba(255, 180, 90, 0.65);
+  box-shadow: 0 0 10px rgba(var(--ink2-rgb), 0.65);
 }
 
-/* ---- 门上的字 ---- */
+/* ---- 门上的字：why 藏在门后，整句压过门面 ---- */
 
-.door-title {
+.door-quote {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 3;
-  width: max-content;
+  inset: 0;
+  z-index: 6;
   margin: 0;
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: var(--door-title-size);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 0.9;
   pointer-events: none;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
   mix-blend-mode: multiply;
-  animation: fade-in 0.9s ease 0.75s both;
 }
 
-.door-title-he {
-  font-family: var(--font-title);
-  font-size: 1.02em;
-  font-weight: 600;
-  letter-spacing: 0.015em;
+.dq-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.door-title-rest {
-  font-family: var(--font-display);
-  font-size: 0.95em;
-  font-style: italic;
+.dq-line {
+  position: absolute;
+  left: 50%;
+  width: max-content;
+  color: var(--ink);
+  font-family: "DM Serif Display", "Playfair Display", Georgia, "Noto Serif SC", serif;
   font-weight: 400;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  animation: fade-in 0.9s ease both;
+}
+
+.dq-l1 {
+  top: 9%;
+  font-size: clamp(52px, 6.6vw, 126px);
+  transform: translate(-52%, -50%);
+  animation-delay: 0.7s;
+}
+
+.dq-l2 {
+  top: 67%;
+  font-family: var(--font-quote);
+  font-size: clamp(54px, 6.9vw, 132px);
+  font-style: italic;
+  letter-spacing: -0.008em;
+  transform: translate(-56%, -50%);
+  animation-delay: 0.8s;
+}
+
+/* 末句一行收在门脚，让门中段完全留给 why */
+.dq-l3 {
+  top: 90%;
+  font-size: clamp(26px, 2.9vw, 56px);
+  letter-spacing: -0.008em;
+  white-space: nowrap;
+  transform: translate(-52%, -50%);
+  animation-delay: 0.9s;
+}
+
+.dq-dot {
+  margin-left: -0.16em;
+}
+
+.dq-strong {
+  font-weight: 700;
+  text-shadow: 0.045em 0.038em 0 var(--ink2);
+}
+
+.dq-how {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-shadow: 0.032em 0.026em 0 var(--ink2);
+}
+
+.dq-br {
+  font-family: var(--font-cn-display);
+  font-weight: 500;
+  font-size: 0.94em;
+}
+
+/* why：门后的图层，超大轮廓字 */
+.dq-why {
+  position: absolute;
+  left: 50%;
+  top: 31%;
+  z-index: -1;
+  transform: translate(-50%, -50%) scaleX(1.06);
+  color: transparent;
+  font-family: var(--font-cn-display);
+  font-weight: 500;
+  font-size: clamp(130px, 16.5vw, 300px);
+  letter-spacing: -0.075em;
+  line-height: 0.7;
+  /* 2026-11-25：纸面这层用粉描边，露在门外的部分靠它 */
+  -webkit-text-stroke: clamp(1.6px, 0.13vw, 3.2px) var(--ink2);
+  pointer-events: none;
+  user-select: none;
+  animation: why-rise 1.2s ease 0.35s both;
+}
+
+/* 门内那层：跟外面同字号同位置，被 .door 的 overflow 裁切，只压在门上，换成米白 */
+.dq-why-in {
+  z-index: 6;
+  -webkit-text-stroke-color: var(--paper);
+  mix-blend-mode: normal;
+}
+
+@keyframes why-rise {
+  from { opacity: 0; transform: translate(-50%, -50%) scaleX(1.03) scale(0.97); }
+  to { opacity: 0.9; transform: translate(-50%, -50%) scaleX(1.06) scale(1); }
+}
+
+/* 1440 级：页码栏左收、why 稍收，别压到两侧引文 */
+@media (max-width: 1500px) {
+  .page-indicator { left: 6px; }
+  .dq-why { font-size: clamp(130px, 16.5vw, 300px); }
+}
+
+/* 1280 及以下：左栏更窄，页码栏直接收起，别压住第一行引文 */
+@media (max-width: 1400px) {
+  .page-indicator { display: none; }
+}
+
+/* 窄屏：门变矮，字随门收，不撑破门厅 */
+@media (max-width: 980px) {
+  .dq-l1 { font-size: clamp(38px, 6.4vw, 74px); }
+  .dq-l2 { font-size: clamp(40px, 6.7vw, 78px); }
+  .dq-l3 { font-size: clamp(19px, 2.6vw, 34px); }
+  .dq-why { font-size: clamp(120px, 19vw, 260px); }
+  .quote-layer { display: none; }
+}
+
+@media (max-width: 720px) {
+  .dq-l1 { font-size: clamp(28px, 6.4vw, 38px); }
+  .dq-l2 { font-size: clamp(30px, 6.8vw, 40px); }
+  .dq-l3 { font-size: clamp(13px, 2.6vw, 19px); }
+  .dq-why { font-size: clamp(90px, 20vw, 140px); }
 }
 
 @keyframes fade-soft {
@@ -418,6 +521,7 @@
   position: absolute;
   top: calc(50% + 8px);
   left: calc(50% + clamp(170px, 18.5vw, 266px));
+  display: none;
   width: clamp(62px, 7vw, 104px);
   height: auto;
   color: var(--ink);
@@ -453,7 +557,7 @@
 
 .scroll-hint {
   position: absolute;
-  bottom: clamp(26px, 5vh, 44px);
+  bottom: clamp(12px, 2.2vh, 22px);
   left: 50%;
   transform: translateX(-50%);
   display: inline-flex;
@@ -461,6 +565,8 @@
   gap: 10px;
   margin: 0;
   color: var(--gray-600);
+  font-family: var(--font-cn-display);
+  font-weight: 500;
   font-size: var(--fs-xs);
   letter-spacing: 0.2em;
   animation: fade-in 0.9s ease 1.5s both, hint-float 3.2s ease-in-out 2.4s infinite alternate;
@@ -476,4 +582,68 @@
 @keyframes hint-float {
   from { transform: translate(-50%, 0); }
   to { transform: translate(-50%, 5px); }
+}
+
+/* ---- 门厅 → 对页书：滚到底就一刀切过去 ---- */
+
+.sec-hall.is-launching .door-stage {
+  animation: door-punch 0.24s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+.sec-hall.is-launching .door-glow {
+  animation: door-glow-cut 0.24s steps(4, end) forwards;
+}
+
+.sec-hall.is-launching .quote-layer,
+.sec-hall.is-launching .scroll-hint,
+.sec-hall.is-launching .door-quote,
+.sec-hall.is-launching .dq-why,
+.sec-hall.is-launching .hero-arrow {
+  animation: door-hush 0.16s ease forwards;
+}
+
+@keyframes door-punch {
+  to { transform: scale(1.055); filter: brightness(1.08); }
+}
+
+@keyframes door-hush {
+  to { opacity: 0; }
+}
+
+@keyframes door-glow-cut {
+  0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.9); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(3.6); }
+}
+
+/* 全屏色幕：在 240ms 内推到满色，然后直接换页 */
+.door-burst {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: var(--accent);
+  opacity: 0;
+}
+
+.door-burst.is-on {
+  animation: door-burst 0.24s steps(3, end) forwards;
+}
+
+@keyframes door-burst {
+  0% { opacity: 0; }
+  35% { opacity: 0.35; }
+  70% { opacity: 0.92; }
+  100% { opacity: 1; }
+}
+
+/* 2026-11-25：sections.css 给每页加了 34px 左让位（给左侧页码栏），
+   但页码栏 1400px 以下就隐藏了，残留的内边距会让门厅整块偏右 17px。
+   这里把门厅改回左右对称。 */
+.sec.sec-hall {
+  padding-inline: clamp(18px, 4vw, 60px);
+}
+
+@media (max-width: 720px) {
+  .sec.sec-hall { padding-inline: 16px; }
 }
