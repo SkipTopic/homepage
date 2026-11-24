@@ -323,6 +323,28 @@
   .ial-rail { position: static; border-right: 0; border-bottom: 1px solid rgba(20, 17, 15, 0.16); padding: 0 0 10px; }
   .ial-card { grid-template-columns: 1fr; }
   .ial-wall { max-height: none; }
+
+  /* 2026-11-25 手机修复：.ial-card.is-game 的权重（0,2,0）压过上一条（0,1,0），
+     手机上仍是 260px + 1fr 两栏 —— 右边被挤成一条竖排字，封面缩在黑框中间。
+     这里按同等权重逐条压回来。 */
+  .ial-card.is-game { grid-template-columns: 1fr; width: 100%; }
+  .ial-fig.is-game { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+  .ial-fig { border-right: 0; border-bottom: 1px solid rgba(20, 17, 15, 0.16); }
+
+  /* 2026-11-25 手机修复：弹层不吃刘海、不压底部手势条；
+     卡片比屏幕高时让整层能滚（原来 align-items:center + 不可滚，上下两头直接切掉）。 */
+  .ial-modal {
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding:
+      calc(16px + env(safe-area-inset-top, 0px))
+      12px
+      calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  /* 弹层自己会滚，遮罩要是跟着滚，滚到底会漏出后面的页面 */
+  .ial-modal-bg { position: fixed; }
+  .ial-body { max-height: none; overflow: visible; }
 }
 
 /* 探索末尾追加的「我做的游戏」 */
