@@ -41,7 +41,8 @@
 .mw-film-shelf {
   display: grid;
   grid-template-columns: 190px minmax(0, 1fr);
-  gap: var(--gap);
+  /* 2026-11-25：同 .aw-shelf，--gap 只在网格上定义，这里取不到，改成实数值 */
+  gap: 18px;
   align-items: start;
 }
 

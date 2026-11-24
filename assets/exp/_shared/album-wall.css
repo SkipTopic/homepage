@@ -38,7 +38,9 @@
 .aw-shelf {
   display: grid;
   grid-template-columns: minmax(140px, 176px) minmax(0, 1fr);
-  gap: var(--gap);
+  /* 2026-11-25 手机修复：原来写 gap: var(--gap)，但 --gap 只定义在 .aw-grid 上，
+     这里取不到 → 实际 gap 是 0。手机上筛选栏和封面墙上下贴在一起、像压上去。 */
+  gap: 18px;
   align-items: start;
   min-width: 0;
 }
