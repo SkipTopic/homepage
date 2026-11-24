@@ -1,0 +1,126 @@
+:root {
+  /* ============ Riso 印刷语言 · 大胆01 蓝×荧光红 ============
+     纸 --paper / 蓝墨 --ink1 / 荧光粉 --ink2 / 印刷黑 --gray-900。
+     灰阶即「纸阶」（暖纸同色相），墨阶归 --ink1 系，粉色只做信号。
+     阴影全部是实心硬偏移（套印错位），圆角全站归零（印刷品是直角的）。 */
+
+  /* ---- 纸阶（9 档，暖纸色相 40° 内） ---- */
+  --gray-100: #fdfbf6; /* 染色底 */
+  --gray-150: #faf7f0; /* 纸（基） */
+  --gray-200: #f1ece0; /* 面板底 */
+  --gray-300: #e6e0d1; /* 分隔底 */
+  --gray-400: #cfc8b6; /* 弱分隔线 */
+  --gray-500: #b3aa97; /* 占位图标 */
+  --gray-600: #8b8172; /* 第三级文字 */
+  --gray-700: #6e6657; /* 次要文字（muted，≥4.5:1 on paper） */
+  --gray-800: #3f3b34; /* 次强调 */
+  --gray-900: #14110f; /* 印刷黑（主文字/描线/粗框） */
+  --outside: #e9e4d8;
+  --paper: var(--gray-150);
+  --paper-rgb: 250, 247, 240;
+  --paper-soft: var(--gray-100);
+  --ink: var(--gray-900);
+  --muted: var(--gray-700);
+  --line: var(--gray-900);
+
+  /* ---- 两色油墨（大胆01：蓝 × 荧光红） ---- */
+  --ink1: #0078bf; /* 蓝墨：门/柜/书脊/大标题 */
+  --ink2: #ff48b0; /* 荧光粉：信号、错位鬼影、光 */
+  --ink2-deep: #a11671; /* 粉的可读档：浅墨当文字/描线时用它（scheme.css 按刊覆盖） */
+
+  /* ---- 门与柜（蓝墨三档） ---- */
+  --door: #0078bf;
+  --door-deep: #005a91;
+  --door-light: #2f92d6;
+  --cabinet: #0078bf;
+  --cabinet-deep: #005a91;
+  --cabinet-light: #2f92d6;
+
+  /* ---- 书蓝（书脊）/ 荧光粉（档案袋）各 3 档 ---- */
+  --book-900: #00344f;
+  --book-500: #00659e;    /* 书脊基色 */
+  --book-100: #d7e6f1;    /* 书页/染色底 */
+  --file-900: #a11671;
+  --file-500: #ff48b0;    /* 档案袋描线 */
+  --file-100: #fcdcef;    /* 袋纸底 */
+
+  /* ---- 印刷光（蓝晕 + 粉光） ---- */
+  --warm-rgb: 0, 120, 191;
+  --glow-rgb: 47, 146, 214;
+  --light-rgb: 255, 72, 176;
+  --ink1-rgb: 0, 120, 191;
+  --ink2-rgb: 255, 72, 176;
+
+  /* ---- 文字语义（三档，第二档=灰，第三档=浅灰） ---- */
+  --quote: rgba(20, 17, 15, 0.62);
+  --quote-soft: rgba(20, 17, 15, 0.44);
+  --quote-author: rgba(20, 17, 15, 0.52);
+  --accent: var(--ink2-deep);
+
+  /* ---- 字体（大胆01 配组：Work Sans / Playfair / Lora Italic / Space Mono / 文楷） ---- */
+  --font-ui: "Work Sans", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+  --font-quote: "Lora", Georgia, "Noto Serif SC", serif;
+  --font-display: "Playfair Display", Georgia, "Noto Serif SC", serif;
+  --font-title: "Playfair Display", Georgia, serif;
+  --font-cn-display: "LXGW WenKai", "Noto Serif SC", "SimSun", "Songti SC", serif;
+  --font-mono: "Space Mono", "JetBrains Mono", Consolas, monospace;
+  --mono: var(--font-mono); /* v0.4 遗留 bug 修复：cabinet/base 引用了未定义的 --mono */
+
+  /* ---- 字号阶梯（px，手工阶梯；正文档整体抬到 1080p 基准 ≥15px） ---- */
+  --fs-xs: 10px;
+  --fs-sm: 11px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-xl: 19px;
+  --fs-2xl: 22px;
+  --fs-3xl: 26px;
+  --fs-4xl: 32px;
+  --fs-5xl: 38px;
+  --fs-display: clamp(44px, 7vw, 84px);
+
+  /* ---- 间距（相邻差 ≥25%，16 基准） ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+
+  /* ---- 阴影体系（五档，实心硬偏移 = 套印错位；叠印粉层用 --misreg） ---- */
+  --shadow-1: 1px 1px 0 rgba(20, 17, 15, 0.8);
+  --shadow-2: 2px 2px 0 rgba(20, 17, 15, 0.82);
+  --shadow-3: 3px 3px 0 rgba(20, 17, 15, 0.85);
+  --shadow-4: 5px 5px 0 rgba(20, 17, 15, 0.88);
+  --shadow-5: 8px 8px 0 rgba(20, 17, 15, 0.9);
+  --misreg: 4px 4px 0 var(--ink2);
+  --shadow-inset-dent: inset 0 2px 3px rgba(0, 34, 53, 0.3), inset 0 -3px 6px rgba(0, 48, 75, 0.26);
+
+  /* ---- 页面框架 ---- */
+  --page-pad: clamp(10px, 2vw, 26px);
+  --frame-border: 3px;
+  --topbar-pad-x: clamp(16px, 2.6vw, 30px);
+  --topbar-pad-y: clamp(10px, 1.6vw, 16px);
+
+  /* ---- 门 ---- */
+  --door-height: clamp(340px, 52vh, 540px);
+  --door-ratio: 1 / 2.15;
+  --door-border: 3px;
+  --door-handle-right: clamp(10px, 1.5vw, 18px);
+  --door-title-size: clamp(48px, 8.6vw, 126px);
+
+  /* ---- 柜子（固定右侧，最上层） ---- */
+  --cabinet-w: clamp(56px, 4.6vw, 72px);
+  --drawer-w: clamp(300px, 34vw, 460px);
+  --drawer-h: clamp(84px, 11vh, 116px);
+
+  --radius: 0px; /* 印刷品是直角的：全站禁圆角（按钮/浮层/开关一并归零） */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-snap: cubic-bezier(0.55, 0, 0.1, 1);
+  --ease-drop: cubic-bezier(0.3, 1.42, 0.44, 1); /* 漫画坠落落地的回弹 */
+  --dur-fast: 0.2s;
+  --dur-move: 0.45s;
+  --dur-panel: 0.32s;
+}

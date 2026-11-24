@@ -1,0 +1,31 @@
+/* ============ 大胆05 双蓝 · 配色方案档 ============
+   两种蓝互相印：群青当主墨（标题/门/柜），靛青当第二版（鬼影/档案袋/光）。 */
+
+:root {
+  --ink1: #1d3fa0;
+  --ink2: #00838a;
+  --ink2-deep: #006a70;
+  --ink1-rgb: 29, 63, 160;
+  --ink2-rgb: 0, 131, 138;
+
+  --warm-rgb: 29, 63, 160;
+  --glow-rgb: 70, 104, 196;
+  --light-rgb: 0, 131, 138;
+
+  --door: #1d3fa0;
+  --door-deep: #142e78;
+  --door-light: #4668c4;
+  --cabinet: #1d3fa0;
+  --cabinet-deep: #142e78;
+  --cabinet-light: #4668c4;
+
+  --book-900: #101f4d;
+  --book-500: #1a358a;
+  --book-100: #d9def2;
+  --file-900: #00555a;
+  --file-500: #00838a;
+  --file-100: #d2eaeb;
+
+  --accent: var(--ink2-deep);
+  --shadow-inset-dent: inset 0 2px 3px rgba(14, 30, 80, 0.32), inset 0 -3px 6px rgba(14, 30, 80, 0.26);
+}

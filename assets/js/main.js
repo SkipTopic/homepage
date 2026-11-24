@@ -24,7 +24,10 @@
   var toastTimer = null;
   var pulseTimer = null;
   var wheelAcc = 0;
-  // 2026-11-25 转正：门厅不再"开门"跳去「对页书」那一页，滚轮一律在本站翻页
+  var doorLaunchLock = false;
+  // 2026-11-25 转正：内页从「修改UI界面/布局09-对页书」搬进了站点内的 ./book/
+  // 用相对路径（不带开头的 /），这样 GitHub Pages 在 /homepage/ 这种子路径下也能跳对
+  var BOOK_INTERIOR = "book/index.html";
   // 2026-11-24 修复：motionQuery 之前只在 manga.js 的作用域里，main.js 没定义，滚轮开门会抛 ReferenceError
   var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -166,8 +169,26 @@
     }, motionQuery.matches ? 120 : 850);
   }
 
-  /* 门厅曾是「封面」：滚轮一到门底就切去「对页书」内页。
-     2026-11-25 转正时站主要求「滚轮到翻页」，跳转整段撤掉，只留普通翻页。 */
+  /* 门厅 → 对页书内页：滚轮一到门底就“啪”地切过去，不做滚动翻页 */
+  function launchBook() {
+    if (doorLaunchLock) return;
+    doorLaunchLock = true;
+    navLock = true;
+
+    if (hallEl) hallEl.classList.add("is-launching");
+
+    if (!motionQuery.matches) {
+      var burst = el("div", "door-burst");
+      document.body.appendChild(burst);
+      window.requestAnimationFrame(function () {
+        burst.classList.add("is-on");
+      });
+    }
+
+    window.setTimeout(function () {
+      window.location.href = BOOK_INTERIOR;
+    }, motionQuery.matches ? 0 : 240);
+  }
 
   function setupObserver() {
     var io = new IntersectionObserver(
@@ -198,6 +219,10 @@
         if (Math.abs(wheelAcc) < 60) return;
         var dir = wheelAcc > 0 ? 1 : -1;
         wheelAcc = 0;
+        if (activeIndex === 0 && dir > 0) {
+          launchBook();
+          return;
+        }
         goTo(activeIndex + dir);
       },
       { passive: false }
@@ -223,11 +248,15 @@
 
       if (next === null) return;
       e.preventDefault();
+      if (activeIndex === 0 && next === 1 && (e.key === "ArrowDown" || e.key === "PageDown")) {
+        launchBook();
+        return;
+      }
       goTo(next);
     });
   }
 
-  /* 触屏：在门厅往上滑也直接切到下一页 */
+  /* 触屏：在门厅往上滑也直接切到内页 */
   function setupTouchLaunch() {
     if (!snap) return;
     var touchStartY = null;
@@ -245,7 +274,7 @@
         if (touchStartY === null || !e.changedTouches.length) return;
         var moved = touchStartY - e.changedTouches[0].clientY;
         touchStartY = null;
-        if (moved > 42) goTo(activeIndex + 1);
+        if (moved > 42) launchBook();
       },
       { passive: true }
     );

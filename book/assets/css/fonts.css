@@ -1,0 +1,51 @@
+/* 2026-11-24：196KB 子集缺字会掉回系统字体，改用完整字符集分包（97 片，按需加载） */
+@import url("../../../assets/fonts/lxgw/lxgwwenkai-regular.css");
+
+/* 本地字体 · 大胆01 配组（全部 OFL 可商用）。
+   Latin：Work Sans / Playfair Display / Lora Italic / Space Mono（自 方案库/fonts，npmmirror fontsource）。
+   中文：霞鹜文楷 Medium 子集（subset_wenkai.py 按站内用字生成 woff2；缺字回退 Noto Serif SC/系统宋体）。
+   许可证：各族均为 SIL OFL 1.1 / LXGW WenKai 为 OFL 1.1，原文见 https://github.com/lxgw/LxgwWenKai。 */
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/work-sans-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/work-sans-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../fonts/playfair-display-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../fonts/playfair-display-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../fonts/lora-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../fonts/space-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+

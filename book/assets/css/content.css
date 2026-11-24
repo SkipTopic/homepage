@@ -1,0 +1,296 @@
+/* ============ content.css — 十布局共用内容基元 ============
+   .gc-* 条目/板块 + 漫画墙按钮 + toast + [data-misreg] 套印标题。
+   布局各自在 layout.css 里改间距与外观。
+   颜色全部走 tokens/scheme，riso：直角、硬偏移阴影、ink1 主墨、ink2-deep 信号。 */
+
+/* ---- 套印错位标题（粉 ghost 印在字后；父级 z-index:0 防换行跑框） ---- */
+
+[data-misreg] {
+  position: relative;
+  z-index: 0;
+}
+
+[data-misreg]::before {
+  content: attr(data-misreg);
+  position: absolute;
+  left: 0.055em;
+  top: 0.045em;
+  z-index: -1;
+  color: var(--ink2);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---- toast / noscript ---- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 100;
+  max-width: min(86vw, 420px);
+  padding: 9px 15px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--fs-md);
+  letter-spacing: 0.04em;
+  text-align: center;
+  box-shadow: 3px 3px 0 rgba(var(--ink2-rgb), 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.noscript {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 110;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--fs-md);
+}
+
+/* ---- 字幕跑马灯 ---- */
+
+.ticker {
+  color: var(--muted);
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: var(--fs-md);
+  transition: opacity 0.38s var(--ease);
+}
+
+.ticker.is-fading {
+  opacity: 0;
+}
+
+/* ---- 板块与条目 ---- */
+
+.gc-group {
+  min-width: 0;
+}
+
+.gc-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gc-group-title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.gc-count {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+}
+
+.gc-lede {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+}
+
+.gc-list {
+  margin: var(--sp-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gc-row + .gc-row {
+  border-top: 1px dotted var(--gray-400);
+}
+
+.gc-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: var(--sp-3) var(--sp-1) var(--sp-3) 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gc-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gc-title {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.gc-item:hover .gc-title,
+.gc-item:focus-visible .gc-title {
+  text-decoration: underline;
+  text-decoration-color: var(--ink2);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.gc-tag {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+}
+
+.gc-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+}
+
+/* ---- 打开漫画墙的油墨按钮（各布局可覆盖） ---- */
+
+.wall-open {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: var(--sp-3) 0 0;
+  padding: 10px 18px;
+  border: 2px solid var(--ink);
+  background: var(--ink1);
+  color: var(--paper);
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.wall-open:hover,
+.wall-open:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--ink2);
+}
+
+.wall-open:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.wall-open-count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+}
+
+/* ---- 漫画墙在暗布局下的两处适配走 scheme，不在这里写死 ---- */
+
+/* ---- 漫画墙嵌入形态（2026-11-23：漫画混进页面内容序列，不再单独开层） ----
+   骨架与全屏 overlay 同一套类名（.manga-wall/.mw-sheet/.mw-grid…），
+   加 .is-inline 落成页内块：十套 wall-theme 主题样式原样生效。 */
+
+.manga-wall.is-inline {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+}
+
+.manga-wall.is-inline .mw-backdrop {
+  display: none;
+}
+
+.manga-wall.is-inline .mw-sheet {
+  position: static;
+  opacity: 1;
+  transform: none;
+  overflow: visible;
+  border-left: 0;
+}
+
+/* 嵌入块不是弹层，× 关闭钮没有意义 */
+.manga-wall.is-inline .mw-close {
+  display: none;
+}
+
+/* 报头在嵌入块里不再 sticky（没有滚动容器） */
+.manga-wall.is-inline .mw-head {
+  position: static;
+}
+
+/* ---- 全屏墙的备用入口：右下角 52 圆章小钮 ---- */
+
+.mw-fab {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink1);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(8deg);
+  transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.mw-fab:hover,
+.mw-fab:focus-visible {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--ink2);
+}
+
+.mw-fab:active {
+  transform: rotate(0deg);
+  box-shadow: none;
+}
+
+/* ---- 嵌入图注防撑宽（2026-11-24）：长书名截断，格子保持整齐 ---- */
+
+.manga-wall.is-inline .mw-card {
+  min-width: 0;
+}
+
+.manga-wall.is-inline .mw-label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.manga-wall.is-inline .mw-label-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

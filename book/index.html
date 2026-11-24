@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>跳过话题 · 对页书</title>
+    <script>
+      // 触屏/手机检测（UA + pointer + 短边）：命中就给 <html> 加 is-touch，
+      // CSS 据此给触屏方案（hover 依赖降级、常显标签等）。桌面访客不受影响。
+      (function () {
+        var ua = navigator.userAgent || "";
+        var mobileUA = /Android|iPhone|iPad|iPod|Mobile|HarmonyOS/i.test(ua);
+        var coarse = !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+        var smallSide = Math.min(window.screen.width || 0, window.screen.height || 0);
+        if (mobileUA || (coarse && smallSide < 500)) {
+          document.documentElement.classList.add("is-touch");
+        }
+      })();
+    </script>
+    <meta name="description" content="布局方案 09：摊开的一本书，左页目录右页正文，翻页是真的翻过去。" />
+    <meta name="theme-color" content="#faf7f0" />
+    <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/css/fonts.css?v=20261124font" />
+    <link rel="stylesheet" href="./assets/css/tokens.css?v=20261124a" />
+    <link rel="stylesheet" href="./assets/css/scheme.css?v=20261124a" />
+    <link rel="stylesheet" href="./assets/css/manga.css?v=20261124a" />
+    <link rel="stylesheet" href="./assets/css/content.css?v=20261124blog2" />
+    <link rel="stylesheet" href="./assets/css/layout.css?v=20261124drop2" />
+    <link rel="stylesheet" href="./assets/css/wall-theme.css?v=20261124a" />
+      <link rel="stylesheet" href="./assets/css/played.css?v=20261124b" />
+      <link rel="stylesheet" href="../assets/exp/_shared/ia-lite.css?v=20261125rack7" />
+    <link rel="stylesheet" href="../assets/exp/_shared/movie-wall.css?v=20261125rack7" />
+    <link rel="stylesheet" href="../assets/exp/_shared/album-wall.css?v=20261125rack7" />
+      <link rel="stylesheet" href="../assets/exp/_shared/project-cube.css?v=20261123i" />
+    <link rel="stylesheet" href="./assets/css/cube.css" />
+  </head>
+  <body>
+    <div class="book">
+      <!-- 左页：目录 -->
+      <aside class="page page-left">
+        <p class="toc-kick">CONTENTS · 目次</p>
+        <h1 class="book-title" data-misreg="跳过话题">跳过话题</h1>
+        <p class="book-sub">个人小站 · 摊开就能读 · 翻页是真的翻</p>
+        <nav class="toc" id="toc" aria-label="书页目录"></nav>
+        <div class="page-left-foot">
+          <p class="ticker" id="ticker"></p>
+        </div>
+      </aside>
+
+      <!-- 书脊 -->
+      <div class="book-spine" aria-hidden="true"></div>
+
+      <!-- 右页：正文 -->
+      <main class="page page-right" id="page-right">
+        <div class="leaf" id="leaf">
+          <header class="running-head">
+            <span class="rh-no" id="rh-no">Ⅰ</span>
+            <h2 class="rh-title" id="rh-title">卷首</h2>
+            <span class="rh-en" id="rh-en">PROLOGUE</span>
+          </header>
+          <div class="leaf-body" id="leaf-body"></div>
+          <footer class="leaf-foot">
+            <span class="folio" id="folio-no">— 1 —</span>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <button type="button" class="mw-fab" data-open-wall aria-label="全屏漫画墙（备用入口）">52</button>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- 书影音 · 漫画墙（布局无关的整版印张，52 张封面坠落入场） -->
+    <div class="manga-wall" id="manga-wall" role="dialog" aria-modal="true" aria-labelledby="manga-wall-title" hidden>
+      <div class="mw-backdrop" data-mw-close></div>
+      <div class="mw-sheet">
+        <header class="mw-head">
+          <div>
+            <p class="mw-kick" aria-hidden="true">PLATES · 图版目录 · 对页印刷</p>
+            <h2 class="mw-title" id="manga-wall-title" data-misreg="书影音">书影音</h2>
+            <p class="mw-sub">52 幅插图印在摊开的书页上，中缝随滚动流过。悬停看图注变深。</p>
+          </div>
+          <div class="mw-head-side">
+            <button type="button" class="mw-replay">重新付印 ↻</button>
+            <span class="mw-stamp" aria-hidden="true">52<br />VOLS</span>
+            <button type="button" class="mw-close" data-mw-close aria-label="关闭漫画墙">×</button>
+          </div>
+        </header>
+        <div class="mw-grid" id="mw-grid"></div>
+        <footer class="mw-foot">
+          <div class="mw-foot-inner">
+            <p class="mw-foot-title">读记在写：</p>
+            <div id="mw-foot-links" class="mw-foot-links"></div>
+            <p class="mw-foot-note">封面长边 ≤720 · #51 无大陆版暂用台版封面</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="noscript">这个页面需要 JavaScript 才能翻页和打开漫画墙。</p>
+    </noscript>
+
+    <!-- 脚本必须在挂件之后：manga.js/content.js 解析时就要抓到 #manga-wall/#toast -->
+    <script src="./assets/js/data.js?v=20261124egg3"></script>
+    <script src="./assets/js/manga-data.js?v=20261124egg3"></script>
+    <script src="./assets/js/content.js?v=20261124egg3"></script>
+    <script src="./assets/js/manga.js?v=20261124a"></script>
+    <script src="./assets/js/layout.js?v=20261124egg"></script>
+        <script src="../assets/exp/_shared/games-data.js?v=20261124egg3"></script>
+    <script src="../assets/exp/_shared/movies-data.js?v=20261124egg3"></script>
+    <script src="../assets/exp/_shared/movie-wall.js?v=20261125rack7"></script>
+    <script src="../assets/exp/_shared/albums-data.js?v=20261124egg3"></script>
+    <script src="../assets/exp/_shared/album-wall.js?v=20261125rack7"></script>
+      <script src="../assets/exp/_shared/ia-lite.js?v=20261125rack7"></script>
+      <script src="../assets/exp/_shared/ia-auto.js"></script>
+      <script src="../assets/exp/_shared/project-cube.js?v=20261123i"></script>
+  </body>
+</html>

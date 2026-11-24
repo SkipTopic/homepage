@@ -1,0 +1,8 @@
+
+/* 对页书：两章一跨页，中间留装订沟 */
+.pjt-chapters { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.pjt-ch { padding: 18px 22px; }
+.pjt-ch:nth-child(odd) { border-right: 1px solid rgba(20,17,15,.2); }
+.pjt-ch:nth-child(1), .pjt-ch:nth-child(2) { border-top: 0; }
+.pjt-ch h3 { font-size: 19px; }
+.pjt-ch .pjt-points { font-size: 12px; }

@@ -1,0 +1,14 @@
+/* 06 · 游戏库 —— 本页：翻开
+   按钮和浮层的骨架在 _shared/game-lib.css，这里只写这一页的脾气。 */
+.gp-lib-grid{perspective:1200px;}
+.gp-t{transform-origin:left center;}
+
+/* 入场：翻开 */
+@keyframes gpp {
+  0%{opacity:0;transform:rotateY(-70deg);filter:blur(2px);}
+  100%{opacity:1;transform:none;filter:none;}
+}
+.gp-lib.is-in .gp-t {
+  animation: gpp .7s var(--ease-drop, cubic-bezier(.3,1.35,.5,1)) both;
+  animation-delay: calc(var(--i) * 45ms);
+}

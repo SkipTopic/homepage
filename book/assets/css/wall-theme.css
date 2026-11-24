@@ -1,0 +1,147 @@
+/* ============ 墙主题 09 · 跨页插图（对页书 × 双蓝） ============
+   首页是摊开的书，漫画墙就是书的图版插页：
+   左右两列对页、中央一道装订缝随滚动流过，封面无边框直接印在纸上，
+   图注（双蓝细线）常显。入场像对页展开落定。
+   只动 transform/opacity；reduced-motion 直接最终态。 */
+
+/* ---- 对页：两页一跨，居中摊开，页宽有上限 ---- */
+
+.mw-grid {
+  grid-template-columns: repeat(2, minmax(240px, 360px));
+  justify-content: center;
+  column-gap: 64px;
+  row-gap: 34px;
+}
+
+/* 装订缝：竖在两列正中，随书页一起滚 */
+.mw-grid {
+  background: linear-gradient(
+    90deg,
+    transparent calc(50% - 2px),
+    rgba(40, 50, 70, 0.16) calc(50% - 2px),
+    rgba(40, 50, 70, 0.16) calc(50% + 2px),
+    transparent calc(50% + 2px)
+  );
+}
+
+/* ---- 版画：无边框，直接印在纸上 ---- */
+
+.mw-cover {
+  border: 0;
+  box-shadow: none;
+}
+
+/* 图注：印在图下，双蓝细线收尾 */
+.mw-label {
+  position: static;
+  display: block;
+  margin: 0 12px;
+  padding: 8px 0 0;
+  border: 0;
+  border-bottom: 2px solid rgba(var(--ink1-rgb), 0.35);
+  background: none;
+  opacity: 1;
+  transform: none;
+  text-align: center;
+}
+
+.mw-label-no {
+  font-family: var(--font-mono);
+}
+
+/* ---- 悬停：页面微抬 ---- */
+
+.mw-card:hover .mw-cover,
+.mw-card:focus-visible .mw-cover {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 0 rgba(var(--ink2-rgb), 0.4);
+}
+
+.mw-card:active .mw-cover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- 入场：对页从装订线展开落定 ---- */
+
+.manga-wall.is-animating .mw-card:nth-child(odd) {
+  animation-name: mw-page-l;
+}
+
+.manga-wall.is-animating .mw-card:nth-child(even) {
+  animation-name: mw-page-r;
+}
+
+.manga-wall.is-animating .mw-card {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease-drop);
+  animation-delay: calc(var(--mw-i, 0) * 16ms + var(--mw-j, 0) * 4ms);
+}
+
+@keyframes mw-page-l {
+  0% {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mw-page-r {
+  0% {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manga-wall.is-animating .mw-card {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ---- 窄屏：单页流 ---- */
+
+@media (max-width: 980px) {
+  .mw-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .mw-grid {
+    background: none;
+  }
+}
+
+/* ---- 嵌入形态：墙印在右页图版区 ---- */
+
+.leaf-body .leaf-wall {
+  margin-top: var(--sp-3);
+}
+
+.leaf-body .leaf-wall .mw-head {
+  padding-top: 0;
+}
+
+.leaf-body .leaf-wall .mw-title {
+  font-size: clamp(24px, 2.6vw, 34px);
+}
+
+.leaf-body .leaf-wall .mw-grid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  column-gap: 28px;
+  row-gap: 26px;
+  padding: var(--sp-3) 0 var(--sp-6);
+  background: none;
+}
+
+.leaf-body .leaf-wall .mw-grid {
+  background: none;
+}
