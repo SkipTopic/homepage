@@ -63,6 +63,13 @@
     padding-top: clamp(64px, 9vh, 88px);
   }
 
+  /* 2026-11-25 站主：手机上门厅（封面）要垂直居中——门和上下的字都往下落到正中间。
+     其余分区继续保持顶部对齐（内容可能超过一屏，居中会切头）。
+     权重 .sec.sec-hall 压过上面的 .sec。 */
+  .sec.sec-hall {
+    justify-content: center;
+  }
+
   .cols-3,
   .cols-2 {
     grid-template-columns: 1fr;
