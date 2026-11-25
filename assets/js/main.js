@@ -25,6 +25,23 @@
   var pulseTimer = null;
   var wheelAcc = 0;
   var doorLaunchLock = false;
+  /* 2026-11-26 彩蛋：连点门 10 次以上，把手弹出去、掉地上，滚轮跟着失效 */
+  var doorClicks = 0;
+  var handleGone = false;
+  var looseHandleEl = null; // 掉在地上的那颗把手（克隆体）
+  var looseShadowEl = null;
+  var DOOR_NAGS = [
+    "别点了，打不开的。",
+    "真的打不开。",
+    "门是画上去的。",
+    "再点它也不会开。",
+    "把手有点松了。",
+    "别怪我没提醒你。",
+    "你手不疼吗？",
+    "再点一下试试。",
+    "行，你赢了。",
+    "……"
+  ];
   // 2026-11-25 转正：内页从「修改UI界面/布局09-对页书」搬进了站点内的 ./book/
   // 用相对路径（不带开头的 /），这样 GitHub Pages 在 /homepage/ 这种子路径下也能跳对
   var BOOK_INTERIOR = "book/index.html";
@@ -149,6 +166,10 @@
     // 门厅不在视野时，名言静止（省 CPU）
     if (quoteLayer) quoteLayer.classList.toggle("is-idle", index !== 0);
 
+    // 掉在地上的把手只属于门厅：翻走了就收起来，回来再摆出来
+    if (looseHandleEl) looseHandleEl.style.display = index === 0 ? "" : "none";
+    if (looseShadowEl) looseShadowEl.style.display = index === 0 ? "" : "none";
+
     // 翻页转场：一张纸掠过
     if (!first && prev !== -1 && wipeEl && !motionQuery.matches) {
       wipeEl.classList.remove("is-wiping");
@@ -172,6 +193,11 @@
   /* 门厅 → 对页书内页：滚轮一到门底就“啪”地切过去，不做滚动翻页 */
   function launchBook() {
     if (doorLaunchLock) return;
+    /* 把手掉了 = 门打不开：滚轮/键盘/上滑都别再把人送进内页 */
+    if (handleGone) {
+      showToast("把手都掉了，门开不了。");
+      return;
+    }
     doorLaunchLock = true;
     navLock = true;
 
@@ -214,6 +240,11 @@
       function (e) {
         if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
         e.preventDefault();
+        /* 2026-11-26 彩蛋：把手掉了以后，门厅的滚轮彻底失效（不翻页、也不进内页） */
+        if (handleGone && activeIndex === 0) {
+          wheelAcc = 0;
+          return;
+        }
         if (navLock) return;
         wheelAcc += e.deltaY;
         if (Math.abs(wheelAcc) < 60) return;
@@ -290,6 +321,159 @@
       hallEl.classList.remove("is-pulse");
     }, 1700);
   }
+
+  /* ---------- 彩蛋：门把手（2026-11-26 站主脚本） ---------- */
+
+  function rattleDoor() {
+    if (!doorEl) return;
+    doorEl.classList.remove("is-rattled");
+    void doorEl.offsetWidth; // 重启动画
+    doorEl.classList.add("is-rattled");
+  }
+
+  function onDoorClick() {
+    if (handleGone) {
+      showToast("把手都掉了，别点了。");
+      return;
+    }
+    doorClicks += 1;
+    pulseDoor();
+
+    /* 前 10 下：一下一句，越点越心虚 */
+    if (doorClicks <= 10) {
+      showToast(DOOR_NAGS[doorClicks - 1]);
+      if (doorClicks >= 6) rattleDoor();
+      return;
+    }
+    breakHandle();
+  }
+
+  function breakHandle() {
+    if (handleGone) return;
+    handleGone = true;
+
+    if (doorEl) {
+      doorEl.classList.add("is-handle-gone");
+      doorEl.setAttribute("aria-label", "一扇掉了把手的门");
+    }
+    if (hallEl) hallEl.classList.add("is-broken");
+
+    /* 滚轮提示改成「坏了」，别让人以为是滚动卡住 */
+    var hint = document.querySelector(".scroll-hint");
+    if (hint) {
+      var line = hint.querySelector(".scroll-hint-line");
+      hint.textContent = "";
+      if (line) hint.appendChild(line);
+      hint.appendChild(document.createTextNode("把手掉了 · 滚轮也停了"));
+    }
+
+    var handle = document.querySelector(".door-handle");
+    if (handle) dropHandle(handle);
+
+    showToast("……把手掉了。");
+    window.setTimeout(function () {
+      showToast("滚轮也一起坏了。");
+    }, 1100);
+  }
+
+  /* 把手从门板上弹出去 → 落地 → 弹几下 → 停住（位置用 left/top，transform 留给压扁动画） */
+  function dropHandle(source) {
+    var rect = source.getBoundingClientRect();
+    var size = rect.width || 15;
+    var frame = document.querySelector(".frame") || document.body;
+    var fr = frame.getBoundingClientRect();
+
+    var handle = document.createElement("span");
+    handle.className = "door-handle is-loose";
+    handle.setAttribute("aria-hidden", "true");
+    handle.style.width = size + "px";
+    handle.style.height = size + "px";
+    handle.style.left = rect.left + "px";
+    handle.style.top = rect.top + "px";
+    document.body.appendChild(handle);
+    looseHandleEl = handle;
+
+    var shadow = document.createElement("span");
+    shadow.className = "door-handle-shadow";
+    shadow.setAttribute("aria-hidden", "true");
+    document.body.appendChild(shadow);
+    looseShadowEl = shadow;
+
+    var minX = fr.left + 10;
+    var maxX = Math.max(minX, fr.right - 10 - size);
+    var floorY = Math.min(fr.bottom, window.innerHeight) - 12 - size;
+    var shadowW = 22;
+
+    function placeShadow(x, y) {
+      var lift = Math.max(0, floorY - y);
+      shadow.style.left = (x + size / 2 - shadowW / 2) + "px";
+      shadow.style.top = (floorY + size - 3) + "px";
+      shadow.style.opacity = String(Math.max(0.05, 0.34 - lift / 800));
+      shadow.style.transform = "scaleX(" + (1 - Math.min(0.45, lift / 700)).toFixed(3) + ")";
+    }
+
+    /* 减少动态：直接放到地上 */
+    if (motionQuery.matches) {
+      var restX = Math.max(minX, Math.min(maxX, rect.left + 90));
+      handle.style.left = restX + "px";
+      handle.style.top = floorY + "px";
+      placeShadow(restX, floorY);
+      return;
+    }
+
+    var x = rect.left;
+    var y = rect.top;
+    var vx = 100 + Math.random() * 50; // 先往右弹（别飞太远，落在门右侧）
+    var vy = -160; // 带一点上抛，像弹簧顶了一下
+    var G = 2300;
+    var last = performance.now();
+
+    placeShadow(x, y);
+
+    function hit() {
+      handle.classList.remove("is-hit");
+      void handle.offsetWidth;
+      handle.classList.add("is-hit");
+    }
+
+    function step(now) {
+      var dt = Math.min(0.033, (now - last) / 1000);
+      last = now;
+
+      vy += G * dt;
+      x += vx * dt;
+      y += vy * dt;
+
+      if (x < minX) { x = minX; vx = Math.abs(vx) * 0.5; }
+      if (x > maxX) { x = maxX; vx = -Math.abs(vx) * 0.5; }
+
+      if (y >= floorY) {
+        y = floorY;
+        if (Math.abs(vy) > 110) {
+          vy = -Math.abs(vy) * 0.46;
+          vx *= 0.84;
+          hit();
+        } else {
+          vy = 0;
+          vx *= 0.9; // 地面摩擦，慢慢打住
+          if (Math.abs(vx) < 5) {
+            handle.style.left = x + "px";
+            handle.style.top = y + "px";
+            placeShadow(x, y);
+            return;
+          }
+        }
+      }
+
+      handle.style.left = x + "px";
+      handle.style.top = y + "px";
+      placeShadow(x, y);
+      window.requestAnimationFrame(step);
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
 
   function syncToggle() {
     if (!toggleBtn || !quoteLayer) return;
@@ -376,7 +560,7 @@
       });
     }
 
-    if (doorEl) doorEl.addEventListener("click", pulseDoor);
+    if (doorEl) doorEl.addEventListener("click", onDoorClick);
 
     if (toggleBtn) {
       toggleBtn.addEventListener("click", function () {
