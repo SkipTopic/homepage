@@ -253,6 +253,10 @@
   border-radius: 50%;
   background: var(--paper);
   color: var(--ink1);
+  /* 2026-11-25：里面从「52」换成小火箭图标，用 flex 居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -261,6 +265,16 @@
   transform: rotate(8deg);
   transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease),
     color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+/* 回到顶端的小火箭：emoji 单独给字号，24px 圆标在 46px 按钮里刚好 */
+.mw-fab svg { display: block; }
+.mw-fab-rocket {
+  font-size: 24px;
+  line-height: 1;
+  /* 抵消按钮自身 rotate(8deg)，让火箭看着更“往上飞”一点 */
+  display: block;
+  transform: rotate(-8deg);
 }
 
 .mw-fab:hover,

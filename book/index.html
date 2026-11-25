@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="./assets/css/tokens.css?v=20261124a" />
     <link rel="stylesheet" href="./assets/css/scheme.css?v=20261124a" />
     <link rel="stylesheet" href="./assets/css/manga.css?v=20261124a" />
-    <link rel="stylesheet" href="./assets/css/content.css?v=20261124blog2" />
+    <link rel="stylesheet" href="./assets/css/content.css?v=20261125rocket" />
     <link rel="stylesheet" href="./assets/css/layout.css?v=20261125home" />
     <link rel="stylesheet" href="./assets/css/wall-theme.css?v=20261124a" />
       <link rel="stylesheet" href="./assets/css/played.css?v=20261124b" />
@@ -67,7 +67,10 @@
       </main>
     </div>
 
-    <button type="button" class="mw-fab" data-open-wall aria-label="全屏漫画墙（备用入口）">52</button>
+    <!-- 2026-11-25 站主要求：原来这个圆标是「52」（漫画墙备用入口），改成小火箭，点了回到页面最顶端 -->
+    <button type="button" class="mw-fab" id="to-top" aria-label="回到顶端" title="回到顶端">
+      <span class="mw-fab-rocket" aria-hidden="true">🚀</span>
+    </button>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -116,5 +119,28 @@
       <script src="../assets/exp/_shared/ia-lite.js?v=20261125rack7"></script>
       <script src="../assets/exp/_shared/ia-auto.js"></script>
       <script src="../assets/exp/_shared/project-cube.js?v=20261123i"></script>
+    <!-- 小火箭：回到最顶端。桌面时书页是「左右页各自滚动」，手机是整页滚动，
+         所以两类容器都收进来，谁的 scrollTop > 0 就归零谁。 -->
+    <script>
+      (function () {
+        var btn = document.getElementById("to-top");
+        if (!btn) return;
+        var BOXES = ".leaf-body, .page-right, .page-left, .book, .ial-wall, .aw-grid, .mw-film-grid";
+
+        btn.addEventListener("click", function () {
+          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          var behavior = reduce ? "auto" : "smooth";
+
+          window.scrollTo({ top: 0, left: 0, behavior: behavior });
+
+          var boxes = document.querySelectorAll(BOXES);
+          for (var i = 0; i < boxes.length; i += 1) {
+            if (boxes[i].scrollTop > 0) {
+              boxes[i].scrollTo({ top: 0, left: 0, behavior: behavior });
+            }
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
