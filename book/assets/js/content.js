@@ -104,15 +104,6 @@
     return link;
   }
 
-  function makeWallButton(count) {
-    var btn = el("button", "wall-open");
-    btn.type = "button";
-    btn.setAttribute("data-open-wall", "");
-    btn.appendChild(el("span", null, "打开漫画墙"));
-    btn.appendChild(el("span", "wall-open-count", count + " VOLS"));
-    return btn;
-  }
-
   /* 板块整块：标题 + 计数 + 说明 + 条目；media 组自动带墙按钮 */
   function renderGroupBlock(id, opts) {
     opts = opts || {};
@@ -128,10 +119,6 @@
     head.appendChild(el("span", "gc-count", group.items.length + " 篇"));
     block.appendChild(head);
     if (group.note && !opts.noNote) block.appendChild(el("p", "gc-lede", group.note));
-    if (group.id === "media" && !opts.noWallButton) {
-      var mangaCount = (window.MANGA_DATA && window.MANGA_DATA.length) || 52;
-      block.appendChild(makeWallButton(mangaCount));
-    }
     block.appendChild(renderItems(id, opts));
     return block;
   }

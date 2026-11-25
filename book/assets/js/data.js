@@ -120,8 +120,12 @@ window.SITE_DATA = {
     {
       id: "blog-film",
       label: "影评",
-      note: "影评 2 篇。",
+      note: "影评 6 篇。",
       items: [
+        { title: "《穿越时空的悲鸣与救赎》", note: "2026-01-15", tag: "2026", href: "../pages/blog/bu-neng-shuo-de-mi-mi.html" },
+        { title: "《从神性的静默到都市的呢喃》", note: "2025-11-28", tag: "2025", href: "../pages/blog/dao-ma-zei-su-zhou-he.html" },
+        { title: "《从街头的跳转到面包店的凝视》", note: "2025-11-06", tag: "2025", href: "../pages/blog/fa-guo-xin-lang-chao.html" },
+        { title: "《在笑声中看见时代的眼泪》", note: "2025-10-10", tag: "2025", href: "../pages/blog/mo-deng-shi-dai.html" },
         { title: "《楚门的世界》：被观看的人生", note: "2025-03-04", tag: "2025", href: "../pages/blog/chu-men-de-shi-jie.html" },
         { title: "《时生》：你的决意，我的救赎", note: "2023-10-21", tag: "2023", href: "../pages/blog/shi-sheng.html" },
       ]

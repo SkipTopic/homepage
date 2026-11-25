@@ -24,46 +24,6 @@
   function renderBody(pg) {
     leafBody.textContent = "";
     if (pg.lede) leafBody.appendChild(L.el("p", "gc-lede drop-lede", pg.lede));
-    if (pg.wall) {
-      // 图版页：墙直接印在右页（嵌入形态），不再砸全屏（备用入口在右下角圆钮）
-      var wall = L.el("section", "manga-wall is-inline leaf-wall");
-      wall.setAttribute("aria-label", "书影音 · 漫画墙（52 本）");
-      var sheet = L.el("div", "mw-sheet");
-      var head2 = L.el("header", "mw-head");
-      var hwrap = L.el("div");
-      var kick = L.el("p", "mw-kick", "PLATES · 图版目录 · 对页印刷");
-      kick.setAttribute("aria-hidden", "true");
-      hwrap.appendChild(kick);
-      hwrap.appendChild(L.el("h3", "mw-title", "书影音"));
-      hwrap.appendChild(L.el("p", "mw-sub", "52 幅插图印在摊开的书页上，中缝随滚动流过。悬停看图注变深。"));
-      head2.appendChild(hwrap);
-      var side = L.el("div", "mw-head-side");
-      var replay = L.el("button", "mw-replay", "重新付印 ↻");
-      replay.type = "button";
-      side.appendChild(replay);
-      var stamp = L.el("span", "mw-stamp");
-      stamp.setAttribute("aria-hidden", "true");
-      stamp.appendChild(L.el("span", null, "52"));
-      stamp.appendChild(L.el("span", null, "VOLS"));
-      side.appendChild(stamp);
-      head2.appendChild(side);
-      sheet.appendChild(head2);
-      sheet.appendChild(L.el("div", "mw-grid"));
-      var foot = L.el("footer", "mw-foot");
-      var fin = L.el("div", "mw-foot-inner");
-      fin.appendChild(L.el("p", "mw-foot-title", "读记在写："));
-      fin.appendChild(L.el("div", "mw-foot-links"));
-      fin.appendChild(L.el("p", "mw-foot-note", "封面长边 ≤720 · #51 无大陆版暂用台版封面"));
-      foot.appendChild(fin);
-      sheet.appendChild(foot);
-      wall.appendChild(sheet);
-      leafBody.appendChild(wall);
-      window.__renderMangaInto(wall);
-      window.setTimeout(function () {
-        window.__replayMangaAt(wall);
-      }, 300);
-      return;
-    }
     if (pg.groups.length) {
       var wrap = L.el("div", pg.cols === 2 ? "cols-2" : "");
       pg.groups.forEach(function (gid) {

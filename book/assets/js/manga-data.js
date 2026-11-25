@@ -678,5 +678,31 @@ window.MANGA_DATA = [
     "src": "封面.jpg",
     "d": "《东方三月精》第三部《Oriental Sacred Place》三卷合订。光之三妖精——桑尼米尔克、露娜切露德、斯塔萨菲雅——搬进博丽神社，继续在幻想乡制造和解决各种小异变。比良坂真琴的画风比前两部更稳，故事仍是短篇日常。",
     "douban": "https://book.douban.com/subject/36849726/"
+  },
+  {
+    "no": 53,
+    "file": "assets/img/covers/53.jpg",
+    "title": "大海原与大海原 1",
+    "author": "海底囚人",
+    "w": 540,
+    "h": 720,
+    "kb": 107,
+    "resized": false,
+    "src": "大海原與大海原-01-1.jpg",
+    "d": "海底囚人把自己的同名 RPG 改编成漫画。海之魔女大海原带着三个使魔回到故乡的海，原使魔鲛吉却挡在面前，要她马上离开。",
+    "douban": "https://book.douban.com/subject/26723182/"
+  },
+  {
+    "no": 54,
+    "file": "assets/img/covers/54.jpg",
+    "title": "大海原与大海原 2",
+    "author": "海底囚人",
+    "w": 540,
+    "h": 720,
+    "kb": 124,
+    "resized": false,
+    "src": "大海原與大海原-02-1.jpg",
+    "d": "第 2 卷。海帝国与死之海的线开始收拢，大海原和使魔们被卷进更深的漩涡里。",
+    "douban": "https://book.douban.com/subject/26918258/"
   }
 ];
