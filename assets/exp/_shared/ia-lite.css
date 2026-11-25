@@ -151,6 +151,55 @@
   margin-left: 4px;
 }
 
+/* 图书馆二级分类：全部 / 纯漫画 / 文学（2026-11-25） */
+.ial-cat { margin-bottom: 14px; }
+.ial-cat .ial-filter { margin-bottom: 1px; }
+
+/* 墙上的二级分类：两带各自成组，组内横带 sticky 在组顶上；
+   组滚完，横带跟着走，所以「纯漫画」的标题不会压在「文学」头上。 */
+.ial-wall.is-banded { display: block; }
+.ial-wall-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--tile), calc((100% - 3 * var(--gap)) / 4)), 1fr));
+  gap: var(--gap);
+}
+.ial-group + .ial-group { margin-top: 18px; }
+
+.ial-band {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 4px 0 7px;
+  background: var(--paper, #faf7f0);
+  border-bottom: 1.5px solid var(--line, #14110f);
+  /* 粘住时下面有卡片从带子底下过，给一点投影，读起来是「压在墙上的标签」 */
+  box-shadow: 0 8px 10px -8px rgba(20, 17, 15, 0.32);
+}
+.ial-band b {
+  font-family: var(--font-cn-display, serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.ial-band i {
+  font-style: normal;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ink1);
+}
+.ial-band em {
+  margin-left: auto;
+  font-style: normal;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: var(--muted);
+}
+
 .ial-wall {
   /* 2026-11-25：横排最多 4 个——列宽取「容器四分之一」和最小值的较大者，
      容器宽就跟着放大，窄了自动减列。不用 max-width，避免右侧留一大块空白。 */
@@ -190,6 +239,112 @@
   line-height: 1.3;
   font-weight: 600;
 }
+
+/* 文学没有扫描封面：竖排字封面（不占图片，缺图也不塌） */
+.ial-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  aspect-ratio: 3 / 4;
+  padding: 8px 8px 7px;
+  background:
+    repeating-linear-gradient(180deg, rgba(20, 17, 15, 0.035) 0 1px, transparent 1px 4px),
+    var(--paper-soft, #fff);
+  border-bottom: 1px solid rgba(20, 17, 15, 0.16);
+  overflow: hidden;
+}
+.ial-cover-kick {
+  align-self: flex-start;
+  font-family: var(--font-mono, monospace);
+  font-size: 7.5px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  opacity: 0.8;
+}
+.ial-cover-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 4px 0;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--font-cn-display, serif);
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: 0.14em;
+  line-height: 1.05;
+  color: var(--ink);
+  /* 套印错位：一层淡靛影，和站上的标题同一种毛病 */
+  text-shadow: 1.5px 0 0 rgba(var(--ink2-rgb, 58, 91, 160), 0.38);
+}
+.ial-cover-foot {
+  align-self: flex-start;
+  width: 100%;
+  padding-top: 5px;
+  border-top: 1px solid rgba(20, 17, 15, 0.2);
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ial-book.is-text:hover .ial-cover-title { color: var(--ink1); }
+.ial-book.is-text:hover .ial-cover { background-color: rgba(var(--ink1-rgb, 0, 120, 191), 0.06); }
+/* 字封面下面的说明行：编号 + 作者（书名在封面上，不重复） */
+.ial-book.is-text > b {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 文学封面：豆瓣原图的竖横比不统一（0.62~0.77），不裁切，衬一圈纸当「裱」，
+   裁了会把封面上的书名切掉；卡片里再按原比例放大。 */
+.ial-book.is-lit .ial-shot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  padding: 7px;
+  background: var(--paper-soft, #fff);
+  border-bottom: 1px solid rgba(20, 17, 15, 0.16);
+  overflow: hidden;
+}
+.ial-book.is-lit .ial-shot img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  /* 文学封面保留原色：漫画那边是灰度统一，书这边要看封面本来长什么样 */
+  filter: none;
+}
+.ial-book.is-lit:hover .ial-shot img { transform: none; }
+.ial-book.is-lit:hover { border-color: var(--ink1); }
+.ial-book.is-lit:hover .ial-shot { background: rgba(var(--ink1-rgb, 0, 120, 191), 0.05); }
+.ial-fig.is-lit { display: flex; align-items: flex-start; justify-content: center; }
+.ial-card.is-lit img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* 书卡里的字封面：放大一档，补一圈完整描边 */
+.ial-fig .ial-cover {
+  width: 100%;
+  border: 1.5px solid var(--line, #14110f);
+}
+.ial-fig .ial-cover-kick { font-size: 9px; }
+.ial-fig .ial-cover-title { font-size: 27px; letter-spacing: 0.2em; }
+.ial-fig .ial-cover-foot { font-size: 10px; }
 .ial-empty {
   grid-column: 1 / -1;
   padding: 48px 18px;
@@ -323,6 +478,23 @@
   .ial-rail { position: static; border-right: 0; border-bottom: 1px solid rgba(20, 17, 15, 0.16); padding: 0 0 10px; }
   .ial-card { grid-template-columns: 1fr; }
   .ial-wall { max-height: none; }
+
+  /* 二级分类在手机上摊成一排小签，别竖着占掉半屏 */
+  .ial-cat { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .ial-cat .ial-filter {
+    width: auto;
+    margin: 0;
+    padding: 4px 9px;
+    border: 1.5px solid rgba(20, 17, 15, 0.26);
+  }
+  .ial-cat .ial-filter.is-on {
+    border-color: var(--ink1);
+    background: rgba(var(--ink1-rgb, 0, 120, 191), 0.07);
+  }
+  /* 字封面在手机上别跟着整行宽变成一张大纸 */
+  .ial-fig .ial-cover { width: min(230px, 62vw); margin: 0 auto; }
+  /* 手机上整页在滚，横带再粘就会飘在导航下面挡内容，取消粘性 */
+  .ial-band { position: static; box-shadow: none; }
 
   /* 2026-11-25 手机修复：.ial-card.is-game 的权重（0,2,0）压过上一条（0,1,0），
      手机上仍是 260px + 1fr 两栏 —— 右边被挤成一条竖排字，封面缩在黑框中间。
