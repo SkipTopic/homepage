@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./assets/css/base.css" />
     <link rel="stylesheet" href="./assets/css/header.css?v=20261124font" />
     <link rel="stylesheet" href="./assets/css/hero.css?v=20261126egg3" />
-    <link rel="stylesheet" href="./assets/css/sections.css" />
+    <link rel="stylesheet" href="./assets/css/sections.css?v=20261126lock3" />
     <link rel="stylesheet" href="./assets/css/responsive.css?v=20261125hall" />
     <link rel="stylesheet" href="./assets/css/manga.css" />
     <link rel="stylesheet" href="./assets/css/scheme.css?v=20261124font" />
@@ -94,16 +94,24 @@
           </section>
 
           <!-- 03 · 喜欢 -->
-          <section class="sec sec-like" id="sec-like" data-sec="3" data-title="喜欢">
+          <section class="sec sec-like" id="sec-like" data-sec="3" data-title="喜欢" data-locked="true">
             <header class="sec-head">
               <span class="sec-no" aria-hidden="true">03</span>
               <div>
                 <h2 class="sec-title-cn" data-misreg="喜欢">喜欢</h2>
                 <span class="sec-title-en">Favorites</span>
               </div>
-              <p class="sec-lede">看过、听过、借过、玩过——都记一笔。</p>
+              <p class="sec-lede">看过、听过、借过、玩过——都收起来了。</p>
             </header>
-            <div class="sec-body cols-2" data-groups="media,games"></div>
+            <!-- 2026-11-26 站主：入门页的「喜欢」只留空壳，内容不对外 -->
+            <div class="sec-body">
+              <div class="liked-lock">
+                <p class="liked-line">真正的喜欢，<br />不会让别人看见。</p>
+                <p class="liked-sub">你没有权限</p>
+                <span class="liked-stamp" aria-hidden="true">NO ACCESS</span>
+                <p class="liked-foot">空着不是忘了放，是不想放。</p>
+              </div>
+            </div>
           </section>
 
           <!-- 04 · 乐趣 -->
@@ -194,6 +202,6 @@
     <script src="./assets/exp/_shared/albums-data.js?v=20261124egg3"></script>
     <script src="./assets/exp/_shared/movie-wall.js?v=20261125rack7"></script>
     <script src="./assets/exp/_shared/album-wall.js?v=20261125rack7"></script>
-    <script src="./assets/exp/_shared/ia-lite.js?v=20261125lib9"></script>
+    <script src="./assets/exp/_shared/ia-lite.js?v=20261126lock"></script>
   </body>
 </html>

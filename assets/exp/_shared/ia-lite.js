@@ -727,10 +727,13 @@ LIB.forEach(function (g) { (g.g || []).forEach(function (x) { m[x] = (m[x] || 0)
     if (!like) return;
     host = like.querySelector(".sec-body");
     if (!host) return;
+    /* 探索页那块「游戏（我做的）」照旧挂上 */
+    mineInto();
+    /* 2026-11-26 站主：入门页的「喜欢」只留空壳（data-locked），不再往里塞书架 */
+    if (like.dataset.locked === "true") return;
     if (!host.querySelector(".ial-rows") && !host.querySelector(".ial-shelf") && !host.querySelector(".ial-empty")) {
       render("hub");
     }
-    mineInto();
   }
 
   /* 对外：给别的页面就地挂载 */
