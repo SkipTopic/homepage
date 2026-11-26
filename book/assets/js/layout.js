@@ -13,7 +13,7 @@
   var folioNo = document.getElementById("folio-no");
 
   var PAGES = [
-    { no: "Ⅰ", cn: "卷首", en: "PROLOGUE", lede: "摊开就能读：左页是目次，右页是正文。翻页是真的翻——纸从书脊那边卷过去。蓝色油墨印字，靛青做鬼影。", groups: [] },
+    { no: "Ⅰ", cn: "卷首", en: "PROLOGUE", lede: "摊开就能读：左页是目次，右页是正文。翻页是真的翻——纸从书脊那边卷过去。蓝色油墨印字，靛青做鬼影。", groups: [], room: true },
     { no: "Ⅱ", cn: "探索", en: "EXPLORE", lede: "还没想清楚的问题，写了一半的世界，梦里排好的片，还有技术、学习与生活的零碎笔记。", groups: ["blog-dream", "blog-essay", "blog-design", "blog-fiction", "blog-book", "blog-film"], cols: 2 },
     { no: "Ⅲ", cn: "喜欢", en: "FAVORITES", lede: "看过、听过、借过、玩过——都记一笔。", groups: ["media", "games"], cols: 2 },
     { no: "Ⅳ", cn: "乐趣", en: "PLAYGROUND", lede: "界面和一点风——做出来的东西装在档案袋里。", groups: ["design"], cols: 2 },
@@ -24,6 +24,12 @@
   function renderBody(pg) {
     leafBody.textContent = "";
     if (pg.lede) leafBody.appendChild(L.el("p", "gc-lede drop-lede", pg.lede));
+    /* 卷首的「我的房间」：每次翻回这一页都重新随机摆一遍（room.js 负责抽图） */
+    if (pg.room && window.ROOM) {
+      var roomHost = L.el("div", "room-mount");
+      leafBody.appendChild(roomHost);
+      window.ROOM.mount(roomHost);
+    }
     if (pg.groups.length) {
       var wrap = L.el("div", pg.cols === 2 ? "cols-2" : "");
       pg.groups.forEach(function (gid) {

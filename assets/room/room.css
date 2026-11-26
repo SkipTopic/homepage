@@ -1,0 +1,151 @@
+/* 「我的房间」· 卷首插画（2026-11-26）
+   一张米白纸上的手绘房间，8 个空位由 room.js 随机贴图。
+   走站点既有印刷语言：直角、2px 墨线、硬偏移阴影、粉色只做信号。 */
+
+.room-plate {
+  width: min(100%, 720px);
+  margin: clamp(16px, 2.4vh, 26px) auto 0;
+}
+
+/* 桌面上按视口高度收一点，保证卷首一屏能读完（手机上页面本来就能滚，不设限） */
+@media (min-width: 861px) {
+  .room-plate {
+    width: min(100%, 720px, max(360px, calc((100vh - 340px) * 1.2941)));
+  }
+}
+
+.room-frame {
+  position: relative;
+  background: #f5e6cd; /* 图里的纸色，底图没到之前不白闪 */
+  border: 2px solid #1e3e74;
+  box-shadow: 4px 4px 0 rgba(20, 17, 15, 0.82);
+}
+
+.room-frame svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- 8 个可点的空位 ---- */
+
+.room-slot {
+  cursor: pointer;
+}
+
+.room-slot image {
+  transition: opacity 0.42s var(--ease), filter 0.2s var(--ease);
+}
+
+.room-slot .room-edge {
+  fill: none;
+  stroke: #1e3e74;
+  stroke-width: 2;
+  pointer-events: none;
+  transition: stroke 0.16s var(--ease), stroke-width 0.16s var(--ease);
+}
+
+.room-slot:hover image,
+.room-slot:focus-visible image {
+  filter: brightness(1.06) saturate(1.04);
+}
+
+.room-slot:hover .room-edge,
+.room-slot:focus-visible .room-edge {
+  stroke: var(--ink2);
+  stroke-width: 3;
+}
+
+.room-slot:focus {
+  outline: none;
+}
+
+/* 换图那一下：整张纸轻微错位再回来（套印没对准） */
+.room-plate.is-rolling .room-frame {
+  animation: room-misreg 0.5s var(--ease);
+}
+
+@keyframes room-misreg {
+  0% { transform: translate(0, 0); }
+  18% { transform: translate(-2px, 1px); }
+  42% { transform: translate(1px, -1px); }
+  68% { transform: translate(-1px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-plate.is-rolling .room-frame {
+    animation: none;
+  }
+  .room-slot image {
+    transition: none;
+  }
+}
+
+/* ---- 图注 ---- */
+
+.room-cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-top: 9px;
+}
+
+.room-cap-kick {
+  color: var(--ink2-deep);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.2em;
+}
+
+.room-cap-name {
+  color: var(--ink);
+  font-family: var(--font-cn-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.room-cap-note {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+}
+
+.room-roll {
+  margin-left: auto;
+  padding: 3px 10px 4px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  box-shadow: 2px 2px 0 rgba(20, 17, 15, 0.8);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.room-roll:hover,
+.room-roll:focus-visible {
+  color: var(--ink2-deep);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink2);
+}
+
+.room-roll:active {
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 520px) {
+  .room-cap-note {
+    flex: 1 1 100%;
+    order: 3;
+  }
+  .room-roll {
+    order: 2;
+  }
+}
