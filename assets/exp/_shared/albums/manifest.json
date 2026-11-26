@@ -1,9 +1,9 @@
 {
- "count": 324,
- "maxSide": 320,
- "quality": 78,
- "totalBytes": 4162438,
- "generatedAt": "2026-11-24",
+ "count": 334,
+ "maxSide": 400,
+ "quality": 82,
+ "totalBytes": 4431748,
+ "generatedAt": "2026-11-26",
  "items": [
   {
    "no": 1,
@@ -5889,6 +5889,199 @@
    "cover": "albums/324.webp",
    "bytes": 12334,
    "url": "https://music.163.com/album?id=2422070"
+  },
+  {
+   "no": 325,
+   "title": "范特西",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2001",
+   "date": "2001-09-14",
+   "company": "阿尔发音乐",
+   "trackCount": 10,
+   "type": "专辑",
+   "likedSongs": [
+    "安静",
+    "开不了口"
+   ],
+   "cover": "albums/325.webp",
+   "bytes": 19470,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/000I5jJB3blWeN",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 326,
+   "title": "叶惠美",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2003",
+   "date": "2003-07-31",
+   "company": "阿尔发音乐",
+   "trackCount": 11,
+   "type": "专辑",
+   "likedSongs": [
+    "晴天"
+   ],
+   "cover": "albums/326.webp",
+   "bytes": 30584,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/000MkMni19ClKG",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 327,
+   "title": "七里香",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2004",
+   "date": "2004-08-03",
+   "company": "阿尔发音乐",
+   "trackCount": 10,
+   "type": "专辑",
+   "likedSongs": [
+    "七里香",
+    "搁浅"
+   ],
+   "cover": "albums/327.webp",
+   "bytes": 39408,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/003DFRzD192KKD",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 328,
+   "title": "十一月的萧邦",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2005",
+   "date": "2005-11-01",
+   "company": "阿尔发音乐",
+   "trackCount": 12,
+   "type": "专辑",
+   "likedSongs": [
+    "夜曲",
+    "枫"
+   ],
+   "cover": "albums/328.webp",
+   "bytes": 15296,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/0024bjiL2aocxT",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 329,
+   "title": "寻找周杰伦",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2003",
+   "date": "2003-11-13",
+   "company": "阿尔发音乐",
+   "trackCount": 4,
+   "type": "EP",
+   "likedSongs": [
+    "轨迹"
+   ],
+   "cover": "albums/329.webp",
+   "bytes": 20824,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/001BGzMs369FzU",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 330,
+   "title": "我很忙",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2007",
+   "date": "2007-11-02",
+   "company": "杰威尔音乐",
+   "trackCount": 10,
+   "type": "专辑",
+   "likedSongs": [
+    "彩虹"
+   ],
+   "cover": "albums/330.webp",
+   "bytes": 31836,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/002eFUFm2XYZ7z",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 331,
+   "title": "魔杰座",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2008",
+   "date": "2008-10-15",
+   "company": "杰威尔音乐",
+   "trackCount": 11,
+   "type": "专辑",
+   "likedSongs": [
+    "花海"
+   ],
+   "cover": "albums/331.webp",
+   "bytes": 30706,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/002Neh8l0uciQZ",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 332,
+   "title": "跨时代",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2010",
+   "date": "2010-05-18",
+   "company": "杰威尔音乐",
+   "trackCount": 11,
+   "type": "专辑",
+   "likedSongs": [
+    "说了再见"
+   ],
+   "cover": "albums/332.webp",
+   "bytes": 23222,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/000bviBl4FjTpO",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 333,
+   "title": "周杰伦的床边故事",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2016",
+   "date": "2016-06-24",
+   "company": "杰威尔音乐",
+   "trackCount": 10,
+   "type": "专辑",
+   "likedSongs": [
+    "告白气球"
+   ],
+   "cover": "albums/333.webp",
+   "bytes": 36142,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/003RMaRI1iFoYd",
+   "source": "QQ音乐"
+  },
+  {
+   "no": 334,
+   "title": "最伟大的作品",
+   "artists": [
+    "周杰伦"
+   ],
+   "year": "2022",
+   "date": "2022-07-15",
+   "company": "杰威尔音乐",
+   "trackCount": 12,
+   "type": "专辑",
+   "likedSongs": [
+    "错过的烟火"
+   ],
+   "cover": "albums/334.webp",
+   "bytes": 21822,
+   "url": "https://y.qq.com/n/ryqq_v2/albumDetail/0042cH172YJ0mz",
+   "source": "QQ音乐"
   }
  ]
 }

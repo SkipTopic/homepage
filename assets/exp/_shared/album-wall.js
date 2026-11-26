@@ -1,6 +1,7 @@
-/* 音乐 · 专辑墙（324 张，网页图 480px WebP）
+/* 音乐 · 专辑墙（334 张，网页图 320–400px WebP）
    和 movie-wall.js 同一套约定：只输出结构 + 通用 .aw-* 类，颜色/字体走各页 token。
-   数据：window.ALBUM_DATA（assets/exp/_shared/albums-data.js） */
+   数据：window.ALBUM_DATA（assets/exp/_shared/albums-data.js）
+   链接默认写「网易云专辑」，条目带 source 的按 source 写（周杰伦那 10 张是 QQ 音乐） */
 (function () {
   "use strict";
 
@@ -78,7 +79,7 @@
     frag.appendChild(crumb(opts.onBack));
     frag.appendChild(el(
       "p", "aw-lede",
-      "听过的 " + ALBUMS.length + " 张专辑。封面压到 320px、每次先铺 60 张；点一张看发行信息和你收藏的那几首，" +
+      "听过的 " + ALBUMS.length + " 张专辑。封面压到 400px 以内、每次先铺 60 张；点一张看发行信息和你收藏的那几首，" +
       "按年代筛，搜索可以查专辑名、歌手和歌名。"
     ));
 
@@ -249,7 +250,7 @@
 
     var foot = el("div", "aw-foot");
     if (a.url) {
-      var link = el("a", "aw-link", "网易云专辑 ↗");
+      var link = el("a", "aw-link", (a.source || "网易云") + "专辑 ↗");
       link.href = a.url;
       link.target = "_blank";
       link.rel = "noopener";
