@@ -33,3 +33,15 @@ README.md
 
 # Playwright 浏览器截图缓存（工具临时文件，不进任何仓库）
 .playwright-mcp/
+
+# 本地生图素材与生成产物（2026-11-27：这里面有一份交接文档含站主本名）
+我的房间-生图/
+generated-images/
+
+# 文章核查工作区（含聊天原文摘录、真名地名比对，2026-11-27）
+_文章检查_20261127/
+
+# 实验版布局与配色（体积大；交接文档 §49 警告过 git add -A 会带进去。
+# 注意：assets/exp/_shared/ 是线上引用的，不能排除，所以只排这两类）
+assets/exp/bold*/
+assets/exp/layout*/
