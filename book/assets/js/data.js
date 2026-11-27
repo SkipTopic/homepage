@@ -149,8 +149,8 @@ window.SITE_DATA = {
     },
     {
       id: "dreams",
-      label: "梦境",
-      note: "梦是另一个片场。",
+      label: "解梦",
+      note: "解梦、多夜连读，和从梦里长出来的角色。",
       items: [
         { title: "机械人梦", note: "迁徙、断桥，和只剩上半身的自己。", tag: "梦境", href: "../pages/jixie-ren-meng.html" },
         { title: "四夜八梦", note: "连续四晚，八个梦：被抛下、被考验、被评价。", tag: "记梦", href: "../pages/si-ye-ba-meng.html" },

@@ -1,4 +1,26 @@
 <!doctype html>
+<!--
+  ══════════════════════════════════════════════════════════════════
+  交接规则 · 门厅（这个文件）不放任何文章
+  ══════════════════════════════════════════════════════════════════
+
+  站主 2026-11-27 定：这个页面只做封面和指路，一个文章条目都不放。
+
+  原因（别重犯）：
+    这里原来挂着「探索 / 乐趣 / 关于」三组的 21 条旧占位。
+    条目全都没有 href，点了只弹「还在整理」，站主自己都以为文章没上传。
+    而真正有正文的 ./book/ 反而少了一章的入口，两头都对不上。
+
+  规矩：
+    1. 本页不放条目。版块可以留标题，正文只写一句指路。
+    2. 所有文章、书影音、游戏、设计、关于，一律走 ./book/。
+    3. 要加文章，只改 book/assets/js/data.js 和 book/assets/js/layout.js，
+       永远不要回到这个文件里加 <li> 或 data-groups。
+    4. 这一份 assets/js/data.js 的 bookmarks 已清空成 []，别往里填东西。
+
+  完整记录在 交接文档.md §58。
+  ══════════════════════════════════════════════════════════════════
+-->
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
@@ -16,7 +38,7 @@
     <link rel="stylesheet" href="./assets/css/base.css" />
     <link rel="stylesheet" href="./assets/css/header.css?v=20261124font" />
     <link rel="stylesheet" href="./assets/css/hero.css?v=20261126egg3" />
-    <link rel="stylesheet" href="./assets/css/sections.css?v=20261126lock3" />
+    <link rel="stylesheet" href="./assets/css/sections.css?v=20261127gate2" />
     <link rel="stylesheet" href="./assets/css/responsive.css?v=20261125hall" />
     <link rel="stylesheet" href="./assets/css/manga.css" />
     <link rel="stylesheet" href="./assets/css/scheme.css?v=20261124font" />
@@ -93,7 +115,19 @@
               </div>
               <p class="sec-lede">还没想清楚的问题，写了一半的世界，和梦里排好的片。</p>
             </header>
-            <div class="sec-body cols-3" data-groups="philosophy,dreams,creation"></div>
+            <!--
+              2026-11-27 站主规定：门厅（本页）不放任何文章条目。
+              所有正文都在 ./book/ 里，这一页只做封面和指路。
+              以前这里挂的 philosophy/dreams/creation 三组是旧占位，
+              条目全是死按钮（没有 href，点了只弹「还在整理」），已全部撤掉。
+              详见 交接文档.md §58。
+            -->
+            <div class="sec-body">
+              <div class="gate-note">
+                <p class="gate-line">文章都在门后。</p>
+                <p class="gate-sub">往下翻 · 或者点那扇门</p>
+              </div>
+            </div>
           </section>
 
           <!-- 03 · 喜欢 -->
@@ -127,7 +161,13 @@
               </div>
               <p class="sec-lede">界面和一点风——做出来的东西装在档案袋里。</p>
             </header>
-            <div class="sec-body cols-2" data-groups="design"></div>
+            <!-- 2026-11-27：门厅不放条目（原 design 组撤掉），只指路 -->
+            <div class="sec-body">
+              <div class="gate-note">
+                <p class="gate-line">做出来的东西，也在门后。</p>
+                <p class="gate-sub">进去以后翻到「乐趣」</p>
+              </div>
+            </div>
           </section>
 
 
@@ -141,7 +181,13 @@
               </div>
               <p class="sec-lede">先放三句话，以后再补。</p>
             </header>
-            <div class="sec-body about-body" data-groups="about"></div>
+            <!-- 2026-11-27：门厅不放条目（原 about 组撤掉），只指路 -->
+            <div class="sec-body">
+              <div class="gate-note">
+                <p class="gate-line">关于我，也在门后。</p>
+                <p class="gate-sub">进去以后翻到「关于」</p>
+              </div>
+            </div>
             <footer class="end-foot">
               <span>跳过话题 · <span id="year">2026</span></span>
               <span class="end-foot-note">门后面是句子，句子后面是还在长的东西。</span>

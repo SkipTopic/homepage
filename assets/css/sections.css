@@ -375,3 +375,43 @@
     bottom: 10px;
   }
 }
+
+/* ---------- 门厅指路块（2026-11-27，站主指令） ----------
+   门厅（index.html）只做封面，四个版块一律不放条目。
+   所有正文在 ./book/ 里，这里只留一句指路。
+   起因：原来「探索/乐趣/关于」挂的是旧占位数据，条目没有 href，
+   点了只弹「还在整理」，站主以为文章没上传。详见 交接文档.md §58。 */
+.gate-note {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(8px, 1.4vh, 14px);
+  min-height: clamp(280px, 56vh, 520px);
+  padding: 0 clamp(16px, 3vw, 32px);
+  text-align: center;
+}
+
+.gate-line {
+  margin: 0;
+  font-family: var(--font-cn-display, serif);
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.gate-sub {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--ink2);
+}
+
+@media (max-width: 720px) {
+  /* 手机上让指路语落在版块视觉中心，别贴着标题、下面空一大片 */
+  .gate-note {
+    min-height: 44vh;
+  }
+}

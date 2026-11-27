@@ -35,76 +35,13 @@ window.SITE_DATA = {
     { text: "The happiness of your life depends upon the quality of your thoughts.", author: "Marcus Aurelius" }
   ],
 
-  bookmarks: [
-    {
-      id: "philosophy",
-      label: "哲学",
-      note: "一些还没想清楚的问题。",
-      items: [
-        { title: "介质与围墙", note: "社交、孤独，以及我们用来互相抵达的东西。", tag: "随笔" },
-        { title: "没有敌人的世界", note: "克隆人、冲突，以及把敌人变成共同体。", tag: "随笔" }
-      ]
-    },
-    {
-      id: "dreams",
-      label: "梦境",
-      note: "梦是另一个片场。",
-      items: [
-        { title: "机械人梦", note: "迁徙、断桥，和只剩上半身的自己。", tag: "梦境" },
-        { title: "梦是潜艇", note: "预知梦、暴露弱点，和梦的边界。", tag: "长文" },
-        { title: "灯守·眠", note: "黑发双辫、闭眼、掌心暖灯的角色。", tag: "角色" }
-      ]
-    },
-    {
-      id: "creation",
-      label: "创作",
-      note: "写到一半的世界。",
-      items: [
-        { title: "三主角的飞船", note: "理科黑客、古风少女、社交达人，一起飞向全灭。", tag: "小说" },
-        { title: "爬梯见秦岭", note: "无尽梯子、山顶，和一套分镜工作流。", tag: "微剧本" },
-        { title: "七幕寝室剧", note: "从性格翻转到性格揭示的校园现实剧。", tag: "剧本" }
-      ]
-    },
-    {
-      id: "media",
-      label: "书影音",
-      note: "看过、听过、借过。",
-      items: [
-        { title: "图书馆书架", note: "在借阅、购买和收藏之间。", tag: "书" },
-        { title: "宫崎夏次系", note: "读书记，以及一次过度润色的反省。", tag: "漫画" },
-        { title: "一张纸存电影", note: "收藏、记忆与载体的尽头。", tag: "影像" }
-      ]
-    },
-    {
-      id: "games",
-      label: "游戏",
-      note: "玩，也做。",
-      items: [
-        { title: "白色弥漫", note: "中世纪、坠落飞船，和一次翻译的背叛。", tag: "企划" },
-        { title: "随机的迷宫", note: "一格走廊、随机生成，和按 K 指路。", tag: "项目" },
-        { title: "塔科夫式背包", note: "按住浮空、松手放置的手机端交互。", tag: "项目" }
-      ]
-    },    {
-      id: "design",
-      label: "设计",
-      note: "把想法做成能摸到的东西。",
-      items: [
-        { title: "空间魔方", note: "为租房者做小空间定制家具。", tag: "项目" },
-        { title: "微光小厨", note: "一只穿白厨师服的鸟，和它的暖色厨房。", tag: "IP" },
-        { title: "简谱琴键", note: "21 个键放不下时，先删哪三个。", tag: "界面" }
-      ]
-    },
-    {
-      id: "about",
-      label: "关于",
-      note: "先放三句话，以后再补。",
-      items: [
-        { title: "站主", note: "数字媒体艺术专业。写梦、写句子，做一点游戏和影像。", tag: "人" },
-        { title: "联系方式", note: "QQ / 邮箱 / 微信：整理中。", tag: "待补" },
-        { title: "这个站", note: "一扇关着的门，门后面是还在长的东西。", tag: "说明" }
-      ]
-    }
-  ],
+  /* 2026-11-27 站主规定：门厅（index.html）不放任何文章。
+     所有正文在 ./book/ 里，用的是 book/assets/js/data.js 那一份。
+     这一份只留名言和柜子配置。
+     原来这里挂着 7 组共 21 条旧占位，全部没有 href，点了只弹「还在整理」，
+     站主因此以为文章没上传。整段已清空，别再往这里加条目。
+     详见 交接文档.md §58。 */
+  bookmarks: [],
 
   /*
    * 右侧固定柜子的抽屉配置（v0.4）。
