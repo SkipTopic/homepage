@@ -48,7 +48,6 @@ window.SITE_DATA = {
       note: "梦是另一个片场。16 篇，保留原始的断裂感。",
       items: [
         { title: "水果棺材", note: "被丢在老家 / 捏坏的气球 / 法老与水果墓", tag: "2026", href: "../pages/blog/shui-guo-guan-cai.html" },
-        { title: "扣两分", note: "机械人掉下悬崖，被少年救起，楼顶是课桌组成的广场", tag: "2026", href: "../pages/blog/kou-liang-fen.html" },
         { title: "考场（合辑）", note: "2026-06-21", tag: "2026", href: "../pages/blog/kao-chang.html" },
         { title: "一层套一层（合辑）", note: "2026-05-05", tag: "2026", href: "../pages/blog/yi-ceng-tao-yi-ceng.html" },
         { title: "不存在的楼层", note: "电梯停在一个不存在的楼层，监控拍不到我", tag: "2026", href: "../pages/blog/bu-cun-zai-de-lou-ceng.html" },
@@ -165,7 +164,7 @@ window.SITE_DATA = {
       note: "写到一半的世界。",
       items: [
         { title: "三主角的飞船", note: "理科黑客、古风少女、社交达人，一起飞向全灭。", tag: "小说", href: "../pages/san-zhujiao.html" },
-        { title: "爬梯见秦岭", note: "无尽梯子、山顶，和一套分镜工作流。", tag: "微剧本", href: "../pages/pa-ti-jian-qinling.html" },
+        { title: "爬梯见山", note: "无尽梯子、山顶，和一套分镜工作流。", tag: "微剧本", href: "../pages/pa-ti-jian-qinling.html" },
         { title: "寝室剧", note: "导演说缺教室，我补了三场。", tag: "剧本", href: "../pages/qinshi-ju.html" },
         { title: "七幕剧备忘", note: "从性格翻转到性格揭示的校园现实剧。", tag: "剧本", href: "../pages/qimu-ju.html" },
         { title: "旧日记里的世界", note: "十几岁写的末地、深海和早餐室。", tag: "旧稿", href: "../pages/jiu-riji.html" },
